@@ -103,7 +103,7 @@ export class Destination extends Building implements BuildingWithTick {
    private static list: Destination[] = [];
 
    static readonly STARTING_HEALTH = 45;
-   static readonly HEALTH_INCREASE = 0;
+   static readonly HEALTH_INCREASE = 1;
    static readonly HEALING_PER_CAR = 5;
 
    private static CURRENT_HEALTH = Destination.STARTING_HEALTH;

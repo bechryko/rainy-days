@@ -8,7 +8,7 @@
    <mat-grid-tile [colspan]="1" [rowspan]="2">
       <div class="buttons">
          <ng-container *ngIf="buttonGroup == 'menu'">
-            <button mat-flat-button color="accent" (click)="startQuickGame()">Quick play</button>
+            <button mat-flat-button color="accent" (click)="startQuickGame()">Play</button>
             <button mat-flat-button color="accent" (click)="switchButtonGroup('setupGame')">Setup game</button>
          </ng-container>
          <form [formGroup]="setupGameForm" (ngSubmit)="startCustomGame()" *ngIf="buttonGroup == 'setupGame'">
