@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GameStartService } from 'src/app/game-start.service';
@@ -17,12 +17,13 @@ import { MatIcon } from '@angular/material/icon';
     imports: [MatGridList, MatGridTile, NewsComponent, MatButton, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatIcon, MatSuffix]
 })
 export class MenuComponent {
+   private router = inject(Router);
+   private gameStartService = inject(GameStartService);
+
    buttonGroup: string = "menu";
    setupGameForm = new FormGroup({
       seed: new FormControl('', [Validators.pattern('^[0-9a-zA-Z]*$')])
    });
-
-   constructor(private router: Router, private gameStartService: GameStartService) { }
 
    switchButtonGroup(group: string) {
       this.buttonGroup = group;

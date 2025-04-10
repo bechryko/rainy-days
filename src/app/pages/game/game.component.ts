@@ -1,4 +1,4 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, inject } from '@angular/core';
 import { GameMessage, GameStatus, InputMessage } from './model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewEncapsulation } from '@angular/core';
@@ -13,6 +13,8 @@ import { MapComponent } from './map/map.component';
     imports: [HudComponent, NgClass, MapComponent]
 })
 export class GameComponent {
+   private snackbar = inject(MatSnackBar);
+
    gameStatus: GameStatus = {
       isGameGoing: false,
       isPaused: false,
@@ -21,8 +23,6 @@ export class GameComponent {
       spawnTimer: 0
    };
    inputEmitter = new EventEmitter<InputMessage>();
-
-   constructor(private snackbar: MatSnackBar) { }
 
    getGameMessage(message: any) {
       message = message as GameMessage;

@@ -1,5 +1,5 @@
 import { GameStartService } from './../../../game-start.service';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { Game } from 'src/app/core/Game';
 import { GameMessage, InputMessage } from '../model';
 import { Random } from 'src/app/core/Random';
@@ -10,11 +10,11 @@ import { Random } from 'src/app/core/Random';
     styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
+   private gameStartService = inject(GameStartService);
+
    game?: Game;
    @Output() gameEmitter = new EventEmitter<GameMessage>();
    @Input() inputEmitter = new EventEmitter<InputMessage>();
-
-   constructor(private gameStartService: GameStartService) { }
 
    ngOnInit() {
       document.addEventListener("contextmenu", e => {
