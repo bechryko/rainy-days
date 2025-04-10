@@ -3,9 +3,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { InputMessage } from '../model';
 
 @Component({
-   selector: 'app-hud',
-   templateUrl: './hud.component.html',
-   styleUrls: ['./hud.component.scss']
+    selector: 'app-hud',
+    templateUrl: './hud.component.html',
+    styleUrls: ['./hud.component.scss'],
+    standalone: false
 })
 export class HudComponent {
    @Input() gameStatus: GameStatus = {

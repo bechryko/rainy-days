@@ -5,9 +5,10 @@ import { GameMessage, InputMessage } from '../model';
 import { Random } from 'src/app/core/Random';
 
 @Component({
-   selector: 'app-map',
-   templateUrl: './map.component.html',
-   styleUrls: ['./map.component.scss']
+    selector: 'app-map',
+    templateUrl: './map.component.html',
+    styleUrls: ['./map.component.scss'],
+    standalone: false
 })
 export class MapComponent implements OnInit {
    game?: Game;

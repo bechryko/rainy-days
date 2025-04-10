@@ -4,9 +4,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewEncapsulation } from '@angular/core';
 
 @Component({
-   selector: 'app-game',
-   templateUrl: './game.component.html',
-   styleUrls: ['./game.component.scss']
+    selector: 'app-game',
+    templateUrl: './game.component.html',
+    styleUrls: ['./game.component.scss'],
+    standalone: false
 })
 export class GameComponent {
    gameStatus: GameStatus = {

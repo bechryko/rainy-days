@@ -4,9 +4,10 @@ import { NewsObject, PatchNote, TipObject } from '../model';
 import { gameTips, patchNotes, trendingNews } from '../textObjects';
 
 @Component({
-   selector: 'app-news',
-   templateUrl: './news.component.html',
-   styleUrls: ['./news.component.scss']
+    selector: 'app-news',
+    templateUrl: './news.component.html',
+    styleUrls: ['./news.component.scss'],
+    standalone: false
 })
 export class NewsComponent implements OnInit {
    readonly gameVersion = "Beta 1";
