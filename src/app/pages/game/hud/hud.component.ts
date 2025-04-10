@@ -1,7 +1,7 @@
 import { GameStatus } from './../model';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { InputMessage } from '../model';
-import { NgIf, NgFor, NgClass } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { MatFabButton, MatButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 
@@ -9,7 +9,7 @@ import { MatTooltip } from '@angular/material/tooltip';
     selector: 'app-hud',
     templateUrl: './hud.component.html',
     styleUrls: ['./hud.component.scss'],
-    imports: [NgIf, NgFor, NgClass, MatFabButton, MatTooltip, MatButton]
+    imports: [NgClass, MatFabButton, MatTooltip, MatButton]
 })
 export class HudComponent {
    @Input() gameStatus: GameStatus = {
