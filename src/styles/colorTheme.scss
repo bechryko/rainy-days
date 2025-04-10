@@ -1,11 +1,11 @@
 @use '@angular/material' as mat;
 
-$RainyDays-primary: mat.define-palette(mat.$light-green-palette, 600, 300, 900);
-$RainyDays-accent: mat.define-palette(mat.$pink-palette, 600, A700, 300);
+$RainyDays-primary: mat.m2-define-palette(mat.$m2-light-green-palette, 600, 300, 900);
+$RainyDays-accent: mat.m2-define-palette(mat.$m2-pink-palette, 600, A700, 300);
 
-$RainyDays-warn: mat.define-palette(mat.$red-palette);
+$RainyDays-warn: mat.m2-define-palette(mat.$m2-red-palette);
 
-$RainyDays-theme: mat.define-light-theme((
+$RainyDays-theme: mat.m2-define-light-theme((
    color: (
       primary: $RainyDays-primary,
       accent: $RainyDays-accent,
@@ -16,14 +16,14 @@ $RainyDays-theme: mat.define-light-theme((
 @include mat.all-component-themes($RainyDays-theme);
 
 @function primaryColor($color) {
-   @return mat.get-color-from-palette($RainyDays-primary, $color);
+   @return mat.m2-get-color-from-palette($RainyDays-primary, $color);
 }
 @function primaryColorWithBlack($color) {
    @return mix(black, primaryColor($color), 50%);
 }
 
 @function accentColor($color) {
-   @return mat.get-color-from-palette($RainyDays-accent, $color);
+   @return mat.m2-get-color-from-palette($RainyDays-accent, $color);
 }
 @function accentColorWithBlack($color) {
    @return mix(black, accentColor($color), 50%);
