@@ -1,8 +1,9 @@
-import { GameStartService } from './../../../game-start.service';
-import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
-import { Game } from 'src/app/core/Game';
-import { GameMessage, InputMessage } from '../model';
-import { Random } from 'src/app/core/Random';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from "@angular/core";
+import { GameStartService } from "src/app/game-start.service";
+import { Game } from "../core/Game";
+import { Random } from "../core/Random";
+import { GameMessage, InputMessage } from "../model";
+
 
 @Component({
     selector: 'app-map',

@@ -1,11 +1,11 @@
 import { EventEmitter } from "@angular/core";
+import { GameMessage } from "../model";
 import { Building, BuildingWithTick, Destination, Spawner } from "./Building";
 import { CanvasDrawer } from "./CanvasDrawer";
 import { Car } from "./Car";
 import { Controller, Selection } from "./Controller";
-import { Colors, Tile } from "./Tile";
-import { GameMessage } from "../pages/game/model";
 import { Random } from "./Random";
+import { Colors, Tile } from "./Tile";
 
 export class Game {
     static readonly SPAWN_MESSAGE_TIME = 10;
