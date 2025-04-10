@@ -14,20 +14,18 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    MenuComponent,
-    NewsComponent,
-  ],
-  imports: [
-    CommonModule,
-    MenuRoutingModule,
-    MatGridListModule,
-    MatTabsModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    MatIconModule
-  ]
+    imports: [
+        CommonModule,
+        MenuRoutingModule,
+        MatGridListModule,
+        MatTabsModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        MenuComponent,
+        NewsComponent
+    ]
 })
 export class MenuModule { }

@@ -7,8 +7,7 @@ import { Random } from 'src/app/core/Random';
 @Component({
     selector: 'app-map',
     templateUrl: './map.component.html',
-    styleUrls: ['./map.component.scss'],
-    standalone: false
+    styleUrls: ['./map.component.scss']
 })
 export class MapComponent implements OnInit {
    game?: Game;

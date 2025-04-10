@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 
 import { NewsObject, PatchNote, TipObject } from '../model';
 import { gameTips, patchNotes, trendingNews } from '../textObjects';
+import { MatTabGroup, MatTab } from '@angular/material/tabs';
+import { NgFor } from '@angular/common';
 
 @Component({
     selector: 'app-news',
     templateUrl: './news.component.html',
     styleUrls: ['./news.component.scss'],
-    standalone: false
+    imports: [MatTabGroup, MatTab, NgFor]
 })
 export class NewsComponent implements OnInit {
    readonly gameVersion = "Beta 1";

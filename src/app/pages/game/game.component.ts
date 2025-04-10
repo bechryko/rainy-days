@@ -2,12 +2,15 @@ import { Component, EventEmitter } from '@angular/core';
 import { GameMessage, GameStatus, InputMessage } from './model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewEncapsulation } from '@angular/core';
+import { HudComponent } from './hud/hud.component';
+import { NgClass } from '@angular/common';
+import { MapComponent } from './map/map.component';
 
 @Component({
     selector: 'app-game',
     templateUrl: './game.component.html',
     styleUrls: ['./game.component.scss'],
-    standalone: false
+    imports: [HudComponent, NgClass, MapComponent]
 })
 export class GameComponent {
    gameStatus: GameStatus = {
