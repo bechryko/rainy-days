@@ -7,6 +7,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "server": "ng build && http-server -p 8080 -c-1 dist/chess",
+    "format": "prettier \"src/**/*.ts\" --write",
     "clear": "rm -rf node_modules .angular"
   },
   "private": true,
@@ -39,6 +40,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
+    "prettier": "^3.5.3",
     "typescript": "^5.8.3"
   }
 }
