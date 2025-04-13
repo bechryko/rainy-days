@@ -100,13 +100,17 @@ export class Controller {
    }
 
    private onMouseMove(event: MouseEvent): void {
-      //TODO: draw from outside the canvas
+      if (!(event.target instanceof HTMLCanvasElement)) {
+         return;
+      }
+
       const x = Math.floor(event.offsetX / Tile.SIZE);
       const y = Math.floor(event.offsetY / Tile.SIZE);
       if (x < 0 || x >= Map.COLUMN_COUNT || y < 0 || y >= Map.ROW_COUNT) {
          this.selectedTile = undefined;
          return;
       }
+
       this.selectedTile = this.tiles[x][y];
    }
 
