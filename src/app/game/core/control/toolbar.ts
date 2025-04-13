@@ -1,13 +1,13 @@
-import { signal, Signal } from "@angular/core";
-import { Building, ColoredGate, TimedGate } from "../buildings";
-import { GameEventHandler, GameEventType } from "../game-events";
-import { Tile } from "../map";
-import { gameObjectColors } from "../map/constants";
-import { Color } from "../map/models";
-import { Road, Tube } from "../roads";
-import { RandomUtils } from "../utils";
+import { signal, Signal } from '@angular/core';
+import { Building, ColoredGate, TimedGate } from '../buildings';
+import { GameEventHandler, GameEventType } from '../game-events';
+import { Tile } from '../map';
+import { gameObjectColors } from '../map/constants';
+import { Color } from '../map/models';
+import { Road, Tube } from '../roads';
+import { RandomUtils } from '../utils';
 import { BasicRoad } from './../roads/basic-road.road';
-import { Selection, ToolbarItem } from "./models";
+import { Selection, ToolbarItem } from './models';
 
 export class Toolbar {
    public static readonly INITIAL_SELECTED_ITEM_KEY = 1;
@@ -23,37 +23,37 @@ export class Toolbar {
 
    public readonly items: ToolbarItem[] = [
       {
-         displayName: "Editor tool",
+         displayName: 'Editor tool',
          selection: Selection.EDITOR_TOOL,
          factory: () => null,
          selectionMatchFn: () => false
       },
       {
-         displayName: "Road",
+         displayName: 'Road',
          selection: Selection.ROAD,
          factory: tile => new BasicRoad(tile),
          selectionMatchFn: obj => obj instanceof BasicRoad
       },
       {
-         displayName: "Tube",
+         displayName: 'Tube',
          selection: Selection.TUBE,
          factory: tile => new Tube(tile),
          selectionMatchFn: obj => obj instanceof Tube
       },
       {
-         displayName: "Colored gate 1", // TODO
+         displayName: 'Colored gate 1', // TODO
          selection: Selection.COLORED_GATE_1,
          factory: tile => new ColoredGate(tile, this.gate1Color),
          selectionMatchFn: obj => obj instanceof ColoredGate && obj.color === this.gate1Color
       },
       {
-         displayName: "Colored gate 2", // TODO
+         displayName: 'Colored gate 2', // TODO
          selection: Selection.COLORED_GATE_2,
          factory: tile => new ColoredGate(tile, this.gate2Color),
          selectionMatchFn: obj => obj instanceof ColoredGate && obj.color === this.gate2Color
       },
       {
-         displayName: "Timed gate",
+         displayName: 'Timed gate',
          selection: Selection.TIMED_GATE,
          factory: tile => new TimedGate(tile),
          selectionMatchFn: obj => obj instanceof TimedGate
@@ -84,7 +84,7 @@ export class Toolbar {
    }
 
    public selectItemByKey(key: number): void {
-      if(key < 0 || key >= this.items.length) {
+      if (key < 0 || key >= this.items.length) {
          return;
       }
 

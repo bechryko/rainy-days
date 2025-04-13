@@ -1,8 +1,8 @@
-import { Tile } from "../../map";
-import { gameObjectColors } from "../../map/constants";
-import { RandomUtils } from "../../utils";
-import { Destination } from "../destination.building";
-import { Spawner } from "../spawner.building";
+import { Tile } from '../../map';
+import { gameObjectColors } from '../../map/constants';
+import { RandomUtils } from '../../utils';
+import { Destination } from '../destination.building';
+import { Spawner } from '../spawner.building';
 
 export class BuildingSpawnerUtils {
    private static readonly SPAWNER_SPAWNING_CLEAR_RANGE = 3;
@@ -11,7 +11,7 @@ export class BuildingSpawnerUtils {
    public static spawnSpawner(map: Tile[][]): void {
       const upgradableSpawners = Spawner.getUpgradeable();
 
-      if(Spawner.canUpgrade() && upgradableSpawners.length && RandomUtils.nextChance()) {
+      if (Spawner.canUpgrade() && upgradableSpawners.length && RandomUtils.nextChance()) {
          const spawner = RandomUtils.nextArrayElement(upgradableSpawners);
          spawner.upgrade();
          return;

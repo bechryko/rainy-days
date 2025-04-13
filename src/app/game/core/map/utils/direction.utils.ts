@@ -1,14 +1,14 @@
-import { Direction } from "../models";
+import { Direction } from '../models';
 
 export class DirectionUtils {
    public static forEachDirection(callback: (direction: Direction, dx: number, dy: number, breakFn: () => void) => void): void {
       let doBreak = false;
-      const breakFn = () => doBreak = true;
+      const breakFn = () => (doBreak = true);
 
-      for(let i = 0; i < 4; i++) {
+      for (let i = 0; i < 4; i++) {
          callback(i, DirectionUtils.getDx(i), DirectionUtils.getDy(i), breakFn);
 
-         if(doBreak) {
+         if (doBreak) {
             break;
          }
       }

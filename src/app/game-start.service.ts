@@ -6,10 +6,8 @@ import { Injectable } from '@angular/core';
 export class GameStartService {
    private paramsInitialized: boolean = false;
    private startingParams = {
-      seed: '',
+      seed: ''
    };
-
-   constructor() { }
 
    initStartingParams(seed: string) {
       if (this.paramsInitialized) return;

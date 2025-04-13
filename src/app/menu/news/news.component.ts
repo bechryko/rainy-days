@@ -4,21 +4,20 @@ import { NewsObject, PatchNote, TipObject } from '../model';
 import { gameTips, patchNotes, trendingNews } from '../textObjects';
 import { MatTabGroup, MatTab } from '@angular/material/tabs';
 
-
 @Component({
-    selector: 'app-news',
-    templateUrl: './news.component.html',
-    styleUrls: ['./news.component.scss'],
-    imports: [MatTabGroup, MatTab]
+   selector: 'app-news',
+   templateUrl: './news.component.html',
+   styleUrls: ['./news.component.scss'],
+   imports: [MatTabGroup, MatTab]
 })
 export class NewsComponent implements OnInit {
-   readonly gameVersion = "Beta 1";
+   readonly gameVersion = 'Beta 1';
 
    trendingNews: NewsObject[] = [];
    latestPatchNote?: PatchNote;
    currentTips: TipObject[] = [];
 
-   constructor() { }
+   constructor() {}
 
    ngOnInit() {
       this.trendingNews = trendingNews;

@@ -11,15 +11,15 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        GameRoutingModule,
-        MatButtonModule,
-        MatSnackBarModule,
-        MatTooltipModule,
-        GameComponent,
-        HudComponent,
-        MapComponent,
-    ]
+   imports: [
+      CommonModule,
+      GameRoutingModule,
+      MatButtonModule,
+      MatSnackBarModule,
+      MatTooltipModule,
+      GameComponent,
+      HudComponent,
+      MapComponent
+   ]
 })
-export class GameModule { }
+export class GameModule {}

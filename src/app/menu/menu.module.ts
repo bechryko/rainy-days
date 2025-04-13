@@ -14,18 +14,18 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MenuRoutingModule,
-        MatGridListModule,
-        MatTabsModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        ReactiveFormsModule,
-        MatIconModule,
-        MenuComponent,
-        NewsComponent
-    ]
+   imports: [
+      CommonModule,
+      MenuRoutingModule,
+      MatGridListModule,
+      MatTabsModule,
+      MatButtonModule,
+      MatFormFieldModule,
+      MatInputModule,
+      ReactiveFormsModule,
+      MatIconModule,
+      MenuComponent,
+      NewsComponent
+   ]
 })
-export class MenuModule { }
+export class MenuModule {}

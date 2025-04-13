@@ -1,6 +1,6 @@
-import { BasicDrawer } from "../drawing";
-import { Tile } from "../map";
-import { Road } from "./road";
+import { BasicDrawer } from '../drawing';
+import { Tile } from '../map';
+import { Road } from './road';
 
 export class BasicRoad extends Road {
    public override matchTypeWith(other: Road): boolean {
@@ -8,6 +8,6 @@ export class BasicRoad extends Road {
    }
 
    public override draw(drawer: BasicDrawer): void {
-      this.drawRoadBase(drawer, "black", Tile.SIZE / 2);
+      this.drawRoadBase(drawer, 'black', Tile.SIZE / 2);
    }
 }

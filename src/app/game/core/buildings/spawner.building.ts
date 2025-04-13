@@ -1,8 +1,8 @@
-import { BasicDrawer } from "../drawing";
-import { Tile } from "../map";
-import { Car } from "../map/car";
-import { Color } from "../map/models";
-import { Building } from "./building";
+import { BasicDrawer } from '../drawing';
+import { Tile } from '../map';
+import { Car } from '../map/car';
+import { Color } from '../map/models';
+import { Building } from './building';
 
 export class Spawner extends Building {
    private static readonly list: Spawner[] = [];
@@ -22,7 +22,10 @@ export class Spawner extends Building {
    private timer = 0;
    private power = 1;
 
-   constructor(tile: Tile, private readonly color: Color) {
+   constructor(
+      tile: Tile,
+      private readonly color: Color
+   ) {
       super(tile, false);
 
       Spawner.list.push(this);
@@ -33,12 +36,12 @@ export class Spawner extends Building {
    }
 
    public tick(deltaTime: number): void {
-      if(!this.tile.hasRoad()) {
+      if (!this.tile.hasRoad()) {
          return;
       }
 
       this.timer -= deltaTime * this.power;
-      if(this.timer < 0) {
+      if (this.timer < 0) {
          this.timer = Spawner.GENERAL_CAR_SPAWN_TIMER;
          new Car(this.tile, this.color);
       }
@@ -49,15 +52,15 @@ export class Spawner extends Building {
 
       drawer.circle((this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE, Tile.SIZE / 4, this.color);
       const circleSizeIncrease = Tile.SIZE / 4 / Spawner.MAX_POWER;
-      for(let i = 0; i < this.power; i++) {
+      for (let i = 0; i < this.power; i++) {
          drawer.circle(
             (this.tile.x + 0.5) * Tile.SIZE,
             (this.tile.y + 0.5) * Tile.SIZE,
             Tile.SIZE / 4 + i * circleSizeIncrease,
-            "black",
+            'black',
             false
          );
       }
-      drawer.text(Math.ceil(this.timer) + "s", (this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE);
+      drawer.text(Math.ceil(this.timer) + 's', (this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE);
    }
 }

@@ -1,7 +1,7 @@
-import { Building } from "../../buildings";
-import { Tile } from "../../map";
-import { Road } from "../../roads";
-import { Selection } from "./selection";
+import { Building } from '../../buildings';
+import { Tile } from '../../map';
+import { Road } from '../../roads';
+import { Selection } from './selection';
 
 export interface ToolbarItem {
    displayName: string;

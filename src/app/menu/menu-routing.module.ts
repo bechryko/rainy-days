@@ -5,7 +5,7 @@ import { MenuComponent } from './menu.component';
 const routes: Routes = [{ path: '', component: MenuComponent }];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+   imports: [RouterModule.forChild(routes)],
+   exports: [RouterModule]
 })
-export class MenuRoutingModule { }
+export class MenuRoutingModule {}

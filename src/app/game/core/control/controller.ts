@@ -37,13 +37,9 @@ export class Controller {
             }
          })
       );
-      this.eventListeners.push(
-         new EventListener('mousemove', this.onMouseMove.bind(this))
-      );
+      this.eventListeners.push(new EventListener('mousemove', this.onMouseMove.bind(this)));
 
-      this.eventListeners.push(
-         new EventListener('keydown', this.onKeyDown.bind(this))
-      );
+      this.eventListeners.push(new EventListener('keydown', this.onKeyDown.bind(this)));
    }
 
    public unregisterEventListeners(): void {
@@ -51,7 +47,7 @@ export class Controller {
    }
 
    public handleMouseActions(): void {
-      if(this.selectedTile) {
+      if (this.selectedTile) {
          if (this.leftMouseDown) {
             this.leftMouseAction();
          } else if (this.rightMouseDown) {
@@ -67,10 +63,7 @@ export class Controller {
       const building = this.toolbar.createBuildingFromSelection(this.selectedTile);
       if (building) {
          this.selectedTile.build(building);
-      } else if (
-         this.selectedTool == Selection.EDITOR_TOOL &&
-         this.selectedTile.hasRoad()
-      ) {
+      } else if (this.selectedTool == Selection.EDITOR_TOOL && this.selectedTile.hasRoad()) {
          if (this.roadConnectionBase && this.roadConnectionBase !== this.selectedTile) {
             this.selectedTile.connectRoadTo(this.roadConnectionBase);
             this.roadConnectionBase = this.selectedTile;
@@ -85,11 +78,7 @@ export class Controller {
    private onLeftMouseDown(_: MouseEvent): void {
       this.leftMouseDown = true;
 
-      if (
-         this.selectedTool === Selection.EDITOR_TOOL &&
-         this.selectedTile &&
-         this.selectedTile.hasRoad()
-      ) {
+      if (this.selectedTool === Selection.EDITOR_TOOL && this.selectedTile && this.selectedTile.hasRoad()) {
          this.roadConnectionBase = this.selectedTile;
       }
    }
@@ -128,7 +117,7 @@ export class Controller {
       }
 
       const numberKey = Number(event.key);
-      if(Number.isNaN(numberKey)) {
+      if (Number.isNaN(numberKey)) {
          return;
       }
       if (this.selectedTool === Selection.EDITOR_TOOL && this.roadConnectionBase) {

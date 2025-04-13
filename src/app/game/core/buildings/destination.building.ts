@@ -1,9 +1,9 @@
-import { BasicDrawer } from "../drawing";
-import { Game } from "../game";
-import { GameEventHandler, GameEventType } from "../game-events";
-import { Tile } from "../map";
-import { Color } from "../map/models";
-import { Building } from "./building";
+import { BasicDrawer } from '../drawing';
+import { Game } from '../game';
+import { GameEventHandler, GameEventType } from '../game-events';
+import { Tile } from '../map';
+import { Color } from '../map/models';
+import { Building } from './building';
 
 export class Destination extends Building {
    private static readonly list: Destination[] = [];
@@ -20,7 +20,10 @@ export class Destination extends Building {
 
    private health: number;
 
-   constructor(tile: Tile, public readonly color: Color) {
+   constructor(
+      tile: Tile,
+      public readonly color: Color
+   ) {
       super(tile, false);
 
       this.health = Destination.CURRENT_HEALTH;
@@ -32,7 +35,7 @@ export class Destination extends Building {
       const oldHealth = this.health;
       this.health -= deltaTime;
 
-      if(this.health < Game.DESTINATION_CRITICAL_HEALTH && oldHealth >= Game.DESTINATION_CRITICAL_HEALTH) {
+      if (this.health < Game.DESTINATION_CRITICAL_HEALTH && oldHealth >= Game.DESTINATION_CRITICAL_HEALTH) {
          GameEventHandler.getInstance().emitEvent(GameEventType.DESTINATION_CRITICAL_HEALTH, Game.DESTINATION_CRITICAL_HEALTH);
       }
    }
@@ -44,6 +47,6 @@ export class Destination extends Building {
    public override draw(drawer: BasicDrawer): void {
       drawer.circle((this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE, Tile.SIZE / 2);
       drawer.circle((this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE, Tile.SIZE / 2.2, this.color);
-      drawer.text(Math.ceil(this.health) + "s", (this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE);
+      drawer.text(Math.ceil(this.health) + 's', (this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE);
    }
 }

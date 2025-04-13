@@ -25,24 +25,32 @@ export class GameComponent {
    });
 
    constructor() {
-      GameEventHandler.getInstance().watchEvents(GameEventType.IS_GAME_GOING, isGameGoing => this.gameStatus.update(status => ({
-         ...status,
-         isGameGoing
-      })));
-      GameEventHandler.getInstance().watchEvents(GameEventType.TOGGLE_PAUSE, () => this.gameStatus.update(status => ({
-         ...status,
-         isPaused: !status.isPaused
-      })));
-      GameEventHandler.getInstance().watchEvents(GameEventType.SELECT_TOOLBAR_ITEM, selectedToolbarItem => this.gameStatus.update(status => ({
-         ...status,
-         selectedToolbarItem
-      })));
-      GameEventHandler.getInstance().watchEvents(GameEventType.GAIN_SCORE, () => this.gameStatus.update(status => ({
-         ...status,
-         score: status.score + 1
-      })));
+      GameEventHandler.getInstance().watchEvents(GameEventType.IS_GAME_GOING, isGameGoing =>
+         this.gameStatus.update(status => ({
+            ...status,
+            isGameGoing
+         }))
+      );
+      GameEventHandler.getInstance().watchEvents(GameEventType.TOGGLE_PAUSE, () =>
+         this.gameStatus.update(status => ({
+            ...status,
+            isPaused: !status.isPaused
+         }))
+      );
+      GameEventHandler.getInstance().watchEvents(GameEventType.SELECT_TOOLBAR_ITEM, selectedToolbarItem =>
+         this.gameStatus.update(status => ({
+            ...status,
+            selectedToolbarItem
+         }))
+      );
+      GameEventHandler.getInstance().watchEvents(GameEventType.GAIN_SCORE, () =>
+         this.gameStatus.update(status => ({
+            ...status,
+            score: status.score + 1
+         }))
+      );
       GameEventHandler.getInstance().watchEvents(GameEventType.UPDATE_SPAWN_TIMER, timer => {
-         if(this.gameStatus().spawnTimer > Game.BUILDING_SPAWN_MESSAGE_TIME && timer <= Game.BUILDING_SPAWN_MESSAGE_TIME) {
+         if (this.gameStatus().spawnTimer > Game.BUILDING_SPAWN_MESSAGE_TIME && timer <= Game.BUILDING_SPAWN_MESSAGE_TIME) {
             this.snackbarMessage(`New spawner and destination spawns in ${timer} seconds`, 'Understood');
          }
          this.gameStatus.update(status => ({

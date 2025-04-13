@@ -1,14 +1,14 @@
-import { Building, Destination, Gate } from "../buildings";
-import { Toolbar } from "../control/toolbar";
-import { BasicDrawer } from "../drawing";
-import { GameEventHandler, GameEventType } from "../game-events";
-import { Road, Tube } from "../roads";
-import { Car } from "./car";
-import { baseMapColor } from "./constants";
-import { Map } from "./map";
-import { Color } from "./models";
+import { Building, Destination, Gate } from '../buildings';
+import { Toolbar } from '../control/toolbar';
+import { BasicDrawer } from '../drawing';
+import { GameEventHandler, GameEventType } from '../game-events';
+import { Road, Tube } from '../roads';
+import { Car } from './car';
+import { baseMapColor } from './constants';
+import { Map } from './map';
+import { Color } from './models';
 import { Direction } from './models/direction';
-import { DirectionUtils } from "./utils";
+import { DirectionUtils } from './utils';
 
 export class Tile {
    public static readonly SIZE = 50;
@@ -19,7 +19,10 @@ export class Tile {
 
    private readonly neighborMap: Record<Direction, Tile | null> = {} as any;
 
-   constructor(public readonly x: number, public readonly y: number) {}
+   constructor(
+      public readonly x: number,
+      public readonly y: number
+   ) {}
 
    public build(buildable: Building | Road): void {
       if (buildable instanceof Building && !this.building) {
@@ -30,7 +33,7 @@ export class Tile {
    }
 
    public tick(deltaTime: number): void {
-      if (this.hasBuilding() && ('tick' in this.building!) && typeof this.building?.tick === "function") {
+      if (this.hasBuilding() && 'tick' in this.building! && typeof this.building?.tick === 'function') {
          this.building.tick(deltaTime);
       }
    }
@@ -80,7 +83,7 @@ export class Tile {
          this.road = undefined;
 
          this.forEachNeighbor((neighbor, direction) => {
-            if(neighbor.road) {
+            if (neighbor.road) {
                neighbor.road.removeConnection(DirectionUtils.getOpposite(direction));
             }
          });

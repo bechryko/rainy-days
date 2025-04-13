@@ -12,8 +12,8 @@ export class RandomUtils {
    }
 
    public static nextIntRange(min: number, max: number): number {
-      if(!this.random) {
-         throw new Error("Random seed not registered!");
+      if (!this.random) {
+         throw new Error('Random seed not registered!');
       }
 
       return Math.floor(this.random() * (max - min) + min);
@@ -24,8 +24,8 @@ export class RandomUtils {
    }
 
    public static nextChance(chance = 0.5): boolean {
-      if(!this.random) {
-         throw new Error("Random seed not registered!");
+      if (!this.random) {
+         throw new Error('Random seed not registered!');
       }
 
       return this.random() < chance;
