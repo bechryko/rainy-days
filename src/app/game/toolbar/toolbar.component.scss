@@ -1,43 +1,59 @@
 @use 'src/styles/colorTheme' as colorTheme;
 
-.center-content {
-   flex-direction: row;
-   * {
-      margin: 0 1rem;
-   }
-}
+:host {
+   display: flex;
+   gap: 1rem;
+   align-items: center;
+   padding-inline: 3rem;
+   user-select: none;
 
-#selectionBar {
-   div {
-      box-sizing: content-box;
-      border-radius: 0.5rem;
-      padding: 0.75rem;
-      border: 0.35rem solid colorTheme.primaryColor(600);
-      transition: border-color 0.25s ease-in-out;
-      &.selected {
-         border-color: colorTheme.primaryColorWithBlack(600);
-      }
+   &.game-over {
+      justify-content: center;
+      gap: 3rem;
    }
-   p {
-      margin-right: 0.5rem;
-   }
-}
-
-button {
-   font-size: 1.25rem;
-   background-color: colorTheme.accentColor(800);
 }
 
 p {
+   margin: 0;
+}
+
+.score {
+   display: block;
+   font-size: 2.5rem;
+   margin-right: 2rem;
+   min-width: 14rem;
+   user-select: none;
+}
+
+.toolbar-item-container {
+   display: flex;
+   align-items: center;
+   padding: 0.75rem;
+   border: 0.25rem solid colorTheme.primaryColor(600);
+   border-radius: 0.5rem;
+   transition: border-color 250ms ease-in-out;
+
+   &.selected {
+      border-color: colorTheme.primaryColorWithBlack(600);
+   }
+
+   .toolbar-item-key {
+      font-size: 2rem;
+      margin-right: 1rem;
+   }
+
+   button {
+      font-size: 1.25rem;
+   }
+}
+
+p.game-over {
+   font-size: 3rem;
+   color: colorTheme.accentColorWithBlack(500);
+}
+
+.restart-button {
    font-size: 2rem;
-   &.gameOver {
-      font-size: 3rem;
-      //font-weight: bold;
-      color: colorTheme.accentColorWithBlack(500);
-   }
-   &.score {
-      font-size: 2.5rem;
-      position: absolute;
-      left: 0;
-   }
+   height: 3.625rem;
+   padding-inline: 2rem;
 }

@@ -15,7 +15,7 @@ export class Controller {
 
    private roadConnectionBase?: Tile;
 
-   constructor(private readonly tiles: Tile[][]) {}
+   constructor(private readonly tiles: Tile[][]) { }
 
    public registerEventListeners(): void {
       this.eventListeners.push(
@@ -39,7 +39,7 @@ export class Controller {
       );
       this.eventListeners.push(new EventListener('mousemove', this.onMouseMove.bind(this)));
 
-      this.eventListeners.push(new EventListener('keydown', this.onKeyDown.bind(this)));
+      this.eventListeners.push(new EventListener('keypress', this.onKeyDown.bind(this)));
    }
 
    public unregisterEventListeners(): void {

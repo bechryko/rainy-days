@@ -1,16 +1,18 @@
-import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatButton, MatFabButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
-import { Toolbar } from '../core/control/toolbar';
+import { Toolbar } from '@rainy-days/core/control/toolbar';
 import { GameStatus } from '../model';
 
 @Component({
    selector: 'rd-toolbar',
    templateUrl: './toolbar.component.html',
    styleUrls: ['./toolbar.component.scss'],
-   imports: [NgClass, MatFabButton, MatTooltip, MatButton],
-   changeDetection: ChangeDetectionStrategy.OnPush
+   imports: [MatFabButton, MatTooltip, MatButton],
+   changeDetection: ChangeDetectionStrategy.OnPush,
+   host: {
+      "[class.game-over]": "!gameStatus().isGameGoing"
+   }
 })
 export class ToolbarComponent {
    public readonly gameStatus = input.required<GameStatus>();
