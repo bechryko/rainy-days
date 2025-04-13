@@ -3,22 +3,16 @@
 @include mat.elevation-classes();
 @include mat.app-background();
 
-* {
-   user-select: none;
-   box-sizing: border-box;
-}
-
-html,
 body {
-   height: 100%;
    margin: 0;
+   height: 100dvh;
+   font-family: Roboto, 'Helvetica Neue', sans-serif;
    background-color: colorTheme.primaryColor(100);
 }
 
-body {
-   margin: 0;
-   font-family: Roboto, "Helvetica Neue", sans-serif;
-   overflow: hidden;
+::selection {
+   background-color: colorTheme.accentColor(900);
+   color: white;
 }
 
 .center-content {
@@ -28,3 +22,4 @@ body {
    align-items: center;
    height: 100%;
 }
+

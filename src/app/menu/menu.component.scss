@@ -1,37 +1,83 @@
 @use 'src/styles/colorTheme' as colorTheme;
-@use '@angular/material' as mat;
+
+:host {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   grid-template-rows: 1fr 2fr;
+   grid-template-areas:
+      'title         news'
+      'control-panel news';
+   height: 100%;
+}
 
 h1 {
-   font-size: 7.5rem;
+   grid-area: title;
+   font-size: 7rem;
+   text-align: center;
    color: colorTheme.primaryColor(500);
+   margin: 0 2rem;
+   align-self: center;
+   text-shadow: 0.5rem 0.5rem 2px colorTheme.primaryColor(900);
+   user-select: none;
 }
 
-.buttons {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   height: 100%;
-   width: 50%;
-   padding: 4rem 0;
-   button {
-      margin: 1rem;
-      width: 100%;
-      height: 3rem;
-      font-size: 2rem;
+.control-panel {
+   $border-width: 2px;
+   $border: $border-width solid colorTheme.primaryColor(500);
+   $border-radius: 1rem;
+
+   grid-area: control-panel;
+   width: 60%;
+   height: calc(100% - 4rem);
+   min-width: min(100%, 20rem);
+   place-self: center;
+   border: $border;
+   border-radius: $border-radius;
+   background-color: colorTheme.primaryColor(200);
+
+   .title {
+      font-size: 2.5rem;
+      width: fit-content;
+      margin: 0 auto;
+      padding: calc(0.5rem - $border-width) 0.5rem 0.5rem;
+      text-align: center;
+      color: colorTheme.primaryColor(900);
+      border: $border;
+      border-top: none;
+      border-bottom-left-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+      user-select: none;
+   }
+
+   .control-panel-inputs-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 3rem;
+
+      > * {
+         width: 100%;
+      }
+
+      button {
+         font-size: 1.75rem;
+         height: 3rem;
+      }
+   }
+
+   .menu-buttons {
+      height: 100%;
+      box-sizing: border-box;
    }
 }
 
-form {
-   * {
-      width: 100%;
-   }
-   button {
-      margin-left: 0 !important;
-      margin-right: 0 !important;
+.game-setup-panel {
+   mat-form-field {
+      margin-bottom: -20px;
    }
 }
 
-app-news {
-   height: 80%;
-   width: 80%;
+rd-news {
+   grid-area: news;
 }
