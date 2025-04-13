@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Game } from './core';
 import { GameEventHandler, GameEventType } from './core/game-events';
@@ -11,7 +11,8 @@ import { GameStatus } from './model';
    selector: 'app-game',
    templateUrl: './game.component.html',
    styleUrls: ['./game.component.scss'],
-   imports: [HudComponent, NgClass, MapComponent]
+   imports: [HudComponent, NgClass, MapComponent],
+   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameComponent {
    private snackbar = inject(MatSnackBar);

@@ -1,20 +1,21 @@
-import { Component, inject } from '@angular/core';
-import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { Router } from '@angular/router';
 import { GameStartService } from 'src/app/game-start.service';
-import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { NewsComponent } from './news/news.component';
 
 import { MatButton } from '@angular/material/button';
 import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
 
 @Component({
    selector: 'app-menu',
    templateUrl: './menu.component.html',
    styleUrls: ['./menu.component.scss'],
-   imports: [MatGridList, MatGridTile, NewsComponent, MatButton, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatIcon, MatSuffix]
+   imports: [MatGridList, MatGridTile, NewsComponent, MatButton, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatIcon, MatSuffix],
+   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MenuComponent {
    private router = inject(Router);

@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
+import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { NewsObject, PatchNote, TipObject } from '../model';
 import { gameTips, patchNotes, trendingNews } from '../textObjects';
-import { MatTabGroup, MatTab } from '@angular/material/tabs';
 
 @Component({
    selector: 'app-news',
    templateUrl: './news.component.html',
    styleUrls: ['./news.component.scss'],
-   imports: [MatTabGroup, MatTab]
+   imports: [MatTabGroup, MatTab],
+   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewsComponent implements OnInit {
    readonly gameVersion = 'Beta 1';
@@ -17,7 +18,7 @@ export class NewsComponent implements OnInit {
    latestPatchNote?: PatchNote;
    currentTips: TipObject[] = [];
 
-   constructor() {}
+   constructor() { }
 
    ngOnInit() {
       this.trendingNews = trendingNews;
