@@ -6,7 +6,7 @@ import { Toolbar } from '../core/control/toolbar';
 import { GameStatus } from './../model';
 
 @Component({
-   selector: 'app-hud',
+   selector: 'rd-hud',
    templateUrl: './hud.component.html',
    styleUrls: ['./hud.component.scss'],
    imports: [NgClass, MatFabButton, MatTooltip, MatButton],

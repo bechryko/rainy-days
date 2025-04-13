@@ -5,7 +5,7 @@ import { GameEventHandler, GameEventType } from '../core/game-events';
 import { RandomUtils } from '../core/utils';
 
 @Component({
-   selector: 'app-map',
+   selector: 'rd-map',
    templateUrl: './map.component.html',
    styleUrls: ['./map.component.scss'],
    changeDetection: ChangeDetectionStrategy.OnPush

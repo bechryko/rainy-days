@@ -8,7 +8,7 @@ import { MapComponent } from './map/map.component';
 import { GameStatus } from './model';
 
 @Component({
-   selector: 'app-game',
+   selector: 'rd-game',
    templateUrl: './game.component.html',
    styleUrls: ['./game.component.scss'],
    imports: [HudComponent, NgClass, MapComponent],

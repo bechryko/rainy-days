@@ -1,27 +1,68 @@
-<mat-grid-list cols="2" rows="3" rowHeight="33%" id="grid-list">
-  <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <h1>Rainy Days</h1>
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="1" [rowspan]="3">
-    <app-news></app-news>
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="1" [rowspan]="2">
-    <div class="buttons">
-      @if (buttonGroup == 'menu') {
-        <button mat-flat-button color="accent" (click)="startQuickGame()">Play</button>
-        <button mat-flat-button color="accent" (click)="switchButtonGroup('setupGame')">Setup game</button>
-      }
-      @if (buttonGroup == 'setupGame') {
-        <form [formGroup]="setupGameForm" (ngSubmit)="startCustomGame()">
-          <mat-form-field color="accent">
-            <mat-label>Game seed</mat-label>
-            <input matInput placeholder="Enter your favorite seed!" type="text" formControlName="seed">
-            <mat-icon matSuffix color="accent">terminal</mat-icon>
-          </mat-form-field>
-          <button mat-flat-button color="accent" type="submit">Start</button>
-          <button mat-flat-button color="accent" type="reset" (click)="switchButtonGroup('menu')">Back</button>
-        </form>
-      }
-    </div>
-  </mat-grid-tile>
+<mat-grid-list
+   cols="2"
+   rows="3"
+   rowHeight="33%"
+   id="grid-list">
+   <mat-grid-tile
+      [colspan]="1"
+      [rowspan]="1">
+      <h1>Rainy Days</h1>
+   </mat-grid-tile>
+   <mat-grid-tile
+      [colspan]="1"
+      [rowspan]="3">
+      <rd-news></rd-news>
+   </mat-grid-tile>
+   <mat-grid-tile
+      [colspan]="1"
+      [rowspan]="2">
+      <div class="buttons">
+         @if (buttonGroup == 'menu') {
+            <button
+               mat-flat-button
+               color="accent"
+               (click)="startQuickGame()">
+               Play
+            </button>
+            <button
+               mat-flat-button
+               color="accent"
+               (click)="switchButtonGroup('setupGame')">
+               Setup game
+            </button>
+         }
+         @if (buttonGroup == 'setupGame') {
+            <form
+               [formGroup]="setupGameForm"
+               (ngSubmit)="startCustomGame()">
+               <mat-form-field color="accent">
+                  <mat-label>Game seed</mat-label>
+                  <input
+                     matInput
+                     placeholder="Enter your favorite seed!"
+                     type="text"
+                     formControlName="seed" />
+                  <mat-icon
+                     matSuffix
+                     color="accent">
+                     terminal
+                  </mat-icon>
+               </mat-form-field>
+               <button
+                  mat-flat-button
+                  color="accent"
+                  type="submit">
+                  Start
+               </button>
+               <button
+                  mat-flat-button
+                  color="accent"
+                  type="reset"
+                  (click)="switchButtonGroup('menu')">
+                  Back
+               </button>
+            </form>
+         }
+      </div>
+   </mat-grid-tile>
 </mat-grid-list>

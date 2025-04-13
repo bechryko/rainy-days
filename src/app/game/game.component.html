@@ -1,6 +1,9 @@
 <div id="hud">
-   <app-hud [gameStatus]="gameStatus()"></app-hud>
+   <rd-hud [gameStatus]="gameStatus()"></rd-hud>
 </div>
-<div id="map" class="center-content" [ngClass]="{'gameOver': !gameStatus().isGameGoing, 'paused': gameStatus().isPaused}">
-   <app-map></app-map>
+<div
+   id="map"
+   class="center-content"
+   [ngClass]="{ gameOver: !gameStatus().isGameGoing, paused: gameStatus().isPaused }">
+   <rd-map></rd-map>
 </div>

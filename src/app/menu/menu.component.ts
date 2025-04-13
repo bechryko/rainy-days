@@ -11,7 +11,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 
 @Component({
-   selector: 'app-menu',
+   selector: 'rd-menu',
    templateUrl: './menu.component.html',
    styleUrls: ['./menu.component.scss'],
    imports: [MatGridList, MatGridTile, NewsComponent, MatButton, ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatIcon, MatSuffix],

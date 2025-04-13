@@ -5,7 +5,7 @@ import { NewsObject, PatchNote, TipObject } from '../model';
 import { gameTips, patchNotes, trendingNews } from '../textObjects';
 
 @Component({
-   selector: 'app-news',
+   selector: 'rd-news',
    templateUrl: './news.component.html',
    styleUrls: ['./news.component.scss'],
    imports: [MatTabGroup, MatTab],
