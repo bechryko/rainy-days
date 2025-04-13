@@ -52,8 +52,9 @@ p.game-over {
    color: colorTheme.accentColorWithBlack(500);
 }
 
-.restart-button {
-   font-size: 2rem;
+.restart-button,
+.back-button {
+   font-size: 1.5rem;
    height: 3.625rem;
-   padding-inline: 2rem;
+   flex-basis: 14rem;
 }

@@ -5,6 +5,7 @@ import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field'
 import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
 import { Router } from '@angular/router';
+import { Route } from '@rainy-days/routes';
 import { GameStartService } from 'src/app/game-start.service';
 import { ControlPanelGroup } from './models';
 import { NewsComponent } from './news';
@@ -35,11 +36,11 @@ export class MenuComponent {
 
    public startQuickGame(): void {
       this.gameStartService.initStartingParams('');
-      this.router.navigateByUrl('/game');
+      this.router.navigateByUrl(Route.GAME);
    }
 
    public startCustomGame(): void {
       this.gameStartService.initStartingParams(this.setupGameForm.value.seed ?? '');
-      this.router.navigateByUrl('/game');
+      this.router.navigateByUrl(Route.GAME);
    }
 }

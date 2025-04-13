@@ -27,6 +27,13 @@
       (click)="restartGame()">
       Restart
    </button>
+   <button
+      class="back-button"
+      mat-flat-button
+      color="accent"
+      (click)="backToMenu()">
+      Back to menu
+   </button>
    <p class="game-over">Score: {{ gameStatus().score }}</p>
 }
 

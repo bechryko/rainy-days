@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { MatButton, MatFabButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
+import { Router } from '@angular/router';
 import { Toolbar } from '@rainy-days/core/control/toolbar';
+import { Route } from '@rainy-days/routes';
 import { GameStatus } from '../model';
 
 @Component({
@@ -15,6 +17,8 @@ import { GameStatus } from '../model';
    }
 })
 export class ToolbarComponent {
+   private readonly router = inject(Router);
+
    public readonly gameStatus = input.required<GameStatus>();
 
    public readonly gameToolbar = Toolbar.inject();
@@ -25,5 +29,9 @@ export class ToolbarComponent {
 
    public selectTool(number: number): void {
       this.gameToolbar()!.selectItemByKey(number);
+   }
+
+   public backToMenu(): void {
+      this.router.navigateByUrl(Route.MENU);
    }
 }
