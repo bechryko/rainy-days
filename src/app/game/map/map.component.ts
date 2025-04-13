@@ -1,21 +1,18 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from "@angular/core";
+import { Component, inject, OnDestroy, OnInit } from "@angular/core";
 import { GameStartService } from "src/app/game-start.service";
-import { Game } from "../core/Game";
-import { Random } from "../core/Random";
-import { GameMessage, InputMessage } from "../model";
-
+import { Game } from "../core/game";
+import { GameEventHandler, GameEventType } from "../core/game-events";
+import { RandomUtils } from "../core/utils";
 
 @Component({
-    selector: 'app-map',
-    templateUrl: './map.component.html',
-    styleUrls: ['./map.component.scss']
+   selector: 'app-map',
+   templateUrl: './map.component.html',
+   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnDestroy {
    private gameStartService = inject(GameStartService);
 
    game?: Game;
-   @Output() gameEmitter = new EventEmitter<GameMessage>();
-   @Input() inputEmitter = new EventEmitter<InputMessage>();
 
    ngOnInit() {
       document.addEventListener("contextmenu", e => {
@@ -23,32 +20,20 @@ export class MapComponent implements OnInit {
       }, false);
       const parameters = this.gameStartService.getStartingParams();
       const seed = !parameters.seed ? Math.random().toString() : parameters.seed;
-      this.game = new Game(
-         0.4, [0.6, 0.7], 
-         document.getElementById("gameCanvas") as HTMLCanvasElement, 
-         {rows: 15, cols: 30},
-         this.gameEmitter,
-         new Random(seed)
-      );
+      RandomUtils.registerSeed(seed);
       console.log(`Game seed: "${seed}"`)
-      this.inputEmitter.subscribe(message => this.getInputMessage(message));
+      this.game = new Game(
+         document.getElementById("gameCanvas") as HTMLCanvasElement
+      );
       this.startGame();
    }
 
-   getInputMessage(message: any) {
-      message = message as InputMessage;
-      switch(message.type) {
-         case "selectTool":
-            this.game?.selectTool(message.data);
-            break;
-         case "pause":
-            this.game && (this.game.paused = message.data);
-            break;
-      }
+   ngOnDestroy(): void {
+      this.game?.stop();
    }
 
-   startGame() {
-      this.gameEmitter.emit({ type: "isGameGoing", data: true });
-      this.game?.startGame();
+   public startGame(): void {
+      GameEventHandler.getInstance().emitEvent(GameEventType.IS_GAME_GOING, true);
+      this.game!.startGame();
    }
 }

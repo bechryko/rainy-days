@@ -1,68 +1,61 @@
-import { Component, EventEmitter, inject } from '@angular/core';
-import { GameMessage, GameStatus, InputMessage } from './model';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ViewEncapsulation } from '@angular/core';
-import { HudComponent } from './hud/hud.component';
 import { NgClass } from '@angular/common';
+import { Component, inject, signal } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Game } from './core';
+import { GameEventHandler, GameEventType } from './core/game-events';
+import { HudComponent } from './hud/hud.component';
 import { MapComponent } from './map/map.component';
+import { GameStatus } from './model';
 
 @Component({
-    selector: 'app-game',
-    templateUrl: './game.component.html',
-    styleUrls: ['./game.component.scss'],
-    imports: [HudComponent, NgClass, MapComponent]
+   selector: 'app-game',
+   templateUrl: './game.component.html',
+   styleUrls: ['./game.component.scss'],
+   imports: [HudComponent, NgClass, MapComponent]
 })
 export class GameComponent {
    private snackbar = inject(MatSnackBar);
 
-   gameStatus: GameStatus = {
+   public readonly gameStatus = signal<GameStatus>({
       isGameGoing: false,
       isPaused: false,
-      selected: 0,
+      selectedToolbarItem: 0,
       score: 0,
       spawnTimer: 0
-   };
-   inputEmitter = new EventEmitter<InputMessage>();
+   });
 
-   getGameMessage(message: any) {
-      message = message as GameMessage;
-      switch (message.type) {
-         case "isGameGoing":
-            this.gameStatus.isGameGoing = message.data;
-            break;
-         case "isPaused":
-            this.gameStatus.isPaused = message.data;
-            break;
-         case "selected":
-            this.gameStatus.selected = message.data;
-            break;
-         case "score":
-            this.gameStatus.score = message.data;
-            break;
-         case "spawnTimer":
-            if(this.gameStatus.spawnTimer > 10 && message.data <= 10) {
-               this.snackbarMessage(`New spawner and destination spawns in ${message.data} seconds`, 'Understood');
-            }
-            this.gameStatus.spawnTimer = message.data;
-            break;
-         case "destinationHealth":
-            this.snackbarMessage(`One of your destinations has ${message.data} health!`, "I'll fix it!");
-            //this.pauseGame();
-            break;
-      }
-   }
-
-   getInputMessage(message: any) {
-      message = message as InputMessage;
-      this.inputEmitter.emit(message);
+   constructor() {
+      GameEventHandler.getInstance().watchEvents(GameEventType.IS_GAME_GOING, isGameGoing => this.gameStatus.update(status => ({
+         ...status,
+         isGameGoing
+      })));
+      GameEventHandler.getInstance().watchEvents(GameEventType.TOGGLE_PAUSE, () => this.gameStatus.update(status => ({
+         ...status,
+         isPaused: !status.isPaused
+      })));
+      GameEventHandler.getInstance().watchEvents(GameEventType.SELECT_TOOLBAR_ITEM, selectedToolbarItem => this.gameStatus.update(status => ({
+         ...status,
+         selectedToolbarItem
+      })));
+      GameEventHandler.getInstance().watchEvents(GameEventType.GAIN_SCORE, () => this.gameStatus.update(status => ({
+         ...status,
+         score: status.score + 1
+      })));
+      GameEventHandler.getInstance().watchEvents(GameEventType.UPDATE_SPAWN_TIMER, timer => {
+         if(this.gameStatus().spawnTimer > Game.BUILDING_SPAWN_MESSAGE_TIME && timer <= Game.BUILDING_SPAWN_MESSAGE_TIME) {
+            this.snackbarMessage(`New spawner and destination spawns in ${timer} seconds`, 'Understood');
+         }
+         this.gameStatus.update(status => ({
+            ...status,
+            spawnTimer: timer
+         }));
+      });
+      GameEventHandler.getInstance().watchEvents(GameEventType.DESTINATION_CRITICAL_HEALTH, health => {
+         this.snackbarMessage(`One of your destinations has ${health} health!`, "I'll fix it!");
+      });
    }
 
    snackbarMessage(message: string, action: string) {
       this.snackbar.open(message, action, { duration: 3000 });
-   }
-
-   pauseGame() {
-      this.inputEmitter.emit({ type: "pause", data: true });
-      this.gameStatus.isPaused = true;
    }
 }

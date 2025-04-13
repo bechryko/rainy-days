@@ -11,7 +11,7 @@ export interface InputMessage {
 export interface GameStatus {
    isGameGoing: boolean;
    isPaused: boolean;
-   selected: number;
+   selectedToolbarItem: number;
    score: number;
    spawnTimer: number;
 }
