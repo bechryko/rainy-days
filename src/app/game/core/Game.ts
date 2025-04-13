@@ -1,9 +1,9 @@
-import { Building, Destination } from './buildings';
-import { Controller } from './control';
-import { BasicDrawer } from './drawing';
-import { GameEventHandler, GameEventType } from './game-events';
-import { Map } from './map/map';
-import { GameCleanupUtils } from './utils';
+import { Building, Destination } from "./buildings";
+import { Controller } from "./control";
+import { BasicDrawer } from "./drawing";
+import { GameEventHandler, GameEventType } from "./game-events";
+import { Map } from "./map/map";
+import { GameCleanupUtils } from "./utils";
 
 export class Game {
    public static readonly BUILDING_SPAWN_MESSAGE_TIME = 10;

@@ -10,7 +10,7 @@ import { RandomUtils } from '../core/utils';
    styleUrls: ['./game-area.component.scss'],
    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MapComponent implements OnInit, OnDestroy {
+export class GameAreaComponent implements OnInit, OnDestroy {
    private readonly gameStartService = inject(GameStartService);
 
    private game?: Game;

@@ -1,17 +1,17 @@
 import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Game } from './core';
-import { GameEventHandler, GameEventType } from './core/game-events';
-import { MapComponent } from './game-area/game-area.component';
+import { Game } from '@rainy-days/core/game';
+import { GameEventHandler, GameEventType } from '@rainy-days/core/game-events';
+import { GameAreaComponent } from './game-area';
 import { GameStatus } from './model';
-import { ToolbarComponent } from './toolbar/toolbar.component';
+import { ToolbarComponent } from './toolbar';
 
 @Component({
    selector: 'rd-game',
    templateUrl: './game.component.html',
    styleUrls: ['./game.component.scss'],
-   imports: [ToolbarComponent, NgClass, MapComponent],
+   imports: [ToolbarComponent, NgClass, GameAreaComponent],
    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameComponent {

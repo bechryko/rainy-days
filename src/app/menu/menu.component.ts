@@ -1,14 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatGridList, MatGridTile } from '@angular/material/grid-list';
-import { Router } from '@angular/router';
-import { GameStartService } from 'src/app/game-start.service';
-import { NewsComponent } from './news/news.component';
-
 import { MatButton } from '@angular/material/button';
 import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { MatIcon } from '@angular/material/icon';
 import { MatInput } from '@angular/material/input';
+import { Router } from '@angular/router';
+import { GameStartService } from 'src/app/game-start.service';
+import { NewsComponent } from './news';
 
 @Component({
    selector: 'rd-menu',

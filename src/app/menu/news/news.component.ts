@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-
 import { MatTab, MatTabGroup } from '@angular/material/tabs';
 import { NewsObject, PatchNote, TipObject } from '../model';
 import { gameTips, patchNotes, trendingNews } from '../textObjects';
