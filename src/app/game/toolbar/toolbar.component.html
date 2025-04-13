@@ -1,0 +1,38 @@
+@if (gameStatus().isGameGoing) {
+   <div class="center-content">
+      @if (gameToolbar()) {
+         <div
+            id="selectionBar"
+            class="center-content">
+            @for (toolbarItem of gameToolbar()!.items; track $index) {
+               <div
+                  class="center-content"
+                  [ngClass]="{ selected: gameStatus().selectedToolbarItem === $index }">
+                  <p>{{ $index }}</p>
+                  <button
+                     mat-fab
+                     (click)="selectTool($index)">
+                     {{ toolbarItem.displayName }}
+                  </button>
+               </div>
+            }
+         </div>
+      }
+      <p
+         class="score"
+         matTooltip="New buildings spawn in {{ gameStatus().spawnTimer }} seconds">
+         Score: {{ gameStatus().score }}
+      </p>
+   </div>
+} @else {
+   <div class="center-content">
+      <p class="gameOver">Game Over!</p>
+      <button
+         mat-flat-button
+         color="accent"
+         (click)="restartGame()">
+         Restart
+      </button>
+      <p class="gameOver">Score: {{ gameStatus().score }}</p>
+   </div>
+}

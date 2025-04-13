@@ -5,17 +5,17 @@ import { GameEventHandler, GameEventType } from '../core/game-events';
 import { RandomUtils } from '../core/utils';
 
 @Component({
-   selector: 'rd-map',
-   templateUrl: './map.component.html',
-   styleUrls: ['./map.component.scss'],
+   selector: 'rd-game-area',
+   templateUrl: './game-area.component.html',
+   styleUrls: ['./game-area.component.scss'],
    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MapComponent implements OnInit, OnDestroy {
-   private gameStartService = inject(GameStartService);
+   private readonly gameStartService = inject(GameStartService);
 
-   game?: Game;
+   private game?: Game;
 
-   ngOnInit() {
+   public ngOnInit(): void {
       document.addEventListener(
          'contextmenu',
          e => {
@@ -31,7 +31,7 @@ export class MapComponent implements OnInit, OnDestroy {
       this.startGame();
    }
 
-   ngOnDestroy(): void {
+   public ngOnDestroy(): void {
       this.game?.stop();
    }
 

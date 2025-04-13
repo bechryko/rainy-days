@@ -3,15 +3,15 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Game } from './core';
 import { GameEventHandler, GameEventType } from './core/game-events';
-import { HudComponent } from './hud/hud.component';
-import { MapComponent } from './map/map.component';
+import { MapComponent } from './game-area/game-area.component';
 import { GameStatus } from './model';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
 @Component({
    selector: 'rd-game',
    templateUrl: './game.component.html',
    styleUrls: ['./game.component.scss'],
-   imports: [HudComponent, NgClass, MapComponent],
+   imports: [ToolbarComponent, NgClass, MapComponent],
    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameComponent {
