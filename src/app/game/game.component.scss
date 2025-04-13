@@ -4,6 +4,10 @@
    display: grid;
    grid-template-rows: 7.5rem 1fr;
    height: 100dvh;
+
+   & > * {
+      max-width: 100dvw;
+   }
 }
 
 rd-toolbar {
@@ -12,18 +16,13 @@ rd-toolbar {
 
 .game-area-wrapper {
    background-color: rgba(colorTheme.accentColor(500), 0.75);
-   display: flex;
-   align-items: center;
-   justify-content: center;
+   display: grid;
+   place-items: center;
 
    &.paused {
       background-color: grey;
    }
    &.gameOver {
       background-color: red;
-   }
-
-   rd-game-area {
-      width: 95%;
    }
 }

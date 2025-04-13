@@ -1,15 +1,17 @@
-import { Tile } from '../map';
 
 type CanvasRenderingContext2DInterface = Pick<CanvasRenderingContext2D, 'beginPath' | 'lineTo' | 'moveTo' | 'stroke'>;
 
 export class BasicDrawer {
    private readonly _ctx: CanvasRenderingContext2D;
 
-   constructor(private canvas: HTMLCanvasElement) {
+   constructor(private readonly canvas: HTMLCanvasElement) {
       this._ctx = this.canvas.getContext('2d')!;
+      this.onResize();
+   }
+
+   public onResize(): void {
       this._ctx.textAlign = 'center';
       this._ctx.textBaseline = 'middle';
-      this._ctx.font = Tile.SIZE * 0.4 + 'px Serif';
    }
 
    public line(x1: number, y1: number, x2: number, y2: number, width: number): void {
@@ -42,8 +44,9 @@ export class BasicDrawer {
       this._ctx[fill ? 'fill' : 'stroke']();
    }
 
-   public text(text: string, x: number, y: number): void {
+   public text(text: string, x: number, y: number, fontSize: number): void {
       this.fillStyle = 'black';
+      this.fontSize = fontSize;
       this._ctx.fillText(text, x, y);
    }
 
@@ -72,6 +75,13 @@ export class BasicDrawer {
    public set lineCap(cap: CanvasLineCap) {
       if (this._ctx.lineCap !== cap) {
          this._ctx.lineCap = cap;
+      }
+   }
+
+   private set fontSize(size: number) {
+      const font = size + 'px Serif';
+      if (this._ctx.font !== font) {
+         this._ctx.font = font;
       }
    }
 

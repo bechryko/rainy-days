@@ -15,12 +15,9 @@ export class Map {
 
    private readonly tiles: Tile[][] = [];
 
-   constructor(canvas: HTMLCanvasElement) {
+   constructor() {
       this.initTiles();
       this.spread();
-
-      canvas.width = Map.COLUMN_COUNT * Tile.SIZE;
-      canvas.height = Map.ROW_COUNT * Tile.SIZE;
    }
 
    public tick(deltaTime: number): void {

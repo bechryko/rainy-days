@@ -17,7 +17,7 @@ export class Game {
    private exited = false;
 
    constructor(canvas: HTMLCanvasElement) {
-      this.map = new Map(canvas);
+      this.map = new Map();
       this.controller = new Controller(this.map['tiles']);
       this.drawer = new BasicDrawer(canvas);
 
@@ -27,6 +27,10 @@ export class Game {
    public startGame(): void {
       this.controller.registerEventListeners();
       this.gameInterval(Date.now());
+   }
+
+   public onResize(): void {
+      this.drawer.onResize();
    }
 
    public stop(): void {

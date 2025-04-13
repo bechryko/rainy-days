@@ -47,6 +47,6 @@ export class Destination extends Building {
    public override draw(drawer: BasicDrawer): void {
       drawer.circle((this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE, Tile.SIZE / 2);
       drawer.circle((this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE, Tile.SIZE / 2.2, this.color);
-      drawer.text(Math.ceil(this.health) + 's', (this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE);
+      drawer.text(Math.ceil(this.health) + 's', (this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE, Tile.SIZE * 0.45);
    }
 }

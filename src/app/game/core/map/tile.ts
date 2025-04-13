@@ -8,10 +8,22 @@ import { baseMapColor } from './constants';
 import { Map } from './map';
 import { Color } from './models';
 import { Direction } from './models/direction';
-import { DirectionUtils } from './utils';
+import { DirectionUtils, ResizeUtils } from './utils';
 
 export class Tile {
-   public static readonly SIZE = 50;
+   private static _SIZE: number;
+
+   public static get SIZE(): number {
+      return this._SIZE;
+   }
+
+   public static resize(): void {
+      this._SIZE = ResizeUtils.getMaxTileSize();
+   }
+
+   static {
+      this.resize();
+   }
 
    public color: Color = baseMapColor;
    private road?: Road;
@@ -22,7 +34,7 @@ export class Tile {
    constructor(
       public readonly x: number,
       public readonly y: number
-   ) {}
+   ) { }
 
    public build(buildable: Building | Road): void {
       if (buildable instanceof Building && !this.building) {

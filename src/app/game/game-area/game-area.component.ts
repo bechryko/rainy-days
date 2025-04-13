@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, effect, ElementRef, inject, input, 
 import { GameStartService } from 'src/app/game-start.service';
 import { Game } from '../core/game';
 import { GameEventHandler, GameEventType } from '../core/game-events';
+import { Tile } from '../core/map';
+import { Map } from '../core/map/map';
 import { RandomUtils } from '../core/utils';
 
 @Component({
@@ -16,6 +18,7 @@ export class GameAreaComponent implements OnDestroy {
    public readonly isGameGoing = input.required<boolean>();
    private readonly gameCanvas = viewChild<ElementRef<HTMLCanvasElement>>("gameCanvas");
    private game?: Game;
+   private onResizeFn?: () => void;
 
    constructor() {
       effect(() => {
@@ -31,17 +34,32 @@ export class GameAreaComponent implements OnDestroy {
             },
             false
          );
+
+         const canvas = gameCanvas.nativeElement;
          const parameters = this.gameStartService.getStartingParams();
          const seed = !parameters.seed ? Math.random().toString() : parameters.seed;
          RandomUtils.registerSeed(seed);
          console.log(`Game seed: "${seed}"`);
-         this.game = new Game(gameCanvas.nativeElement);
+         this.game = new Game(canvas);
+
+         this.onResizeFn = () => {
+            Tile.resize();
+            canvas.style.width = (canvas.width = Map.COLUMN_COUNT * Tile.SIZE) + "px";
+            canvas.style.height = (canvas.height = Map.ROW_COUNT * Tile.SIZE) + "px";
+            this.game!.onResize();
+         };
+         window.addEventListener("resize", this.onResizeFn);
+         this.onResizeFn();
+
          this.startGame();
       })
    }
 
    public ngOnDestroy(): void {
       this.game?.stop();
+      if (this.onResizeFn) {
+         window.addEventListener("resize", this.onResizeFn);
+      }
    }
 
    public startGame(): void {
