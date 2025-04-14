@@ -2,35 +2,36 @@
   "name": "rainy-days",
   "version": "Beta 1",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --open",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "server": "ng build && http-server -p 8080 -c-1 dist/chess"
+    "server": "ng build && http-server -p 8080 -c-1 dist/chess",
+    "format": "prettier \"src/**/*.ts\" --write",
+    "clear": "rm -rf node_modules .angular"
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^15.2.0",
-    "@angular/cdk": "^15.2.9",
-    "@angular/common": "^15.2.0",
-    "@angular/compiler": "^15.2.0",
-    "@angular/core": "^15.2.0",
-    "@angular/forms": "^15.2.0",
-    "@angular/material": "^15.2.9",
-    "@angular/platform-browser": "^15.2.0",
-    "@angular/platform-browser-dynamic": "^15.2.0",
-    "@angular/router": "^15.2.0",
-    "@angular/service-worker": "^15.2.0",
-    "rxjs": "~7.8.0",
+    "@angular/animations": "^19.2.6",
+    "@angular/cdk": "^19.2.9",
+    "@angular/common": "^19.2.6",
+    "@angular/compiler": "^19.2.6",
+    "@angular/core": "^19.2.6",
+    "@angular/forms": "^19.2.6",
+    "@angular/material": "^19.2.9",
+    "@angular/platform-browser": "^19.2.6",
+    "@angular/platform-browser-dynamic": "^19.2.6",
+    "@angular/router": "^19.2.6",
+    "@angular/service-worker": "^19.2.6",
+    "rxjs": "^7.8.2",
     "seedrandom": "^3.0.5",
     "tslib": "^2.3.0",
-    "zone.js": "~0.12.0"
+    "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^15.2.5",
-    "@angular/cli": "~15.2.5",
-    "@angular/compiler-cli": "^15.2.0",
+    "@angular-devkit/build-angular": "^19.2.7",
+    "@angular/cli": "~19.2.7",
+    "@angular/compiler-cli": "^19.2.6",
     "@types/jasmine": "~4.3.0",
     "@types/seedrandom": "^3.0.5",
     "jasmine-core": "~4.5.0",
@@ -39,6 +40,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
-    "typescript": "~4.9.4"
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3"
   }
 }

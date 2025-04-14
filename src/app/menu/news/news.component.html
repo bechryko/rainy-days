@@ -1,0 +1,30 @@
+<h2>News</h2>
+<mat-tab-group color="accent">
+  <mat-tab label="Trending">
+    @for (article of trendingNews; track article) {
+      <article>
+        <h3>{{article.title}}</h3>
+        @for (text of article.text; track text) {
+          <p>{{text}}</p>
+        }
+      </article>
+    }
+  </mat-tab>
+  <mat-tab label="Latest patch notes">
+    <h3>{{latestPatchNote?.version}}</h3>
+    <p>Released: {{latestPatchNote?.date}}</p>
+    <ul>
+      @for (note of latestPatchNote?.content; track note) {
+        <li>{{note}}</li>
+      }
+    </ul>
+  </mat-tab>
+  <mat-tab label="Newest tips">
+    @for (tip of currentTips; track tip) {
+      <article>
+        <h3>{{tip.name}}</h3>
+        <p>{{tip.description}}</p>
+      </article>
+    }
+  </mat-tab>
+</mat-tab-group>

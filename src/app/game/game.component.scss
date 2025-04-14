@@ -1,0 +1,28 @@
+@use 'src/styles/colorTheme' as colorTheme;
+
+:host {
+   display: grid;
+   grid-template-rows: 7.5rem 1fr;
+   height: 100dvh;
+
+   & > * {
+      max-width: 100dvw;
+   }
+}
+
+rd-toolbar {
+   background-color: colorTheme.primaryColor(600);
+}
+
+.game-area-wrapper {
+   background-color: rgba(colorTheme.accentColor(500), 0.75);
+   display: grid;
+   place-items: center;
+
+   &.paused {
+      background-color: grey;
+   }
+   &.gameOver {
+      background-color: red;
+   }
+}

@@ -1,0 +1,7 @@
+<rd-toolbar [gameStatus]="gameStatus()"></rd-toolbar>
+<div
+   class="game-area-wrapper"
+   [ngClass]="{ gameOver: !gameStatus().isGameGoing, paused: gameStatus().isPaused }">
+   <rd-game-area [isGameGoing]="gameStatus().isGameGoing"></rd-game-area>
+</div>
+

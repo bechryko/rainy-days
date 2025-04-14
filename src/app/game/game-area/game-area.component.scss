@@ -1,0 +1,15 @@
+:host {
+   display: block;
+   width: fit-content;
+}
+
+canvas {
+   display: block;
+   border: 0.5rem solid black;
+   border-radius: 1rem;
+   aspect-ratio: 2 / 1;
+
+   &.active {
+      cursor: pointer;
+   }
+}

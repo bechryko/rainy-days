@@ -1,0 +1,39 @@
+@if (gameStatus().isGameGoing) {
+   <p
+      class="score"
+      matTooltip="New buildings spawn in {{ gameStatus().spawnTimer }} seconds">
+      Score: {{ gameStatus().score }}
+   </p>
+   @if (gameToolbar()) {
+      @for (toolbarItem of gameToolbar()!.items; track $index) {
+         <div
+            class="toolbar-item-container"
+            [class.selected]="gameStatus().selectedToolbarItem === $index">
+            <span class="toolbar-item-key">{{ $index }}</span>
+            <button
+               mat-fab
+               (click)="selectTool($index)">
+               {{ toolbarItem.displayName }}
+            </button>
+         </div>
+      }
+   }
+} @else {
+   <p class="game-over">Game Over!</p>
+   <button
+      class="restart-button"
+      mat-flat-button
+      color="accent"
+      (click)="restartGame()">
+      Restart
+   </button>
+   <button
+      class="back-button"
+      mat-flat-button
+      color="accent"
+      (click)="backToMenu()">
+      Back to menu
+   </button>
+   <p class="game-over">Score: {{ gameStatus().score }}</p>
+}
+
