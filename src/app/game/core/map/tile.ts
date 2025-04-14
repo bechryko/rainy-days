@@ -34,7 +34,7 @@ export class Tile {
    constructor(
       public readonly x: number,
       public readonly y: number
-   ) {}
+   ) { }
 
    public build(buildable: Building | Road): void {
       if (buildable instanceof Building && !this.building) {
@@ -62,12 +62,14 @@ export class Tile {
       }
    }
 
-   public isUnlocked(car: Car, tiles: Tile[][]): boolean {
+   public isUnlocked(car: Car, carTile: Tile): boolean;
+   public isUnlocked(car: Car, tiles: Tile[][]): boolean;
+   public isUnlocked(car: Car, tileOrTiles: Tile | Tile[][]): boolean {
       if (!this.road) {
          return false;
       }
 
-      const carTile = car.getTile(tiles);
+      const carTile = tileOrTiles instanceof Tile ? tileOrTiles : car.getTile(tileOrTiles);
       const connectedRoadDirections = carTile.getConnectedRoadDirections();
       if (!connectedRoadDirections.some(direction => carTile.getTileInDirection(direction) === this)) {
          return false;

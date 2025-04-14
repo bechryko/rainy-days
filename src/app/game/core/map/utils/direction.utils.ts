@@ -1,12 +1,24 @@
 import { Direction } from '../models';
 
+interface ForEachDirectionConfig {
+   counterclockwise?: boolean;
+   startingDirection?: Direction;
+}
+
 export class DirectionUtils {
-   public static forEachDirection(callback: (direction: Direction, dx: number, dy: number, breakFn: () => void) => void): void {
+   public static forEachDirection(
+      callback: (direction: Direction, dx: number, dy: number, breakFn: () => void) => void,
+      config?: ForEachDirectionConfig
+   ): void {
       let doBreak = false;
       const breakFn = () => (doBreak = true);
 
-      for (let i = 0; i < 4; i++) {
-         callback(i, DirectionUtils.getDx(i), DirectionUtils.getDy(i), breakFn);
+      for (
+         let dir = config?.startingDirection ?? Direction.UP, i = 0;
+         i < 4;
+         dir = Boolean(config?.counterclockwise) ? this.turnLeftFrom(dir) : this.turnRightFrom(dir), i++
+      ) {
+         callback(dir, DirectionUtils.getDx(dir), DirectionUtils.getDy(dir), breakFn);
 
          if (doBreak) {
             break;

@@ -37,6 +37,7 @@ export class Car {
    private readonly destinationTile: { x: number; y: number };
    private currentDirection = Direction.UP;
    private locked = false;
+   private moved = false;
 
    constructor(
       spawnTile: Tile,
@@ -55,6 +56,16 @@ export class Car {
          console.log(`${this.x} -> ${Math.floor(this.x / Tile.SIZE)}`, `${this.y} -> ${Math.floor(this.y / Tile.SIZE)}`);
       }
       return map[Math.floor(this.x / Tile.SIZE)][Math.floor(this.y / Tile.SIZE)];
+   }
+
+   public setDestinationIn(direction: Direction): void {
+      if (this.moved) {
+         return;
+      }
+
+      this.currentDirection = direction;
+      this.destinationTile.x += DirectionUtils.getDx(direction);
+      this.destinationTile.y += DirectionUtils.getDy(direction);
    }
 
    public destroy(): void {
@@ -79,18 +90,18 @@ export class Car {
          this.locked = false;
       }
 
-      const dest = {
+      const destinationCoords = {
          x: (this.destinationTile.x + 0.5) * Tile.SIZE,
          y: (this.destinationTile.y + 0.5) * Tile.SIZE
       };
-      const distance = Math.abs(this.x - dest.x) + Math.abs(this.y - dest.y);
-      const moved = Car.SPEED * Tile.SIZE * deltaTime;
-      this.x += DirectionUtils.getDx(this.currentDirection) * moved;
-      this.y += DirectionUtils.getDy(this.currentDirection) * moved;
+      const oldDistanceFromDestination = Math.abs(this.x - destinationCoords.x) + Math.abs(this.y - destinationCoords.y);
+      const distanceMoved = Car.SPEED * Tile.SIZE * deltaTime;
+      this.x += DirectionUtils.getDx(this.currentDirection) * distanceMoved;
+      this.y += DirectionUtils.getDy(this.currentDirection) * distanceMoved;
 
-      if (Math.abs(this.x - dest.x) + Math.abs(this.y - dest.y) >= distance) {
-         this.x = dest.x;
-         this.y = dest.y;
+      if (Math.abs(this.x - destinationCoords.x) + Math.abs(this.y - destinationCoords.y) >= oldDistanceFromDestination) {
+         this.x = destinationCoords.x;
+         this.y = destinationCoords.y;
 
          if (!this.canEscapeTile(tiles)) {
             this.locked = true;
@@ -98,6 +109,8 @@ export class Car {
             this.searchNewDestination(tiles);
          }
       }
+
+      this.moved = true;
    }
 
    private searchNewDestination(tiles: Tile[][]): void {
