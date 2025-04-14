@@ -1,5 +1,6 @@
 import { Tile } from '../../map';
 import { gameObjectColors } from '../../map/constants';
+import { Color } from '../../map/models';
 import { RandomUtils } from '../../utils';
 import { Destination } from '../destination.building';
 import { Spawner } from '../spawner.building';
@@ -18,7 +19,11 @@ export class BuildingSpawnerUtils {
    public static spawnDestination(tiles: Tile[][]): void {
       const possibleLocations = this.getAvailableBuildingLocations(tiles, BuildingSpawnerUtils.DESTINATION_SPAWNING_CLEAR_RANGE);
       const location = RandomUtils.nextArrayElement(possibleLocations);
-      const destination = new Destination(location, RandomUtils.nextArrayElement(gameObjectColors));
+
+      const possibleColors = [...gameObjectColors].filter(color => color !== location.color);
+      const color = RandomUtils.nextArrayElement<Color>(possibleColors);
+
+      const destination = new Destination(location, color);
       location.build(destination);
    }
 
