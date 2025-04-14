@@ -4,35 +4,39 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## About
 
-Rainy Days is a real-time strategy game greatly inspired by Mini Motorways. The goal is to build a sustainable transportational system in a randomly generated square-tiled map, where some tiles have rainclouds above them. Those clouds rain colored water which colors different objects below them, mostly cars. Because your task is to deliver the cars from the spawners to the destinations in the desired colors, while you have some control over their movement and behavior.
+Rainy Days is a strategy game greatly inspired by Mini Motorways. The goal is to build a sustainable transportational system in a randomly generated square-tiled map, where some tiles have rainclouds above them. Those clouds rain colored water which colors different objects below them, mostly cars. Your task is to deliver cars from the spawners to the destinations in the desired colors, while you have some control over their movement and behavior.
 
-### Buildable objects
+### Tile objects
 
-#### Roads
+In the game you can use the tiles to house different objects. These objects can be placed in two layer: road and building layer. Each tile has a capacity of one road and one building object.
 
-Roads are the most basic transportation method in the game. Cars travel on them with basic speed, and turn in a random direction at a crossroad. They are also exposed to the rain. Roads only automatically connect with other roads.
+#### Buildable
 
-#### Tunnels
+##### Roads
 
-Tunnels are similar to roads, but they give protection to the cars, preventing them to be colored by the rain. Cars travel on them with basic speed, and turn in a random direction at a crossroad. Tunnels only automatically connect with other tunnels.
+Basic roads are the most basic transportation method in the game. Cars travel on them with basic speed, and turn in a random direction at a crossroad. They are also exposed to the rain. Roads only automatically connect with other roads.
 
-#### Colored gates
+##### Tubes
 
-Colored gates are buildings placeable on roads or tunnels. They prevent every car of the same color from going through it. The player gets two colored gates of random colors at the start of each game.
+Tubes are similar to roads, but they give protection to the cars, preventing them to be colored by the rain. Cars travel on them with basic speed, and turn in a random direction at a crossroad. Tubes only automatically connect with other tubes.
 
-#### Timed gates
+##### Colored gates
 
-Timed gates are special kind of gates which have two states: open and closed. Open allows every car through, and closed prevent every as well. By default, timed gates change state every two seconds.
+Colored gates are building objects. They prevent every car of the same color from going through them. The player gets two colored gates of random colors at the start of each game.
 
-### Generated objects
+##### Timed gates
 
-#### Spawners
+Timed gates are another kind of gates which have two states: open and closed. Open allows every car through, and closed prevent every as well. By default, timed gates change state every two seconds.
 
-They spawn cars of the given color every few seconds. They continously spawn throughout the game, but later they might get upgraded to spawn cars more frequently.
+#### Generated
 
-#### Destinations
+##### Spawners
 
-Destinations are the buildings where cars have to be transported with the given color. Destinations have a timer which decreases with each second, which you can increase back with each car delivered of the correct color. Cars of other colors are ignored by the destination. Destinations spawn continously throughout the game.
+They spawn cars of the given color every few seconds. They continuously spawn throughout the game, but later they might get upgraded to spawn cars more frequently.
+
+##### Destinations
+
+Destinations are the buildings where cars have to be transported with the given color. Destinations have a timer which decreases with each second, which you can increase back with each car delivered of the correct color. Cars of other colors are ignored by the destination. Destinations spawn continuously throughout the game.
 
 ## Development server
 
