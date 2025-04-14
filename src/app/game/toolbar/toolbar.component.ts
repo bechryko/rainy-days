@@ -13,7 +13,7 @@ import { GameStatus } from '../model';
    imports: [MatFabButton, MatTooltip, MatButton],
    changeDetection: ChangeDetectionStrategy.OnPush,
    host: {
-      "[class.game-over]": "!gameStatus().isGameGoing"
+      '[class.game-over]': '!gameStatus().isGameGoing'
    }
 })
 export class ToolbarComponent {

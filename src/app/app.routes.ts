@@ -1,8 +1,8 @@
-import { Routes } from "@angular/router";
+import { Routes } from '@angular/router';
 
 export enum Route {
-   MENU = "menu",
-   GAME = "game"
+   MENU = 'menu',
+   GAME = 'game'
 }
 
 export const routes: Routes = [

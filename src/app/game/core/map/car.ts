@@ -34,7 +34,7 @@ export class Car {
 
    private x: number;
    private y: number;
-   private readonly destinationTile: { x: number, y: number };
+   private readonly destinationTile: { x: number; y: number };
    private currentDirection = Direction.UP;
    private locked = false;
 
@@ -122,7 +122,7 @@ export class Car {
 
    private canEscapeTile(tiles: Tile[][]): boolean {
       let canEscape = false;
-      this.getTile(tiles).forEachNeighbor((neighbor) => {
+      this.getTile(tiles).forEachNeighbor(neighbor => {
          if (neighbor.isUnlocked(this, tiles)) {
             canEscape = true;
          }

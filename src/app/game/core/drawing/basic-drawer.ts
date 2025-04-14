@@ -1,4 +1,3 @@
-
 type CanvasRenderingContext2DInterface = Pick<CanvasRenderingContext2D, 'beginPath' | 'lineTo' | 'moveTo' | 'stroke'>;
 
 export class BasicDrawer {

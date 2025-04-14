@@ -1,4 +1,4 @@
-import { Map } from "../map";
+import { Map } from '../map';
 
 export class ResizeUtils {
    private static readonly TOOLBAR_HEIGHT_REM = 7.5;
@@ -11,17 +11,14 @@ export class ResizeUtils {
    }
 
    private static getMaxAvailableWidth(): number {
-      return Math.round(
-         window.innerWidth * 0.95
-         - 2 * ResizeUtils.remToPx(ResizeUtils.CANVAS_BORDER_WIDTH_REM)
-      );
+      return Math.round(window.innerWidth * 0.95 - 2 * ResizeUtils.remToPx(ResizeUtils.CANVAS_BORDER_WIDTH_REM));
    }
 
    private static getMaxAvailableHeight(): number {
       return Math.round(
-         window.innerHeight * 0.95
-         - ResizeUtils.remToPx(ResizeUtils.TOOLBAR_HEIGHT_REM)
-         - 2 * ResizeUtils.remToPx(ResizeUtils.CANVAS_BORDER_WIDTH_REM)
+         window.innerHeight * 0.95 -
+            ResizeUtils.remToPx(ResizeUtils.TOOLBAR_HEIGHT_REM) -
+            2 * ResizeUtils.remToPx(ResizeUtils.CANVAS_BORDER_WIDTH_REM)
       );
    }
 

@@ -17,8 +17,6 @@ export class NewsComponent implements OnInit {
    latestPatchNote?: PatchNote;
    currentTips: TipObject[] = [];
 
-   constructor() { }
-
    ngOnInit() {
       this.trendingNews = trendingNews;
       this.latestPatchNote = patchNotes[patchNotes.length - 1];
