@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { Toolbar } from '@rainy-days/core/control/toolbar';
 import { Route } from '@rainy-days/routes';
 import { filter, fromEvent, map } from 'rxjs';
-import { GameStatus } from '../model';
+import { GameStatus } from '../models';
 import { CalculateTrueGameSpeedPipe } from './pipes';
 
 @Component({

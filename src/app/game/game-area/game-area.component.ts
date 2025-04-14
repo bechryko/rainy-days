@@ -5,7 +5,7 @@ import { GameEventHandler, GameEventType } from '../core/game-events';
 import { Tile } from '../core/map';
 import { Map } from '../core/map/map';
 import { RandomUtils } from '../core/utils';
-import { GameStatus } from '../model';
+import { GameStatus } from '../models';
 
 @Component({
    selector: 'rd-game-area',

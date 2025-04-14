@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Game } from '@rainy-days/core/game';
 import { GameEventHandler, GameEventType } from '@rainy-days/core/game-events';
 import { GameAreaComponent } from './game-area';
-import { GameStatus } from './model';
+import { GameStatus } from './models';
 import { ToolbarComponent } from './toolbar';
 
 @Component({
