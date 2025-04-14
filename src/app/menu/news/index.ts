@@ -1,1 +1,1 @@
-export { NewsComponent } from "./news.component";
+export { NewsComponent } from './news.component';

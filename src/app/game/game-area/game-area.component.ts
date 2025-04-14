@@ -16,7 +16,7 @@ export class GameAreaComponent implements OnDestroy {
    private readonly gameStartService = inject(GameStartService);
 
    public readonly isGameGoing = input.required<boolean>();
-   private readonly gameCanvas = viewChild<ElementRef<HTMLCanvasElement>>("gameCanvas");
+   private readonly gameCanvas = viewChild<ElementRef<HTMLCanvasElement>>('gameCanvas');
    private game?: Game;
    private onResizeFn?: () => void;
 
@@ -44,21 +44,21 @@ export class GameAreaComponent implements OnDestroy {
 
          this.onResizeFn = () => {
             Tile.resize();
-            canvas.style.width = (canvas.width = Map.COLUMN_COUNT * Tile.SIZE) + "px";
-            canvas.style.height = (canvas.height = Map.ROW_COUNT * Tile.SIZE) + "px";
+            canvas.style.width = (canvas.width = Map.COLUMN_COUNT * Tile.SIZE) + 'px';
+            canvas.style.height = (canvas.height = Map.ROW_COUNT * Tile.SIZE) + 'px';
             this.game!.onResize();
          };
-         window.addEventListener("resize", this.onResizeFn);
+         window.addEventListener('resize', this.onResizeFn);
          this.onResizeFn();
 
          this.startGame();
-      })
+      });
    }
 
    public ngOnDestroy(): void {
       this.game?.stop();
       if (this.onResizeFn) {
-         window.addEventListener("resize", this.onResizeFn);
+         window.addEventListener('resize', this.onResizeFn);
       }
    }
 

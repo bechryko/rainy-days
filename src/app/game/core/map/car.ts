@@ -1,5 +1,4 @@
 import { BasicDrawer } from '../drawing';
-import { RandomUtils } from '../utils/random.utils';
 import { Direction } from './models';
 import { Tile } from './tile';
 import { DirectionUtils } from './utils';
@@ -35,8 +34,10 @@ export class Car {
 
    private x: number;
    private y: number;
-   private readonly destination = { tileX: 0, tileY: 0 };
-   private lastDirection = Direction.UP;
+   private readonly destinationTile: { x: number; y: number };
+   private currentDirection = Direction.UP;
+   private locked = false;
+   private moved = false;
 
    constructor(
       spawnTile: Tile,
@@ -44,8 +45,7 @@ export class Car {
    ) {
       this.x = (spawnTile.x + 0.5) * Tile.SIZE;
       this.y = (spawnTile.y + 0.5) * Tile.SIZE;
-      this.destination.tileX = spawnTile.x;
-      this.destination.tileY = spawnTile.y;
+      this.destinationTile = { x: spawnTile.x, y: spawnTile.y };
       spawnTile.tileAction(this);
       Car.pool.push(this);
    }
@@ -56,6 +56,16 @@ export class Car {
          console.log(`${this.x} -> ${Math.floor(this.x / Tile.SIZE)}`, `${this.y} -> ${Math.floor(this.y / Tile.SIZE)}`);
       }
       return map[Math.floor(this.x / Tile.SIZE)][Math.floor(this.y / Tile.SIZE)];
+   }
+
+   public setDestinationIn(direction: Direction): void {
+      if (this.moved) {
+         return;
+      }
+
+      this.currentDirection = direction;
+      this.destinationTile.x += DirectionUtils.getDx(direction);
+      this.destinationTile.y += DirectionUtils.getDy(direction);
    }
 
    public destroy(): void {
@@ -72,41 +82,64 @@ export class Car {
       drawer.circle(this.x, this.y, Car.SIZE / 2.5, this.color);
    }
 
-   private move(deltaTime: number, map: Tile[][]): void {
-      const dest = {
-         x: (this.destination.tileX + 0.5) * Tile.SIZE,
-         y: (this.destination.tileY + 0.5) * Tile.SIZE
-      };
-      const distance = Math.abs(this.x - dest.x) + Math.abs(this.y - dest.y);
-      const moved = Car.SPEED * Tile.SIZE * deltaTime;
-      this.x += DirectionUtils.getDx(this.lastDirection) * moved;
-      this.y += DirectionUtils.getDy(this.lastDirection) * moved;
-      if (Math.abs(this.x - dest.x) + Math.abs(this.y - dest.y) >= distance) {
-         this.x = dest.x;
-         this.y = dest.y;
-         this.searchNewDestination(map);
+   private move(deltaTime: number, tiles: Tile[][]): void {
+      if (this.locked) {
+         if (!this.canEscapeTile(tiles)) {
+            return;
+         }
+         this.locked = false;
       }
+
+      const destinationCoords = {
+         x: (this.destinationTile.x + 0.5) * Tile.SIZE,
+         y: (this.destinationTile.y + 0.5) * Tile.SIZE
+      };
+      const oldDistanceFromDestination = Math.abs(this.x - destinationCoords.x) + Math.abs(this.y - destinationCoords.y);
+      const distanceMoved = Car.SPEED * Tile.SIZE * deltaTime;
+      this.x += DirectionUtils.getDx(this.currentDirection) * distanceMoved;
+      this.y += DirectionUtils.getDy(this.currentDirection) * distanceMoved;
+
+      if (Math.abs(this.x - destinationCoords.x) + Math.abs(this.y - destinationCoords.y) >= oldDistanceFromDestination) {
+         this.x = destinationCoords.x;
+         this.y = destinationCoords.y;
+
+         if (!this.canEscapeTile(tiles)) {
+            this.locked = true;
+         } else {
+            this.searchNewDestination(tiles);
+         }
+      }
+
+      this.moved = true;
    }
 
    private searchNewDestination(tiles: Tile[][]): void {
-      const possibleDirections = [];
-      let direction = Direction.RIGHT;
-      for (let d = 0; d < 4; d++, direction = DirectionUtils.getNext(direction)) {
-         const targetX = this.destination.tileX + DirectionUtils.getDx(direction);
-         const targetY = this.destination.tileY + DirectionUtils.getDy(direction);
+      let newDirection = DirectionUtils.getOpposite(this.currentDirection);
+
+      let direction = DirectionUtils.turnRightFrom(this.currentDirection);
+      for (let d = 0; d < 3; d++, direction = DirectionUtils.turnLeftFrom(direction)) {
+         const targetX = this.destinationTile.x + DirectionUtils.getDx(direction);
+         const targetY = this.destinationTile.y + DirectionUtils.getDy(direction);
          const targetTile = tiles[targetX]?.[targetY];
+
          if (targetTile && targetTile.isUnlocked(this, tiles)) {
-            possibleDirections.push(direction);
+            newDirection = direction;
+            break;
          }
       }
-      if (possibleDirections.length == 0) {
-         // this.lastDirection = Direction.NONE;
-         return;
-      } else if (possibleDirections.length !== 1 && possibleDirections.includes(DirectionUtils.getOpposite(this.lastDirection))) {
-         possibleDirections.splice(possibleDirections.indexOf(DirectionUtils.getOpposite(this.lastDirection)), 1);
-      }
-      this.lastDirection = RandomUtils.nextArrayElement(possibleDirections); // TODO: right
-      this.destination.tileX += DirectionUtils.getDx(this.lastDirection);
-      this.destination.tileY += DirectionUtils.getDy(this.lastDirection);
+
+      this.currentDirection = newDirection;
+      this.destinationTile.x += DirectionUtils.getDx(this.currentDirection);
+      this.destinationTile.y += DirectionUtils.getDy(this.currentDirection);
+   }
+
+   private canEscapeTile(tiles: Tile[][]): boolean {
+      let canEscape = false;
+      this.getTile(tiles).forEachNeighbor(neighbor => {
+         if (neighbor.isUnlocked(this, tiles)) {
+            canEscape = true;
+         }
+      });
+      return canEscape;
    }
 }

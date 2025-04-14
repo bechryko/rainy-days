@@ -2,6 +2,7 @@ import { BasicDrawer } from '../drawing';
 import { Tile } from '../map';
 import { Car } from '../map/car';
 import { Color } from '../map/models';
+import { DirectionUtils } from '../map/utils';
 import { Building } from './building';
 
 export class Spawner extends Building {
@@ -43,7 +44,15 @@ export class Spawner extends Building {
       this.timer -= deltaTime * this.power;
       if (this.timer < 0) {
          this.timer = Spawner.GENERAL_CAR_SPAWN_TIMER;
-         new Car(this.tile, this.color);
+         const car = new Car(this.tile, this.color);
+
+         DirectionUtils.forEachDirection((direction, _x, _y, breakFn) => {
+            const neighbor = this.tile.getTileInDirection(direction);
+            if (neighbor && neighbor.isUnlocked(car, this.tile)) {
+               car.setDestinationIn(direction);
+               breakFn();
+            }
+         });
       }
    }
 
