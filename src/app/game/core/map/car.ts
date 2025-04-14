@@ -1,5 +1,4 @@
 import { BasicDrawer } from '../drawing';
-import { RandomUtils } from '../utils/random.utils';
 import { Direction } from './models';
 import { Tile } from './tile';
 import { DirectionUtils } from './utils';
@@ -36,7 +35,7 @@ export class Car {
    private x: number;
    private y: number;
    private readonly destination = { tileX: 0, tileY: 0 };
-   private lastDirection = Direction.UP;
+   private currentDirection = Direction.UP;
 
    constructor(
       spawnTile: Tile,
@@ -79,8 +78,8 @@ export class Car {
       };
       const distance = Math.abs(this.x - dest.x) + Math.abs(this.y - dest.y);
       const moved = Car.SPEED * Tile.SIZE * deltaTime;
-      this.x += DirectionUtils.getDx(this.lastDirection) * moved;
-      this.y += DirectionUtils.getDy(this.lastDirection) * moved;
+      this.x += DirectionUtils.getDx(this.currentDirection) * moved;
+      this.y += DirectionUtils.getDy(this.currentDirection) * moved;
       if (Math.abs(this.x - dest.x) + Math.abs(this.y - dest.y) >= distance) {
          this.x = dest.x;
          this.y = dest.y;
@@ -89,24 +88,22 @@ export class Car {
    }
 
    private searchNewDestination(tiles: Tile[][]): void {
-      const possibleDirections = [];
-      let direction = Direction.RIGHT;
-      for (let d = 0; d < 4; d++, direction = DirectionUtils.getNext(direction)) {
+      let newDirection = DirectionUtils.getOpposite(this.currentDirection);
+
+      let direction = DirectionUtils.turnRightFrom(this.currentDirection);
+      for (let d = 0; d < 3; d++, direction = DirectionUtils.turnLeftFrom(direction)) {
          const targetX = this.destination.tileX + DirectionUtils.getDx(direction);
          const targetY = this.destination.tileY + DirectionUtils.getDy(direction);
          const targetTile = tiles[targetX]?.[targetY];
+
          if (targetTile && targetTile.isUnlocked(this, tiles)) {
-            possibleDirections.push(direction);
+            newDirection = direction;
+            break;
          }
       }
-      if (possibleDirections.length == 0) {
-         // this.lastDirection = Direction.NONE;
-         return;
-      } else if (possibleDirections.length !== 1 && possibleDirections.includes(DirectionUtils.getOpposite(this.lastDirection))) {
-         possibleDirections.splice(possibleDirections.indexOf(DirectionUtils.getOpposite(this.lastDirection)), 1);
-      }
-      this.lastDirection = RandomUtils.nextArrayElement(possibleDirections); // TODO: right
-      this.destination.tileX += DirectionUtils.getDx(this.lastDirection);
-      this.destination.tileY += DirectionUtils.getDy(this.lastDirection);
+
+      this.currentDirection = newDirection;
+      this.destination.tileX += DirectionUtils.getDx(this.currentDirection);
+      this.destination.tileY += DirectionUtils.getDy(this.currentDirection);
    }
 }

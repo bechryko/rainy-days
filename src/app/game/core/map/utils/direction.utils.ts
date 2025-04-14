@@ -14,8 +14,12 @@ export class DirectionUtils {
       }
    }
 
-   public static getNext(direction: Direction): Direction {
+   public static turnRightFrom(direction: Direction): Direction {
       return (direction + 1) % 4;
+   }
+
+   public static turnLeftFrom(direction: Direction): Direction {
+      return (direction + 3) % 4;
    }
 
    public static getOpposite(direction: Direction): Direction {
