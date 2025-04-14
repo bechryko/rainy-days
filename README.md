@@ -32,7 +32,7 @@ Timed gates are another kind of gates which have two states: open and closed. Op
 
 ##### Spawners
 
-They spawn cars of the given color every few seconds. They continuously spawn throughout the game, but later they might get upgraded to spawn cars more frequently.
+They spawn cars of the given color every 4 seconds throughout the game.
 
 ##### Destinations
 
