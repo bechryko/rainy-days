@@ -1,6 +1,7 @@
 @use 'src/styles/colorTheme' as colorTheme;
 
 :host {
+   position: relative;
    display: flex;
    gap: 1rem;
    align-items: center;
@@ -44,6 +45,50 @@ p {
 
    button {
       font-size: 1.25rem;
+   }
+}
+
+.game-speed-panel {
+   $border-radius: 0.5rem;
+
+   position: absolute;
+   top: 100%;
+   background-color: inherit;
+   padding: 0.5rem;
+   left: 50%;
+   translate: -50%;
+   border-bottom-left-radius: $border-radius;
+   border-bottom-right-radius: $border-radius;
+
+   .game-speed-button {
+      display: inline-block;
+      font-family: monospace;
+      border: none;
+      background-color: transparent;
+      aspect-ratio: 1;
+      padding: 0.5rem;
+      border-radius: 50%;
+      transition: background-color 400ms ease;
+
+      &.selected {
+         background-color: rgba(black, 0.4);
+      }
+
+      &:not(.selected) {
+         cursor: pointer;
+
+         &:hover {
+            background-color: rgba(black, 0.2);
+         }
+      }
+
+      &:focus-visible {
+         outline: none;
+      }
+
+      & + .game-speed-button {
+         margin-left: 0.25rem;
+      }
    }
 }
 

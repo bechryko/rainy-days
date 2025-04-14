@@ -18,6 +18,16 @@
          </div>
       }
    }
+   <div class="game-speed-panel">
+      @for (speed of possibleGameSpeeds; track speed) {
+         <div
+            class="game-speed-button"
+            [class.selected]="(gameStatus() | calculateTrueGameSpeed) === speed"
+            (click)="setGameSpeed(speed)">
+            x{{ speed }}
+         </div>
+      }
+   </div>
 } @else {
    <p class="game-over">Game Over!</p>
    <button
@@ -36,4 +46,3 @@
    </button>
    <p class="game-over">Score: {{ gameStatus().score }}</p>
 }
-
