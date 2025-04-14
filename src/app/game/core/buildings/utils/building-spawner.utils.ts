@@ -9,14 +9,6 @@ export class BuildingSpawnerUtils {
    private static readonly DESTINATION_SPAWNING_CLEAR_RANGE = 3;
 
    public static spawnSpawner(map: Tile[][]): void {
-      const upgradableSpawners = Spawner.getUpgradeable();
-
-      if (Spawner.canUpgrade() && upgradableSpawners.length && RandomUtils.nextChance()) {
-         const spawner = RandomUtils.nextArrayElement(upgradableSpawners);
-         spawner.upgrade();
-         return;
-      }
-
       const possibleLocations = this.getAvailableBuildingLocations(map, BuildingSpawnerUtils.SPAWNER_SPAWNING_CLEAR_RANGE);
       const location = RandomUtils.nextArrayElement(possibleLocations);
       const spawner = new Spawner(location, RandomUtils.nextArrayElement(gameObjectColors));
