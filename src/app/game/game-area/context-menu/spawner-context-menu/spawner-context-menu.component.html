@@ -1,1 +1,13 @@
-<p>spawner-context-menu works!</p>
+<h3>Spawner</h3>
+<p>Spawns car in: {{ building().displayTimer$ | async }}</p>
+<p>
+   Delay spawn by:
+   @for (time of spawnDelayTimes; track time) {
+      <button
+         #button
+         class="delay-button"
+         (click)="delaySpawn(time); button.blur()">
+         {{ time }}s
+      </button>
+   }
+</p>

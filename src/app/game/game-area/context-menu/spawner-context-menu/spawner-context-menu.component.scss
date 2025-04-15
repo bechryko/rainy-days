@@ -1,0 +1,16 @@
+h3 {
+   margin: 0;
+}
+
+.delay-button {
+   $size: 2rem;
+
+   font-size: 0.875rem;
+   border: 1px solid black;
+   outline: none;
+   background-color: white;
+   height: $size;
+   width: $size;
+   padding-inline: 0;
+   text-align: center;
+}

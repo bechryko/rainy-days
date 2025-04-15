@@ -1,4 +1,6 @@
+import { BehaviorSubject, distinctUntilChanged, Observable } from 'rxjs';
 import { BasicDrawer } from '../drawing';
+import { toFraction } from '../functions';
 import { Tile } from '../map';
 import { Car } from '../map/car';
 import { Color } from '../map/models';
@@ -8,6 +10,7 @@ import { Building } from './building';
 export class Spawner extends Building {
    public static readonly GENERAL_CAR_SPAWN_TIMER = 4;
 
+   private readonly _displayTimer$ = new BehaviorSubject("0");
    private timer = 0;
 
    constructor(
@@ -35,6 +38,13 @@ export class Spawner extends Building {
             }
          });
       }
+
+      this.emit();
+   }
+
+   public delaySpawn(delay: number): void {
+      this.timer += delay;
+      this.emit();
    }
 
    public override draw(drawer: BasicDrawer): void {
@@ -49,5 +59,13 @@ export class Spawner extends Building {
          false
       );
       drawer.text(Math.ceil(this.timer) + 's', (this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE, Tile.SIZE * 0.35);
+   }
+
+   public get displayTimer$(): Observable<string> {
+      return this._displayTimer$.pipe(distinctUntilChanged());
+   }
+
+   private emit(): void {
+      this._displayTimer$.next(toFraction(this.timer));
    }
 }
