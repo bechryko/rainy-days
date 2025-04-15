@@ -62,6 +62,12 @@ export class Tile {
       }
    }
 
+   public openContextMenu(): void {
+      if (this.building) {
+         GameEventHandler.getInstance().emitEvent(GameEventType.OPEN_CONTEXT_MENU, this.building);
+      }
+   }
+
    public isUnlocked(car: Car, carTile: Tile): boolean;
    public isUnlocked(car: Car, tiles: Tile[][]): boolean;
    public isUnlocked(car: Car, tileOrTiles: Tile | Tile[][]): boolean {

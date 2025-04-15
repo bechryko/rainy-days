@@ -9,13 +9,12 @@ export class Controller {
    private selectedTile?: Tile;
    private leftMouseDown: boolean = false;
    private rightMouseDown: boolean = false;
-   private selectedTool = Selection.EDITOR_TOOL;
    private readonly toolbar = new Toolbar();
    private readonly eventListeners: EventListener<any>[] = [];
 
    private roadConnectionBase?: Tile;
 
-   constructor(private readonly tiles: Tile[][]) {}
+   constructor(private readonly tiles: Tile[][]) { }
 
    public registerEventListeners(): void {
       this.eventListeners.push(
@@ -51,7 +50,7 @@ export class Controller {
          if (this.leftMouseDown) {
             this.leftMouseAction();
          } else if (this.rightMouseDown) {
-            this.rightMouseAction(this.selectedTile);
+            this.rightMouseAction();
          }
       }
    }
@@ -63,7 +62,7 @@ export class Controller {
       const building = this.toolbar.createBuildingFromSelection(this.selectedTile);
       if (building) {
          this.selectedTile.build(building);
-      } else if (this.selectedTool == Selection.EDITOR_TOOL && this.selectedTile.hasRoad()) {
+      } else if (this.toolbar.selection == Selection.EDITOR_TOOL && this.selectedTile.hasRoad()) {
          if (this.roadConnectionBase && this.roadConnectionBase !== this.selectedTile) {
             this.selectedTile.connectRoadTo(this.roadConnectionBase);
             this.roadConnectionBase = this.selectedTile;
@@ -71,14 +70,18 @@ export class Controller {
       }
    }
 
-   public rightMouseAction(tile: Tile): void {
-      tile.deleteBuilding(this.toolbar);
+   public rightMouseAction(): void {
+      if (this.toolbar.selection === Selection.EDITOR_TOOL) {
+         this.selectedTile!.openContextMenu();
+      } else {
+         this.selectedTile!.deleteBuilding(this.toolbar);
+      }
    }
 
    private onLeftMouseDown(_: MouseEvent): void {
       this.leftMouseDown = true;
 
-      if (this.selectedTool === Selection.EDITOR_TOOL && this.selectedTile && this.selectedTile.hasRoad()) {
+      if (this.toolbar.selection === Selection.EDITOR_TOOL && this.selectedTile && this.selectedTile.hasRoad()) {
          this.roadConnectionBase = this.selectedTile;
       }
    }
@@ -90,7 +93,7 @@ export class Controller {
    private onLeftMouseUp(_: MouseEvent): void {
       this.leftMouseDown = false;
 
-      if (this.selectedTool === Selection.EDITOR_TOOL && this.roadConnectionBase) {
+      if (this.toolbar.selection === Selection.EDITOR_TOOL && this.roadConnectionBase) {
          this.roadConnectionBase = undefined;
       }
    }
@@ -124,7 +127,7 @@ export class Controller {
       if (Number.isNaN(numberKey)) {
          return;
       }
-      if (this.selectedTool === Selection.EDITOR_TOOL && this.roadConnectionBase) {
+      if (this.toolbar.selection === Selection.EDITOR_TOOL && this.roadConnectionBase) {
          this.roadConnectionBase = undefined;
       }
       this.toolbar.selectItemByKey(numberKey);

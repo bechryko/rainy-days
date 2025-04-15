@@ -1,3 +1,4 @@
+import { Building } from '../buildings';
 import { GameEventType } from './game-event-type';
 
 export interface GameEventTypeEventDataMap {
@@ -7,4 +8,6 @@ export interface GameEventTypeEventDataMap {
    [GameEventType.UPDATE_SPAWN_TIMER]: number;
    [GameEventType.DESTINATION_CRITICAL_HEALTH]: number;
    [GameEventType.GAIN_SCORE]: null;
+   [GameEventType.OPEN_CONTEXT_MENU]: Building;
+   [GameEventType.CLOSE_CONTEXT_MENU]: null;
 }
