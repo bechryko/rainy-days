@@ -55,14 +55,12 @@ p {
    top: 100%;
    background-color: inherit;
    padding: 0.5rem;
-   left: 50%;
-   translate: -50%;
-   border-bottom-left-radius: $border-radius;
+   left: 0;
    border-bottom-right-radius: $border-radius;
 
    .game-speed-button {
       display: inline-block;
-      font-family: monospace;
+      font: 1rem monospace;
       border: none;
       background-color: transparent;
       aspect-ratio: 1;
