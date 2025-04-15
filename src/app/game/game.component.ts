@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Game } from '@rainy-days/core/game';
 import { GameEventHandler, GameEventType } from '@rainy-days/core/game-events';
 import { GameAreaComponent } from './game-area';
-import { GameStatus } from './model';
+import { GameStatus } from './models';
 import { ToolbarComponent } from './toolbar';
 
 @Component({
@@ -20,6 +20,7 @@ export class GameComponent {
    public readonly gameStatus = signal<GameStatus>({
       isGameGoing: false,
       isPaused: false,
+      gameSpeed: 1,
       selectedToolbarItem: 0,
       score: 0,
       spawnTimer: 0
@@ -62,6 +63,22 @@ export class GameComponent {
       GameEventHandler.getInstance().watchEvents(GameEventType.DESTINATION_CRITICAL_HEALTH, health => {
          this.snackbarMessage(`One of your destinations has ${health} health!`, "I'll fix it!");
       });
+   }
+
+   public onGameSpeedChange(gameSpeed: number): void {
+      if (gameSpeed === 0 && !this.gameStatus().isPaused) {
+         GameEventHandler.getInstance().emitEvent(GameEventType.TOGGLE_PAUSE, null);
+         return;
+      }
+      if (gameSpeed !== 0) {
+         if (this.gameStatus().isPaused) {
+            GameEventHandler.getInstance().emitEvent(GameEventType.TOGGLE_PAUSE, null);
+         }
+         this.gameStatus.update(status => ({
+            ...status,
+            gameSpeed
+         }));
+      }
    }
 
    snackbarMessage(message: string, action: string) {

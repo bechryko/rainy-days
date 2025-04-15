@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, effect, ElementRef, inject, input, OnDestroy, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, input, OnDestroy, viewChild } from '@angular/core';
 import { GameStartService } from 'src/app/game-start.service';
 import { Game } from '../core/game';
 import { GameEventHandler, GameEventType } from '../core/game-events';
 import { Tile } from '../core/map';
 import { Map } from '../core/map/map';
 import { RandomUtils } from '../core/utils';
+import { GameStatus } from '../models';
 
 @Component({
    selector: 'rd-game-area',
@@ -15,7 +16,7 @@ import { RandomUtils } from '../core/utils';
 export class GameAreaComponent implements OnDestroy {
    private readonly gameStartService = inject(GameStartService);
 
-   public readonly isGameGoing = input.required<boolean>();
+   public readonly gameStatus = input.required<GameStatus>();
    private readonly gameCanvas = viewChild<ElementRef<HTMLCanvasElement>>('gameCanvas');
    private game?: Game;
    private onResizeFn?: () => void;
@@ -40,7 +41,7 @@ export class GameAreaComponent implements OnDestroy {
          const seed = !parameters.seed ? Math.random().toString() : parameters.seed;
          RandomUtils.registerSeed(seed);
          console.log(`Game seed: "${seed}"`);
-         this.game = new Game(canvas);
+         this.game = new Game(canvas, computed(() => this.gameStatus().gameSpeed));
 
          this.onResizeFn = () => {
             Tile.resize();

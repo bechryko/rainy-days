@@ -1,3 +1,4 @@
+import { Signal } from '@angular/core';
 import { Building, Destination } from './buildings';
 import { Controller } from './control';
 import { BasicDrawer } from './drawing';
@@ -16,7 +17,7 @@ export class Game {
    public paused = false;
    private exited = false;
 
-   constructor(canvas: HTMLCanvasElement) {
+   constructor(canvas: HTMLCanvasElement, private readonly gameSpeed: Signal<number>) {
       this.map = new Map();
       this.controller = new Controller(this.map['tiles']);
       this.drawer = new BasicDrawer(canvas);
@@ -51,9 +52,11 @@ export class Game {
 
    private main(deltaTime: number): boolean {
       if (!this.paused) {
-         deltaTime = Math.min(deltaTime, 0.1);
-         this.timedActions(deltaTime);
-         this.map.tick(deltaTime);
+         for (let i = 0; i < this.gameSpeed(); i++) {
+            deltaTime = Math.min(deltaTime, 0.1);
+            this.timedActions(deltaTime);
+            this.map.tick(deltaTime);
+         }
       }
       // Mouse actions
       this.controller.handleMouseActions();
