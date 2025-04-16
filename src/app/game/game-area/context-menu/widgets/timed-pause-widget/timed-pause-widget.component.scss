@@ -1,0 +1,15 @@
+mat-checkbox {
+   margin-left: -11px;
+}
+
+.warning {
+   display: block;
+   text-wrap: wrap;
+   max-width: 18rem;
+   font-size: 0.75rem;
+   color: red;
+
+   &.invisible {
+      visibility: hidden;
+   }
+}

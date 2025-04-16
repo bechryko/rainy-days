@@ -1,17 +1,20 @@
 import { BehaviorSubject, distinctUntilChanged, Observable } from 'rxjs';
 import { BasicDrawer } from '../drawing';
 import { toFraction } from '../functions';
+import { GameEventHandler, GameEventType } from '../game-events';
 import { Tile } from '../map';
 import { Car } from '../map/car';
 import { Color } from '../map/models';
 import { DirectionUtils } from '../map/utils';
 import { Building } from './building';
+import { DelayedPauseBuilding } from './models';
 
-export class Spawner extends Building {
+export class Spawner extends Building implements DelayedPauseBuilding {
    public static readonly GENERAL_CAR_SPAWN_TIMER = 4;
 
    private readonly _displayTimer$ = new BehaviorSubject("0");
    private timer = 0;
+   public timedPause = false;
 
    constructor(
       tile: Tile,
@@ -37,6 +40,12 @@ export class Spawner extends Building {
                breakFn();
             }
          });
+
+         if (this.timedPause) {
+            GameEventHandler.getInstance().emitEvent(GameEventType.TOGGLE_PAUSE, null);
+            GameEventHandler.getInstance().emitEvent(GameEventType.COMPLETE_TIMED_PAUSE, null);
+            this.timedPause = false;
+         }
       }
 
       this.emit();

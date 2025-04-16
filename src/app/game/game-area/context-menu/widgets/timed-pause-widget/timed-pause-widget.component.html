@@ -1,0 +1,11 @@
+<mat-checkbox
+   #checkbox
+   [checked]="building().timedPause"
+   (change)="onTimedPauseChange($event)">
+   <ng-content></ng-content>
+</mat-checkbox>
+<span
+   class="warning"
+   [class.invisible]="!timedPauseWarning">
+   Other building has a timed pause turned on. If you turn this on, the other's will be turned off.
+</span>

@@ -2,10 +2,11 @@ import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatRipple } from '@angular/material/core';
 import { Spawner } from '@rainy-days/game/core/buildings';
+import { TimedPauseWidgetComponent } from '../widgets';
 
 @Component({
    selector: 'rd-spawner-context-menu',
-   imports: [AsyncPipe, MatRipple],
+   imports: [AsyncPipe, MatRipple, TimedPauseWidgetComponent],
    templateUrl: './spawner-context-menu.component.html',
    styleUrl: './spawner-context-menu.component.scss',
    changeDetection: ChangeDetectionStrategy.OnPush

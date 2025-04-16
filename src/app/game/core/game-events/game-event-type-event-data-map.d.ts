@@ -10,4 +10,5 @@ export interface GameEventTypeEventDataMap {
    [GameEventType.GAIN_SCORE]: null;
    [GameEventType.OPEN_CONTEXT_MENU]: Building;
    [GameEventType.CLOSE_CONTEXT_MENU]: null;
+   [GameEventType.COMPLETE_TIMED_PAUSE]: null;
 }

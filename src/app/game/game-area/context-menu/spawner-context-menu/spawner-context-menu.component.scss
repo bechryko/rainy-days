@@ -1,5 +1,9 @@
 @use 'src/styles/colorTheme' as colorTheme;
 
+:host {
+   user-select: none;
+}
+
 h3 {
    margin: 0;
    color: colorTheme.primaryColorWithBlack(600);
@@ -17,7 +21,6 @@ h3 {
    width: $size;
    padding-inline: 0;
    text-align: center;
-   user-select: none;
    cursor: pointer;
 
    &:first-child {
@@ -30,4 +33,8 @@ h3 {
       border-top-right-radius: $radius;
       border-bottom-right-radius: $radius;
    }
+}
+
+.smaller-bottom-margin {
+   margin-bottom: 0.5rem;
 }

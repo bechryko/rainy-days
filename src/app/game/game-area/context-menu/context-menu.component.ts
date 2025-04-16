@@ -6,12 +6,14 @@ import { GameEventHandler, GameEventType } from '@rainy-days/game/core/game-even
 import { Tile } from '@rainy-days/game/core/map';
 import { filter, fromEvent, map } from 'rxjs';
 import { contextMenuMap } from './context-menu-map';
+import { ContextMenuService } from './context-menu.service';
 
 @Component({
    selector: 'rd-context-menu',
    templateUrl: './context-menu.component.html',
    styleUrl: './context-menu.component.scss',
    imports: [NgComponentOutlet],
+   providers: [ContextMenuService],
    changeDetection: ChangeDetectionStrategy.OnPush,
    host: {
       "[style.left.px]": "xPos()",
