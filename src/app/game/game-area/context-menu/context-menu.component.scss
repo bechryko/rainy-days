@@ -1,9 +1,11 @@
+@use 'src/styles/colorTheme' as colorTheme;
+
 :host {
    position: absolute;
    translate: 0 -100%;
    display: block;
-   background-color: grey;
-   border: 1px solid black;
+   background-color: colorTheme.primaryColor(100);
+   border: 2px solid colorTheme.primaryColorWithBlack(600);
    border-radius: 1rem;
    padding: 1rem;
 }

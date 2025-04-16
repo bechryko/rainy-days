@@ -1,9 +1,13 @@
+@use 'src/styles/colorTheme' as colorTheme;
+
 h3 {
    margin: 0;
+   color: colorTheme.primaryColorWithBlack(600);
 }
 
 .delay-button {
    $size: 2rem;
+   $radius: 0.5rem;
 
    font-size: 0.875rem;
    border: 1px solid black;
@@ -13,4 +17,17 @@ h3 {
    width: $size;
    padding-inline: 0;
    text-align: center;
+   user-select: none;
+   cursor: pointer;
+
+   &:first-child {
+      margin-left: 0.5rem;
+      border-top-left-radius: $radius;
+      border-bottom-left-radius: $radius;
+   }
+
+   &:last-child {
+      border-top-right-radius: $radius;
+      border-bottom-right-radius: $radius;
+   }
 }

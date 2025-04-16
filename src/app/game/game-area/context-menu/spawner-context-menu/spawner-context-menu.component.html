@@ -5,6 +5,7 @@
    @for (time of spawnDelayTimes; track time) {
       <button
          #button
+         matRipple
          class="delay-button"
          (click)="delaySpawn(time); button.blur()">
          {{ time }}s

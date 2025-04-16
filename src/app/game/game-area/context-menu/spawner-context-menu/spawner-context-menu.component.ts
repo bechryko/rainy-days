@@ -1,10 +1,11 @@
 import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { MatRipple } from '@angular/material/core';
 import { Spawner } from '@rainy-days/game/core/buildings';
 
 @Component({
    selector: 'rd-spawner-context-menu',
-   imports: [AsyncPipe],
+   imports: [AsyncPipe, MatRipple],
    templateUrl: './spawner-context-menu.component.html',
    styleUrl: './spawner-context-menu.component.scss',
    changeDetection: ChangeDetectionStrategy.OnPush
