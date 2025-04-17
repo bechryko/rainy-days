@@ -50,6 +50,7 @@ export class Game {
       } else {
          this.controller.unregisterEventListeners();
          GameEventHandler.getInstance().emitEvent(GameEventType.IS_GAME_GOING, false);
+         GameEventHandler.getInstance().emitEvent(GameEventType.CLOSE_CONTEXT_MENU, null);
       }
    }
 
