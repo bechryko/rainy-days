@@ -17,7 +17,10 @@ export class Game {
    public paused = false;
    private exited = false;
 
-   constructor(canvas: HTMLCanvasElement, private readonly gameSpeed: Signal<number>) {
+   constructor(
+      canvas: HTMLCanvasElement,
+      private readonly gameSpeed: Signal<number>
+   ) {
       this.map = new Map();
       this.controller = new Controller(this.map['tiles']);
       this.drawer = new BasicDrawer(canvas);

@@ -12,7 +12,10 @@ export class GameEventHandler {
       [GameEventType.SELECT_TOOLBAR_ITEM]: pipe(startWith(Toolbar.INITIAL_SELECTED_ITEM_KEY), distinctUntilChanged(), shareReplay(1)),
       [GameEventType.UPDATE_SPAWN_TIMER]: pipe(distinctUntilChanged(), shareReplay(1)),
       [GameEventType.DESTINATION_CRITICAL_HEALTH]: pipe(throttleTime(GameEventHandler.DESTINATION_HEALTH_MESSAGE_COOLDOWN_S * 1000)),
-      [GameEventType.GAIN_SCORE]: pipe()
+      [GameEventType.GAIN_SCORE]: pipe(),
+      [GameEventType.OPEN_CONTEXT_MENU]: pipe(shareReplay(1)),
+      [GameEventType.CLOSE_CONTEXT_MENU]: pipe(),
+      [GameEventType.COMPLETE_TIMED_PAUSE]: pipe()
    };
 
    private static instance?: GameEventHandler;

@@ -90,4 +90,8 @@ export class Toolbar {
 
       GameEventHandler.getInstance().emitEvent(GameEventType.SELECT_TOOLBAR_ITEM, key);
    }
+
+   public get selection(): Selection {
+      return this.selectedToolbarItem.selection;
+   }
 }

@@ -26,7 +26,7 @@ export class ToolbarComponent {
    public readonly gameSpeedChange = output<number>();
 
    public readonly possibleGameSpeeds = [0, 1, 2, 4];
-   private readonly possibleGameSpeedKeys = ["q", "w", "e"];
+   private readonly possibleGameSpeedKeys = ['q', 'w', 'e'];
    public readonly gameToolbar = Toolbar.inject();
 
    constructor() {

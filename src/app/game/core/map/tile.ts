@@ -34,7 +34,7 @@ export class Tile {
    constructor(
       public readonly x: number,
       public readonly y: number
-   ) { }
+   ) {}
 
    public build(buildable: Building | Road): void {
       if (buildable instanceof Building && !this.building) {
@@ -59,6 +59,12 @@ export class Tile {
          car.destroy(); //TODO: object pool
          this.building.heal();
          GameEventHandler.getInstance().emitEvent(GameEventType.GAIN_SCORE, null);
+      }
+   }
+
+   public openContextMenu(): void {
+      if (this.building) {
+         GameEventHandler.getInstance().emitEvent(GameEventType.OPEN_CONTEXT_MENU, this.building);
       }
    }
 
