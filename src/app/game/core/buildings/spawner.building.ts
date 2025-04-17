@@ -7,9 +7,9 @@ import { Car } from '../map/car';
 import { Color } from '../map/models';
 import { DirectionUtils } from '../map/utils';
 import { Building } from './building';
-import { DelayedPauseBuilding } from './models';
+import { TimedPauseBuilding } from './models';
 
-export class Spawner extends Building implements DelayedPauseBuilding {
+export class Spawner extends Building implements TimedPauseBuilding {
    public static readonly GENERAL_CAR_SPAWN_TIMER = 4;
 
    private readonly _displayTimer$ = new BehaviorSubject('0');
