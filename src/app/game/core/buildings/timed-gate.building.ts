@@ -2,10 +2,12 @@ import { Signal, signal } from '@angular/core';
 import { BehaviorSubject, distinctUntilChanged, Observable } from 'rxjs';
 import { BasicDrawer } from '../drawing';
 import { toFraction } from '../functions';
+import { GameEventHandler, GameEventType } from '../game-events';
 import { Tile } from '../map';
 import { Gate } from './gate';
+import { TimedPauseBuilding } from './models';
 
-export class TimedGate extends Gate {
+export class TimedGate extends Gate implements TimedPauseBuilding {
    public static readonly BARRIER_TIMER = 4;
    public static readonly OPEN_COLOR = '#BBB';
    public static readonly CLOSED_COLOR = '#444';
@@ -14,6 +16,7 @@ export class TimedGate extends Gate {
    private readonly _displayTimer$ = new BehaviorSubject('0');
    private timer = TimedGate.BARRIER_TIMER;
    private readonly closed = signal(false);
+   public timedPause = false;
 
    constructor(tile: Tile) {
       super(tile, true);
@@ -22,6 +25,12 @@ export class TimedGate extends Gate {
    public switch(): void {
       this.closed.update(state => !state);
       this.emit();
+
+      if (this.timedPause) {
+         GameEventHandler.getInstance().emitEvent(GameEventType.TOGGLE_PAUSE, null);
+         GameEventHandler.getInstance().emitEvent(GameEventType.COMPLETE_TIMED_PAUSE, null);
+         this.timedPause = false;
+      }
    }
 
    public doesLetPass(): boolean {
