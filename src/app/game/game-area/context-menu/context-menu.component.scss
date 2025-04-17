@@ -4,8 +4,18 @@
    position: absolute;
    translate: 0 -100%;
    display: block;
+   visibility: hidden;
+   height: 0;
    background-color: colorTheme.primaryColor(100);
    border: 2px solid colorTheme.primaryColorWithBlack(600);
    border-radius: 1rem;
    padding: 1rem;
+   overflow-y: hidden;
+   interpolate-size: allow-keywords;
+   transition: height 250ms ease;
+
+   &.visible {
+      visibility: visible;
+      height: auto;
+   }
 }

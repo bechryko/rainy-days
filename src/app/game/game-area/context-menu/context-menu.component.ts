@@ -18,7 +18,7 @@ import { ContextMenuService } from './context-menu.service';
    host: {
       "[style.left.px]": "xPos()",
       "[style.top.px]": "yPos()",
-      "[style.visibility]": "contextMenuBuilding() ? 'visible' : 'hidden'"
+      "[class.visible]": "contextMenuBuilding()"
    }
 })
 export class ContextMenuComponent {
