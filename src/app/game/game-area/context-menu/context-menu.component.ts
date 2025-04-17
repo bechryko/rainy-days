@@ -20,7 +20,7 @@ import { ContextMenuService } from './context-menu.service';
    host: {
       '[style.left]': 'xPos()',
       '[style.top.px]': 'yPosPx()',
-      '[style.width.rem]': 'width',
+      '[style.min-width.rem]': 'minWidthRem',
       '[class.visible]': 'contextMenuBuilding()',
       '[class.is-on-bottom]': 'isOnBottom()'
    }
@@ -28,7 +28,7 @@ import { ContextMenuService } from './context-menu.service';
 export class ContextMenuComponent {
    private readonly elementRef = inject(ElementRef);
 
-   public readonly widthRem = 20;
+   public readonly minWidthRem = 14;
    public readonly contextMenuBuilding = input<Building>();
 
    public readonly contextMenuComponent = computed<Type<any> | null>(() => {
@@ -61,7 +61,7 @@ export class ContextMenuComponent {
       const clampedDisplayedTileX = Math.min(Map.COLUMN_COUNT, Math.max(0, displayedTileX));
       const x = clampedDisplayedTileX * Tile.SIZE + (isOnLeft ? ResizeUtils.remToPx(ResizeUtils.CANVAS_BORDER_WIDTH_REM) * 2 : 0);
       if (isOnLeft) {
-         return `calc(${x}px - ${this.widthRem}rem)`;
+         return `calc(${x}px - ${this.minWidthRem}rem)`;
       }
       return `${x}px`;
    });
