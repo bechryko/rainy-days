@@ -4,6 +4,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Building } from '@rainy-days/game/core/buildings';
 import { GameEventHandler, GameEventType } from '@rainy-days/game/core/game-events';
 import { Tile } from '@rainy-days/game/core/map';
+import { Map } from '@rainy-days/game/core/map/map';
+import { ResizeUtils } from '@rainy-days/game/core/map/utils';
 import { filter, fromEvent, map } from 'rxjs';
 import { contextMenuMap } from './context-menu-map';
 import { ContextMenuService } from './context-menu.service';
@@ -16,14 +18,17 @@ import { ContextMenuService } from './context-menu.service';
    providers: [ContextMenuService],
    changeDetection: ChangeDetectionStrategy.OnPush,
    host: {
-      "[style.left.px]": "xPos()",
-      "[style.top.px]": "yPos()",
-      "[class.visible]": "contextMenuBuilding()"
+      "[style.left]": "xPos()",
+      "[style.top.px]": "yPosPx()",
+      "[style.width.rem]": "width",
+      "[class.visible]": "contextMenuBuilding()",
+      "[class.is-on-bottom]": "isOnBottom()"
    }
 })
 export class ContextMenuComponent {
    private readonly elementRef = inject(ElementRef);
 
+   public readonly widthRem = 20;
    public readonly contextMenuBuilding = input<Building>();
 
    public readonly contextMenuComponent = computed<Type<any> | null>(() => {
@@ -36,24 +41,39 @@ export class ContextMenuComponent {
       return contextMenuData.component;
    });
 
+   public readonly isOnBottom = computed(() => {
+      const building = this.contextMenuBuilding();
+      if (!building) {
+         return false;
+      }
+
+      return this.calcIsOnBottom(building);
+   });
+
    public readonly xPos = computed(() => {
       const building = this.contextMenuBuilding();
       if (!building) {
-         return 0;
+         return "0px";
       }
 
-      const tileX = building.tile.x * Tile.SIZE;
-      return tileX;
+      const isOnLeft = this.calcIsOnLeft(building);
+      const displayedTileX = building.tile.x + (isOnLeft ? 2 : -1);
+      const clampedDisplayedTileX = Math.min(Map.COLUMN_COUNT, Math.max(0, displayedTileX));
+      const x = clampedDisplayedTileX * Tile.SIZE + (isOnLeft ? ResizeUtils.remToPx(ResizeUtils.CANVAS_BORDER_WIDTH_REM) * 2 : 0);
+      if (isOnLeft) {
+         return `calc(${x}px - ${this.widthRem}rem)`;
+      }
+      return `${x}px`;
    });
 
-   public readonly yPos = computed(() => {
+   public readonly yPosPx = computed(() => {
       const building = this.contextMenuBuilding();
       if (!building) {
          return 0;
       }
 
-      const tileY = building.tile.y * Tile.SIZE;
-      return tileY;
+      const tilesWidth = building.tile.y * Tile.SIZE;
+      return tilesWidth + ResizeUtils.remToPx(ResizeUtils.CANVAS_BORDER_WIDTH_REM) + (this.calcIsOnBottom(building) ? Tile.SIZE : 0);
    });
 
    constructor() {
@@ -73,5 +93,13 @@ export class ContextMenuComponent {
          return true;
       }
       return this.isChildOfThis(element.parentElement);
+   }
+
+   private calcIsOnBottom(building: Building): boolean {
+      return building.tile.y < Map.ROW_COUNT / 2;
+   }
+
+   private calcIsOnLeft(building: Building): boolean {
+      return building.tile.x > Map.COLUMN_COUNT / 2;
    }
 }

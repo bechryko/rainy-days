@@ -1,8 +1,11 @@
 @use 'src/styles/colorTheme' as colorTheme;
 
 :host {
+   --translate-x: 0;
+   --translate-y: -100%;
+
    position: absolute;
-   translate: 0 -100%;
+   translate: var(--translate-x) var(--translate-y);
    display: block;
    visibility: hidden;
    height: 0;
@@ -13,6 +16,10 @@
    overflow-y: hidden;
    interpolate-size: allow-keywords;
    transition: height 250ms ease;
+
+   &.is-on-bottom {
+      --translate-y: 0;
+   }
 
    &.visible {
       visibility: visible;
