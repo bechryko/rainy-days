@@ -67,7 +67,7 @@ export class GameAreaComponent implements OnDestroy {
    public ngOnDestroy(): void {
       this.game?.stop();
       if (this.onResizeFn) {
-         window.addEventListener('resize', this.onResizeFn);
+         window.removeEventListener('resize', this.onResizeFn);
       }
    }
 
