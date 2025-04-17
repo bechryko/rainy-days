@@ -14,7 +14,7 @@ export class Controller {
 
    private roadConnectionBase?: Tile;
 
-   constructor(private readonly tiles: Tile[][]) { }
+   constructor(private readonly tiles: Tile[][]) {}
 
    public registerEventListeners(): void {
       this.eventListeners.push(

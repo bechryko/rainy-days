@@ -1,4 +1,15 @@
-import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, inject, input, OnDestroy, signal, viewChild } from '@angular/core';
+import {
+   ChangeDetectionStrategy,
+   Component,
+   computed,
+   effect,
+   ElementRef,
+   inject,
+   input,
+   OnDestroy,
+   signal,
+   viewChild
+} from '@angular/core';
 import { GameStartService } from 'src/app/game-start.service';
 import { Building } from '../core/buildings';
 import { Game } from '../core/game';
@@ -49,7 +60,10 @@ export class GameAreaComponent implements OnDestroy {
          const seed = !parameters.seed ? Math.random().toString() : parameters.seed;
          RandomUtils.registerSeed(seed);
          console.log(`Game seed: "${seed}"`);
-         this.game = new Game(canvas, computed(() => this.gameStatus().gameSpeed));
+         this.game = new Game(
+            canvas,
+            computed(() => this.gameStatus().gameSpeed)
+         );
 
          this.onResizeFn = () => {
             Tile.resize();

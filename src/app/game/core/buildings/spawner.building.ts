@@ -12,7 +12,7 @@ import { DelayedPauseBuilding } from './models';
 export class Spawner extends Building implements DelayedPauseBuilding {
    public static readonly GENERAL_CAR_SPAWN_TIMER = 4;
 
-   private readonly _displayTimer$ = new BehaviorSubject("0");
+   private readonly _displayTimer$ = new BehaviorSubject('0');
    private timer = 0;
    public timedPause = false;
 
@@ -60,13 +60,7 @@ export class Spawner extends Building implements DelayedPauseBuilding {
       drawer.lineWidth = 2;
 
       drawer.circle((this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE, Tile.SIZE / 4, this.color);
-      drawer.circle(
-         (this.tile.x + 0.5) * Tile.SIZE,
-         (this.tile.y + 0.5) * Tile.SIZE,
-         Tile.SIZE / 4,
-         'black',
-         false
-      );
+      drawer.circle((this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE, Tile.SIZE / 4, 'black', false);
       drawer.text(Math.ceil(this.timer) + 's', (this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE, Tile.SIZE * 0.35);
    }
 

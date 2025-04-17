@@ -16,7 +16,7 @@ export class TimedPauseWidgetComponent {
    private readonly cdr = inject(ChangeDetectorRef);
 
    public readonly building = input.required<DelayedPauseBuilding>();
-   @ViewChild("checkbox", { read: ElementRef }) private checkboxElementRef!: ElementRef<HTMLElement>;
+   @ViewChild('checkbox', { read: ElementRef }) private checkboxElementRef!: ElementRef<HTMLElement>;
 
    constructor() {
       GameEventHandler.getInstance().watchEvents(GameEventType.COMPLETE_TIMED_PAUSE, () => this.cdr.markForCheck());

@@ -34,7 +34,7 @@ export class Tile {
    constructor(
       public readonly x: number,
       public readonly y: number
-   ) { }
+   ) {}
 
    public build(buildable: Building | Road): void {
       if (buildable instanceof Building && !this.building) {

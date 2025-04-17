@@ -18,11 +18,11 @@ import { ContextMenuService } from './context-menu.service';
    providers: [ContextMenuService],
    changeDetection: ChangeDetectionStrategy.OnPush,
    host: {
-      "[style.left]": "xPos()",
-      "[style.top.px]": "yPosPx()",
-      "[style.width.rem]": "width",
-      "[class.visible]": "contextMenuBuilding()",
-      "[class.is-on-bottom]": "isOnBottom()"
+      '[style.left]': 'xPos()',
+      '[style.top.px]': 'yPosPx()',
+      '[style.width.rem]': 'width',
+      '[class.visible]': 'contextMenuBuilding()',
+      '[class.is-on-bottom]': 'isOnBottom()'
    }
 })
 export class ContextMenuComponent {
@@ -53,7 +53,7 @@ export class ContextMenuComponent {
    public readonly xPos = computed(() => {
       const building = this.contextMenuBuilding();
       if (!building) {
-         return "0px";
+         return '0px';
       }
 
       const isOnLeft = this.calcIsOnLeft(building);
@@ -77,12 +77,14 @@ export class ContextMenuComponent {
    });
 
    constructor() {
-      fromEvent<MouseEvent>(document, "mousedown").pipe(
-         takeUntilDestroyed(),
-         map(event => event.target),
-         filter(target => target instanceof HTMLElement),
-         filter(element => !this.isChildOfThis(element))
-      ).subscribe(() => GameEventHandler.getInstance().emitEvent(GameEventType.CLOSE_CONTEXT_MENU, null));
+      fromEvent<MouseEvent>(document, 'mousedown')
+         .pipe(
+            takeUntilDestroyed(),
+            map(event => event.target),
+            filter(target => target instanceof HTMLElement),
+            filter(element => !this.isChildOfThis(element))
+         )
+         .subscribe(() => GameEventHandler.getInstance().emitEvent(GameEventType.CLOSE_CONTEXT_MENU, null));
    }
 
    private isChildOfThis(element: HTMLElement | null): boolean {

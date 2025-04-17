@@ -7,7 +7,7 @@ export class ContextMenuService {
    private timedPauseBuilding?: DelayedPauseBuilding;
 
    constructor() {
-      GameEventHandler.getInstance().watchEvents(GameEventType.COMPLETE_TIMED_PAUSE, () => this.timedPauseBuilding = undefined);
+      GameEventHandler.getInstance().watchEvents(GameEventType.COMPLETE_TIMED_PAUSE, () => (this.timedPauseBuilding = undefined));
    }
 
    public setTimedPauseBuilding(building: DelayedPauseBuilding): void {
