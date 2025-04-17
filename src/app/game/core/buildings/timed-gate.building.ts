@@ -20,6 +20,7 @@ export class TimedGate extends Gate implements TimedPauseBuilding {
 
    constructor(tile: Tile) {
       super(tile, true);
+      this.emit();
    }
 
    public switch(): void {
