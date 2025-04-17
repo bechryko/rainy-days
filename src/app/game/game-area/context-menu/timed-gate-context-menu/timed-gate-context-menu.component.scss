@@ -1,17 +1,8 @@
-@use 'src/styles/colorTheme' as colorTheme;
+@use 'mixins';
 
-:host {
-   user-select: none;
-}
-
-h3 {
-   margin: 0;
-   color: colorTheme.primaryColorWithBlack(600);
-}
+@include mixins.context-menu;
 
 .state-control-container {
-   margin-top: 0.75rem;
-
    p {
       margin-block: 0.25rem;
 
@@ -21,14 +12,6 @@ h3 {
    }
 
    button {
-      font-size: 0.875rem;
-      border: 1px solid black;
-      border-radius: 0.5rem;
-      outline: none;
-      background-color: white;
-      height: 2rem;
       padding-inline: 1rem;
-      text-align: center;
-      cursor: pointer;
    }
 }

@@ -40,7 +40,8 @@
             "browser": "src/main.ts",
             "stylePreprocessorOptions": {
               "includePaths": [
-                "."
+                ".",
+                "./src/styles"
               ]
             }
           },
