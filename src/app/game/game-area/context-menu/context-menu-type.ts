@@ -1,3 +1,4 @@
 export enum ContextMenuType {
-   SPAWNER
+   SPAWNER,
+   TIMED_GATE
 }

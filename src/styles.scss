@@ -1,5 +1,6 @@
 @use '@angular/material' as mat;
 @use './styles/colorTheme' as colorTheme;
+@use 'material-override';
 @include mat.elevation-classes();
 @include mat.app-background();
 
@@ -26,4 +27,3 @@ body {
    align-items: center;
    height: 100%;
 }
-

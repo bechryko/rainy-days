@@ -1,0 +1,23 @@
+@use 'colorTheme';
+
+@mixin context-menu {
+   :host {
+      user-select: none;
+   }
+
+   h3 {
+      margin: 0 0 1rem;
+      color: colorTheme.primaryColorWithBlack(600);
+   }
+
+   button {
+      font-size: 0.875rem;
+      border: 1px solid black;
+      border-radius: 0.5rem;
+      outline: none;
+      background-color: white;
+      height: 2rem;
+      text-align: center;
+      cursor: pointer;
+   }
+}

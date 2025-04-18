@@ -1,40 +1,29 @@
-@use 'src/styles/colorTheme' as colorTheme;
+@use 'mixins';
+@use 'utils';
 
-:host {
-   user-select: none;
-}
+@include mixins.context-menu;
 
-h3 {
-   margin: 0;
-   color: colorTheme.primaryColorWithBlack(600);
+p {
+   margin-block: 0;
+
+   &:last-of-type {
+      margin-bottom: 0.5rem;
+   }
 }
 
 .delay-button {
-   $size: 2rem;
-   $radius: 0.5rem;
-
-   font-size: 0.875rem;
-   border: 1px solid black;
-   outline: none;
-   background-color: white;
-   height: $size;
-   width: $size;
+   width: 2.5rem;
    padding-inline: 0;
-   text-align: center;
-   cursor: pointer;
 
    &:first-child {
       margin-left: 0.5rem;
-      border-top-left-radius: $radius;
-      border-bottom-left-radius: $radius;
    }
 
-   &:last-child {
-      border-top-right-radius: $radius;
-      border-bottom-right-radius: $radius;
+   &:not(:first-child) {
+      @include utils.border-left-radius(unset);
    }
-}
 
-.smaller-bottom-margin {
-   margin-bottom: 0.5rem;
+   &:not(:last-child) {
+      @include utils.border-right-radius(unset);
+   }
 }

@@ -1,0 +1,15 @@
+<h3>Timed Gate</h3>
+<div class="state-control-container">
+   <p>
+      Current state:
+      <strong>{{ isGateClosed() ? 'closed' : 'open' }}</strong>
+   </p>
+   <p>Switches state in {{ building().displayTimer$ | async }}s</p>
+   <button
+      #button
+      matRipple
+      (click)="switchGateState(); button.blur()">
+      Switch state
+   </button>
+</div>
+<rd-timed-pause-widget [building]="building()">Pause the game when it switches</rd-timed-pause-widget>

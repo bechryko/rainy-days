@@ -1,0 +1,17 @@
+@use 'mixins';
+
+@include mixins.context-menu;
+
+.state-control-container {
+   p {
+      margin-block: 0.25rem;
+
+      &:last-of-type {
+         margin-bottom: 0.5rem;
+      }
+   }
+
+   button {
+      padding-inline: 1rem;
+   }
+}

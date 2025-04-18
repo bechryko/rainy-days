@@ -1,6 +1,6 @@
 <h3>Spawner</h3>
 <p>Spawns car in: {{ building().displayTimer$ | async }}</p>
-<p class="smaller-bottom-margin">
+<p>
    Delay spawn by:
    @for (time of spawnDelayTimes; track time) {
       <button
@@ -12,4 +12,4 @@
       </button>
    }
 </p>
-<rd-delayed-spawn-widget [building]="building()">Pause the game when it spawns</rd-delayed-spawn-widget>
+<rd-timed-pause-widget [building]="building()">Pause the game when it spawns</rd-timed-pause-widget>

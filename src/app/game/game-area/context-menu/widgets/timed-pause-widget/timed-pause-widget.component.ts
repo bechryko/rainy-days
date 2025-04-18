@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, input, ViewChild } from '@angular/core';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
-import { DelayedPauseBuilding } from '@rainy-days/game/core/buildings/models';
+import { TimedPauseBuilding } from '@rainy-days/game/core/buildings/models';
 import { GameEventHandler, GameEventType } from '@rainy-days/game/core/game-events';
 import { ContextMenuService } from '../../context-menu.service';
 
 @Component({
-   selector: 'rd-delayed-spawn-widget',
+   selector: 'rd-timed-pause-widget',
    imports: [MatCheckboxModule],
    templateUrl: './timed-pause-widget.component.html',
    styleUrl: './timed-pause-widget.component.scss',
@@ -15,7 +15,7 @@ export class TimedPauseWidgetComponent {
    private readonly contextMenuService = inject(ContextMenuService);
    private readonly cdr = inject(ChangeDetectorRef);
 
-   public readonly building = input.required<DelayedPauseBuilding>();
+   public readonly building = input.required<TimedPauseBuilding>();
    @ViewChild('checkbox', { read: ElementRef }) private checkboxElementRef!: ElementRef<HTMLElement>;
 
    constructor() {
