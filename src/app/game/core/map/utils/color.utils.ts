@@ -1,8 +1,28 @@
-import { RandomUtils } from "../../utils";
+import { RandomUtils } from '../../utils';
+
+export enum SystemColorToken {
+   GRID = '--rd-game-grid-color',
+   BUILDING_OUTLINE = '--rd-game-building-outline-color',
+   CAR_OUTLINE = '--rd-game-car-outline-color',
+   TEXT = '--rd-game-text-color'
+}
+
+export enum ComponentColorToken {
+   BASIC_ROAD = '--rd-game-basic-road-color',
+   TUBE_OUTLINE = '--rd-game-tube-outline-color',
+   TUBE = '--rd-game-tube-color',
+   TIMED_GATE_OPEN = '--rd-game-timed-gate-open-color',
+   TIMED_GATE_CLOSED = '--rd-game-timed-gate-closed-color',
+   TIMED_GATE_X = '--rd-game-timed-gate-x-color'
+}
 
 export class ColorUtils {
+   public static getTokenValue(colorToken: SystemColorToken | ComponentColorToken): string {
+      return this.getPropertyValue(colorToken);
+   }
+
    public static getBaseTileColor(): string {
-      return this.getPropertyValue("--rd-game-tile-color-base");
+      return this.getPropertyValue('--rd-game-tile-color-base');
    }
 
    public static getGameObjectColors(): string[] {

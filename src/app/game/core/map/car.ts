@@ -1,7 +1,7 @@
 import { BasicDrawer } from '../drawing';
 import { Direction } from './models';
 import { Tile } from './tile';
-import { DirectionUtils } from './utils';
+import { ColorUtils, DirectionUtils, SystemColorToken } from './utils';
 
 export class Car {
    private static readonly pool: Car[] = [];
@@ -53,7 +53,10 @@ export class Car {
    public getTile(map: Tile[][]): Tile {
       const tile = map[Math.floor(this.x / Tile.SIZE)]?.[Math.floor(this.y / Tile.SIZE)];
       if (!tile) {
-         console.log(`${this.x} -> ${Math.floor(this.x / Tile.SIZE)}`, `${this.y} -> ${Math.floor(this.y / Tile.SIZE)}`);
+         console.log(
+            `${this.x} -> ${Math.floor(this.x / Tile.SIZE)}`,
+            `${this.y} -> ${Math.floor(this.y / Tile.SIZE)}`
+         );
       }
       return map[Math.floor(this.x / Tile.SIZE)][Math.floor(this.y / Tile.SIZE)];
    }
@@ -78,7 +81,7 @@ export class Car {
    }
 
    private draw(drawer: BasicDrawer): void {
-      drawer.circle(this.x, this.y, Car.SIZE / 2, 'black');
+      drawer.circle(this.x, this.y, Car.SIZE / 2, ColorUtils.getTokenValue(SystemColorToken.CAR_OUTLINE));
       drawer.circle(this.x, this.y, Car.SIZE / 2.5, this.color);
    }
 
@@ -94,12 +97,16 @@ export class Car {
          x: (this.destinationTile.x + 0.5) * Tile.SIZE,
          y: (this.destinationTile.y + 0.5) * Tile.SIZE
       };
-      const oldDistanceFromDestination = Math.abs(this.x - destinationCoords.x) + Math.abs(this.y - destinationCoords.y);
+      const oldDistanceFromDestination =
+         Math.abs(this.x - destinationCoords.x) + Math.abs(this.y - destinationCoords.y);
       const distanceMoved = Car.SPEED * Tile.SIZE * deltaTime;
       this.x += DirectionUtils.getDx(this.currentDirection) * distanceMoved;
       this.y += DirectionUtils.getDy(this.currentDirection) * distanceMoved;
 
-      if (Math.abs(this.x - destinationCoords.x) + Math.abs(this.y - destinationCoords.y) >= oldDistanceFromDestination) {
+      if (
+         Math.abs(this.x - destinationCoords.x) + Math.abs(this.y - destinationCoords.y) >=
+         oldDistanceFromDestination
+      ) {
          this.x = destinationCoords.x;
          this.y = destinationCoords.y;
 

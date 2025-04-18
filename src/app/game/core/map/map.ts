@@ -3,7 +3,7 @@ import { BasicDrawer } from '../drawing';
 import { RandomUtils } from '../utils';
 import { Car } from './car';
 import { Tile } from './tile';
-import { ColorUtils } from './utils';
+import { ColorUtils, SystemColorToken } from './utils';
 
 export class Map {
    public static readonly ROW_COUNT = 15;
@@ -93,7 +93,7 @@ export class Map {
    }
 
    private drawMapGrid(drawer: BasicDrawer): void {
-      drawer.strokeStyle = 'black';
+      drawer.strokeStyle = ColorUtils.getTokenValue(SystemColorToken.GRID);
       drawer.lineCap = 'square';
       drawer.lineWidth = 1;
 

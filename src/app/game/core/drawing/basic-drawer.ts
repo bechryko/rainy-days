@@ -1,3 +1,5 @@
+import { ColorUtils, SystemColorToken } from '../map/utils';
+
 type CanvasRenderingContext2DInterface = Pick<CanvasRenderingContext2D, 'beginPath' | 'lineTo' | 'moveTo' | 'stroke'>;
 
 export class BasicDrawer {
@@ -21,7 +23,7 @@ export class BasicDrawer {
       this._ctx.stroke();
    }
 
-   public square(x: number, y: number, side: number, color = 'black', fill = true): void {
+   public square(x: number, y: number, side: number, color: string, fill = true): void {
       if (fill) {
          this.fillStyle = color;
       } else {
@@ -32,7 +34,7 @@ export class BasicDrawer {
       this._ctx[fill ? 'fill' : 'stroke']();
    }
 
-   public circle(x: number, y: number, radius: number, color = 'black', fill = true): void {
+   public circle(x: number, y: number, radius: number, color: string, fill = true): void {
       if (fill) {
          this.fillStyle = color;
       } else {
@@ -44,7 +46,7 @@ export class BasicDrawer {
    }
 
    public text(text: string, x: number, y: number, fontSize: number): void {
-      this.fillStyle = 'black';
+      this.fillStyle = ColorUtils.getTokenValue(SystemColorToken.TEXT);
       this.fontSize = fontSize;
       this._ctx.fillText(text, x, y);
    }
