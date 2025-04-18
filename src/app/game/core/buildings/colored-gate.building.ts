@@ -1,13 +1,12 @@
 import { BasicDrawer } from '../drawing';
 import { Tile } from '../map';
 import { Car } from '../map/car';
-import { Color } from '../map/models';
 import { Gate } from './gate';
 
 export class ColoredGate extends Gate {
    constructor(
       tile: Tile,
-      public readonly color: Color
+      public readonly color: string
    ) {
       super(tile, true);
    }

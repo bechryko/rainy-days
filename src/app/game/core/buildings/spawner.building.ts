@@ -4,7 +4,6 @@ import { toFraction } from '../functions';
 import { GameEventHandler, GameEventType } from '../game-events';
 import { Tile } from '../map';
 import { Car } from '../map/car';
-import { Color } from '../map/models';
 import { DirectionUtils } from '../map/utils';
 import { Building } from './building';
 import { TimedPauseBuilding } from './models';
@@ -18,7 +17,7 @@ export class Spawner extends Building implements TimedPauseBuilding {
 
    constructor(
       tile: Tile,
-      private readonly color: Color
+      private readonly color: string
    ) {
       super(tile, false);
    }

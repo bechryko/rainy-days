@@ -2,7 +2,6 @@ import { BasicDrawer } from '../drawing';
 import { Game } from '../game';
 import { GameEventHandler, GameEventType } from '../game-events';
 import { Tile } from '../map';
-import { Color } from '../map/models';
 import { Building } from './building';
 
 export class Destination extends Building {
@@ -22,7 +21,7 @@ export class Destination extends Building {
 
    constructor(
       tile: Tile,
-      public readonly color: Color
+      public readonly color: string
    ) {
       super(tile, false);
 

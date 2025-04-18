@@ -1,6 +1,5 @@
 import { Tile } from '../../map';
-import { gameObjectColors } from '../../map/constants';
-import { Color } from '../../map/models';
+import { ColorUtils } from '../../map/utils';
 import { RandomUtils } from '../../utils';
 import { Destination } from '../destination.building';
 import { Spawner } from '../spawner.building';
@@ -12,7 +11,7 @@ export class BuildingSpawnerUtils {
    public static spawnSpawner(map: Tile[][]): void {
       const possibleLocations = this.getAvailableBuildingLocations(map, BuildingSpawnerUtils.SPAWNER_SPAWNING_CLEAR_RANGE);
       const location = RandomUtils.nextArrayElement(possibleLocations);
-      const spawner = new Spawner(location, RandomUtils.nextArrayElement(gameObjectColors));
+      const spawner = new Spawner(location, ColorUtils.getRandomGameObjectColor());
       location.build(spawner);
    }
 
@@ -20,8 +19,8 @@ export class BuildingSpawnerUtils {
       const possibleLocations = this.getAvailableBuildingLocations(tiles, BuildingSpawnerUtils.DESTINATION_SPAWNING_CLEAR_RANGE);
       const location = RandomUtils.nextArrayElement(possibleLocations);
 
-      const possibleColors = [...gameObjectColors].filter(color => color !== location.color);
-      const color = RandomUtils.nextArrayElement<Color>(possibleColors);
+      const possibleColors = [...ColorUtils.getGameObjectColors()].filter(color => color !== location.color);
+      const color = RandomUtils.nextArrayElement(possibleColors);
 
       const destination = new Destination(location, color);
       location.build(destination);

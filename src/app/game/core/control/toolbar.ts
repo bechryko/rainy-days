@@ -2,8 +2,7 @@ import { signal, Signal } from '@angular/core';
 import { Building, ColoredGate, TimedGate } from '../buildings';
 import { GameEventHandler, GameEventType } from '../game-events';
 import { Tile } from '../map';
-import { gameObjectColors } from '../map/constants';
-import { Color } from '../map/models';
+import { ColorUtils } from '../map/utils';
 import { Road, Tube } from '../roads';
 import { RandomUtils } from '../utils';
 import { BasicRoad } from './../roads/basic-road.road';
@@ -18,8 +17,8 @@ export class Toolbar {
       return this.instance.asReadonly();
    }
 
-   private readonly gate1Color: Color;
-   private readonly gate2Color: Color;
+   private readonly gate1Color: string;
+   private readonly gate2Color: string;
 
    public readonly items: ToolbarItem[] = [
       {
@@ -63,10 +62,10 @@ export class Toolbar {
    private selectedToolbarItem!: ToolbarItem;
 
    constructor() {
-      this.gate1Color = RandomUtils.nextArrayElement(gameObjectColors);
-      do {
-         this.gate2Color = RandomUtils.nextArrayElement(gameObjectColors);
-      } while (this.gate1Color == this.gate2Color);
+      const possibleColors = ColorUtils.getGameObjectColors();
+      this.gate1Color = RandomUtils.nextArrayElement(possibleColors);
+      possibleColors.splice(possibleColors.indexOf(this.gate1Color));
+      this.gate2Color = RandomUtils.nextArrayElement(possibleColors);
 
       GameEventHandler.getInstance().watchEvents(GameEventType.SELECT_TOOLBAR_ITEM, toolbarItemIndex => {
          this.selectedToolbarItem = this.items[toolbarItemIndex];

@@ -2,9 +2,8 @@ import { BuildingSpawnerUtils } from '../buildings/utils';
 import { BasicDrawer } from '../drawing';
 import { RandomUtils } from '../utils';
 import { Car } from './car';
-import { baseMapColor, gameObjectColors } from './constants';
-import { Color } from './models/color.d';
 import { Tile } from './tile';
+import { ColorUtils } from './utils';
 
 export class Map {
    public static readonly ROW_COUNT = 15;
@@ -62,7 +61,7 @@ export class Map {
                continue;
             }
 
-            if (tile.color === baseMapColor) {
+            if (tile.color === ColorUtils.getBaseTileColor()) {
                spreads++;
             } else if (RandomUtils.nextChance()) {
                continue;
@@ -78,11 +77,11 @@ export class Map {
       }
    }
 
-   private chooseSpreadColor(): Color {
-      const colorCountMap = {} as Record<Color, number>;
-      let minColor: Color | undefined;
+   private chooseSpreadColor(): string {
+      const colorCountMap: Record<string, number> = {};
+      let minColor: string | undefined;
 
-      for (const color of gameObjectColors) {
+      for (const color of ColorUtils.getGameObjectColors()) {
          colorCountMap[color] = this.tiles.flat().filter(tile => tile.color === color).length;
 
          if (!minColor || colorCountMap[minColor] > colorCountMap[color]) {
