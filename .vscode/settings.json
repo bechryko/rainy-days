@@ -2,13 +2,16 @@
    "editor.formatOnSave": true,
    "editor.defaultFormatter": "esbenp.prettier-vscode",
    "editor.tabSize": 3,
-   "editor.rulers": [140],
+   "editor.rulers": [120],
    "editor.wordWrap": "wordWrapColumn",
-   "editor.wordWrapColumn": 140,
+   "editor.wordWrapColumn": 120,
    "editor.insertSpaces": true,
    "editor.codeActionsOnSave": {
       "source.organizeImports": "explicit",
       "source.fixAll": "explicit"
+   },
+   "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
    },
    "editor.guides.bracketPairs": "active",
    "editor.guides.bracketPairsHorizontal": "active",
