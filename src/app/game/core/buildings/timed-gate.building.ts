@@ -13,14 +13,13 @@ export class TimedGate extends Gate implements TimedPauseBuilding {
    public static readonly CLOSED_COLOR = '#444';
    public static readonly DENY_COLOR = 'red';
 
-   private readonly _displayTimer$ = new BehaviorSubject('0');
    private timer = TimedGate.BARRIER_TIMER;
+   private readonly _displayTimer$ = new BehaviorSubject(toFraction(this.timer));
    private readonly closed = signal(false);
    public timedPause = false;
 
    constructor(tile: Tile) {
       super(tile, true);
-      this.emit();
    }
 
    public switch(): void {

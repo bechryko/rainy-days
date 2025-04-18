@@ -12,8 +12,8 @@ import { TimedPauseBuilding } from './models';
 export class Spawner extends Building implements TimedPauseBuilding {
    public static readonly GENERAL_CAR_SPAWN_TIMER = 4;
 
-   private readonly _displayTimer$ = new BehaviorSubject('0');
    private timer = 0;
+   private readonly _displayTimer$ = new BehaviorSubject(toFraction(this.timer));
    public timedPause = false;
 
    constructor(
