@@ -1,0 +1,34 @@
+@use '@angular/material';
+
+$rainy-days-primary: material.m2-define-palette(material.$m2-light-green-palette, 600, 300, 900);
+$rainy-days-accent: material.m2-define-palette(material.$m2-pink-palette, 600, A700, 300);
+
+$rainy-days-warn: material.m2-define-palette(material.$m2-red-palette);
+
+$rainy-days-theme: material.m2-define-light-theme(
+   (
+      color: (
+         primary: $rainy-days-primary,
+         accent: $rainy-days-accent,
+         warn: $rainy-days-warn
+      )
+   )
+);
+
+@include material.all-component-themes($rainy-days-theme);
+
+@function primary($color) {
+   @return material.m2-get-color-from-palette($rainy-days-primary, $color);
+}
+
+@function primary-darker($color) {
+   @return mix(black, primary($color), 50%);
+}
+
+@function accent($color) {
+   @return material.m2-get-color-from-palette($rainy-days-accent, $color);
+}
+
+@function accent-darker($color) {
+   @return mix(black, accent($color), 50%);
+}

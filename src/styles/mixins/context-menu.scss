@@ -1,5 +1,3 @@
-@use 'colorTheme';
-
 @mixin context-menu {
    :host {
       user-select: none;
@@ -7,7 +5,7 @@
 
    h3 {
       margin: 0 0 1rem;
-      color: colorTheme.primaryColorWithBlack(600);
+      color: var(--rd-primary-darker);
    }
 
    button {
@@ -15,7 +13,7 @@
       border: 1px solid black;
       border-radius: 0.5rem;
       outline: none;
-      background-color: white;
+      background-color: var(--rd-white);
       height: 2rem;
       text-align: center;
       cursor: pointer;

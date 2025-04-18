@@ -1,8 +1,9 @@
-@use '@angular/material' as mat;
-@use './styles/colorTheme' as colorTheme;
+@use '@angular/material';
+@use 'color-theme';
 @use 'material-override';
-@include mat.elevation-classes();
-@include mat.app-background();
+
+@include material.elevation-classes();
+@include material.app-background();
 
 html {
    overflow: hidden;
@@ -12,12 +13,12 @@ body {
    margin: 0;
    height: 100dvh;
    font-family: Roboto, 'Helvetica Neue', sans-serif;
-   background-color: colorTheme.primaryColor(100);
+   background-color: var(--rd-primary-lighter);
 }
 
 ::selection {
-   background-color: colorTheme.accentColor(900);
-   color: white;
+   background-color: var(--rd-accent-darker);
+   color: var(--rd-white);
 }
 
 .center-content {

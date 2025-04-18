@@ -1,5 +1,3 @@
-@use 'src/styles/colorTheme' as colorTheme;
-
 :host {
    --translate-x: 0;
    --translate-y: -100%;
@@ -9,8 +7,8 @@
    display: block;
    visibility: hidden;
    height: 0;
-   background-color: colorTheme.primaryColor(100);
-   border: 2px solid colorTheme.primaryColorWithBlack(600);
+   background-color: var(--rd-primary-lighter);
+   border: 2px solid var(--rd-primary-darker);
    border-radius: 1rem;
    padding: 1rem;
    overflow-y: hidden;

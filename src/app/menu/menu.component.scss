@@ -1,5 +1,3 @@
-@use 'src/styles/colorTheme' as colorTheme;
-
 :host {
    display: grid;
    grid-template-columns: 1fr 1fr;
@@ -14,16 +12,16 @@ h1 {
    grid-area: title;
    font-size: 7rem;
    text-align: center;
-   color: colorTheme.primaryColor(500);
+   color: var(--rd-primary);
    margin: 0 2rem;
    align-self: center;
-   text-shadow: 0.5rem 0.5rem 2px colorTheme.primaryColor(900);
+   text-shadow: 0.5rem 0.5rem 2px var(--rd-primary-darker);
    user-select: none;
 }
 
 .control-panel {
    $border-width: 2px;
-   $border: $border-width solid colorTheme.primaryColor(500);
+   $border: $border-width solid var(--rd-primary);
    $border-radius: 1rem;
 
    grid-area: control-panel;
@@ -33,7 +31,7 @@ h1 {
    place-self: center;
    border: $border;
    border-radius: $border-radius;
-   background-color: colorTheme.primaryColor(200);
+   background-color: var(--rd-primary-lighter-alternative);
 
    .title {
       font-size: 2.5rem;
@@ -41,7 +39,7 @@ h1 {
       margin: 0 auto;
       padding: calc(0.5rem - $border-width) 0.5rem 0.5rem;
       text-align: center;
-      color: colorTheme.primaryColor(900);
+      color: var(--rd-primary-darker);
       border: $border;
       border-top: none;
       border-bottom-left-radius: $border-radius;
