@@ -141,7 +141,6 @@ export class Controller {
          this.roadConnectionBase = undefined;
       }
       this.toolbar.selectItemByKey(numberKey);
-      GameEventHandler.getInstance().emitEvent(GameEventType.SELECT_TOOLBAR_ITEM, numberKey);
    }
 
    private onScrollDown(_: WheelEvent): void {
