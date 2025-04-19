@@ -30,7 +30,7 @@ p {
    padding: 0.75rem;
    border: 0.25rem solid var(--rd-primary);
    border-radius: 0.5rem;
-   transition: border-color 250ms ease-in-out;
+   transition: border-color 150ms ease-in-out;
 
    &.selected {
       border-color: var(--rd-primary-darker);

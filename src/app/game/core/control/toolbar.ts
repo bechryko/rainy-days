@@ -83,11 +83,24 @@ export class Toolbar {
    }
 
    public selectItemByKey(key: number): void {
-      if (key < 0 || key >= this.items.length) {
-         return;
+      while (key < 0) {
+         key += this.items.length;
+      }
+      while (key >= this.items.length) {
+         key -= this.items.length;
       }
 
       GameEventHandler.getInstance().emitEvent(GameEventType.SELECT_TOOLBAR_ITEM, key);
+   }
+
+   public stepSelectedItem(amount: number): void {
+      const currentItemIndex = this.items.indexOf(this.selectedToolbarItem);
+      if (currentItemIndex === -1) {
+         this.selectItemByKey(0);
+         return;
+      }
+
+      this.selectItemByKey(currentItemIndex + amount);
    }
 
    public get selection(): Selection {

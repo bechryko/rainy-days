@@ -39,6 +39,16 @@ export class Controller {
       this.eventListeners.push(new EventListener('mousemove', this.onMouseMove.bind(this)));
 
       this.eventListeners.push(new EventListener('keypress', this.onKeyDown.bind(this)));
+
+      this.eventListeners.push(
+         new EventListener('wheel', event => {
+            if (event.deltaY < 0) {
+               this.onScrollUp(event);
+            } else if (event.deltaY > 0) {
+               this.onScrollDown(event);
+            }
+         })
+      );
    }
 
    public unregisterEventListeners(): void {
@@ -131,6 +141,13 @@ export class Controller {
          this.roadConnectionBase = undefined;
       }
       this.toolbar.selectItemByKey(numberKey);
-      GameEventHandler.getInstance().emitEvent(GameEventType.SELECT_TOOLBAR_ITEM, numberKey);
+   }
+
+   private onScrollDown(_: WheelEvent): void {
+      this.toolbar.stepSelectedItem(1);
+   }
+
+   private onScrollUp(_: WheelEvent): void {
+      this.toolbar.stepSelectedItem(-1);
    }
 }
