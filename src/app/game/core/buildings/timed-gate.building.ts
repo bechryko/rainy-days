@@ -4,14 +4,12 @@ import { BasicDrawer } from '../drawing';
 import { toFraction } from '../functions';
 import { GameEventHandler, GameEventType } from '../game-events';
 import { Tile } from '../map';
+import { ColorUtils, ComponentColorToken, SystemColorToken } from '../map/utils';
 import { Gate } from './gate';
 import { TimedPauseBuilding } from './models';
 
 export class TimedGate extends Gate implements TimedPauseBuilding {
    public static readonly BARRIER_TIMER = 4;
-   public static readonly OPEN_COLOR = '#BBB';
-   public static readonly CLOSED_COLOR = '#444';
-   public static readonly DENY_COLOR = 'red';
 
    private timer = TimedGate.BARRIER_TIMER;
    private readonly _displayTimer$ = new BehaviorSubject(toFraction(this.timer));
@@ -48,12 +46,19 @@ export class TimedGate extends Gate implements TimedPauseBuilding {
    }
 
    public override draw(drawer: BasicDrawer): void {
-      drawer.square((this.tile.x + 0.25) * Tile.SIZE, (this.tile.y + 0.25) * Tile.SIZE, Tile.SIZE / 2);
-      const color = this.closed() ? TimedGate.CLOSED_COLOR : TimedGate.OPEN_COLOR;
+      drawer.square(
+         (this.tile.x + 0.25) * Tile.SIZE,
+         (this.tile.y + 0.25) * Tile.SIZE,
+         Tile.SIZE / 2,
+         ColorUtils.getTokenValue(SystemColorToken.BUILDING_OUTLINE)
+      );
+      const color = this.closed()
+         ? ColorUtils.getTokenValue(ComponentColorToken.TIMED_GATE_CLOSED)
+         : ColorUtils.getTokenValue(ComponentColorToken.TIMED_GATE_OPEN);
       drawer.square((this.tile.x + 0.3) * Tile.SIZE, (this.tile.y + 0.3) * Tile.SIZE, Tile.SIZE * 0.4, color);
 
       if (this.closed()) {
-         drawer.strokeStyle = TimedGate.DENY_COLOR;
+         drawer.strokeStyle = ColorUtils.getTokenValue(ComponentColorToken.TIMED_GATE_X);
 
          const width = Tile.SIZE * 0.05;
          drawer.line(

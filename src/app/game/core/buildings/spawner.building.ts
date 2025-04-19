@@ -4,8 +4,7 @@ import { toFraction } from '../functions';
 import { GameEventHandler, GameEventType } from '../game-events';
 import { Tile } from '../map';
 import { Car } from '../map/car';
-import { Color } from '../map/models';
-import { DirectionUtils } from '../map/utils';
+import { ColorUtils, DirectionUtils, SystemColorToken } from '../map/utils';
 import { Building } from './building';
 import { TimedPauseBuilding } from './models';
 
@@ -18,7 +17,7 @@ export class Spawner extends Building implements TimedPauseBuilding {
 
    constructor(
       tile: Tile,
-      private readonly color: Color
+      private readonly color: string
    ) {
       super(tile, false);
    }
@@ -60,8 +59,19 @@ export class Spawner extends Building implements TimedPauseBuilding {
       drawer.lineWidth = 2;
 
       drawer.circle((this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE, Tile.SIZE / 4, this.color);
-      drawer.circle((this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE, Tile.SIZE / 4, 'black', false);
-      drawer.text(Math.ceil(this.timer) + 's', (this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE, Tile.SIZE * 0.35);
+      drawer.circle(
+         (this.tile.x + 0.5) * Tile.SIZE,
+         (this.tile.y + 0.5) * Tile.SIZE,
+         Tile.SIZE / 4,
+         ColorUtils.getTokenValue(SystemColorToken.BUILDING_OUTLINE),
+         false
+      );
+      drawer.text(
+         Math.ceil(this.timer) + 's',
+         (this.tile.x + 0.5) * Tile.SIZE,
+         (this.tile.y + 0.5) * Tile.SIZE,
+         Tile.SIZE * 0.35
+      );
    }
 
    public get displayTimer$(): Observable<string> {

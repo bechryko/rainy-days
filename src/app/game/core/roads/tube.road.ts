@@ -1,5 +1,6 @@
 import { BasicDrawer } from '../drawing';
 import { Tile } from '../map';
+import { ColorUtils, ComponentColorToken } from '../map/utils';
 import { Road } from './road';
 
 export class Tube extends Road {
@@ -8,7 +9,7 @@ export class Tube extends Road {
    }
 
    public override draw(drawer: BasicDrawer): void {
-      this.drawRoadBase(drawer, 'black', Tile.SIZE / 2);
-      this.drawRoadBase(drawer, 'grey', Tile.SIZE / 2.5);
+      this.drawRoadBase(drawer, ColorUtils.getTokenValue(ComponentColorToken.TUBE_OUTLINE), Tile.SIZE / 2);
+      this.drawRoadBase(drawer, ColorUtils.getTokenValue(ComponentColorToken.TUBE), Tile.SIZE / 2.5);
    }
 }

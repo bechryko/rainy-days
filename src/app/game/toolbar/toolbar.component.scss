@@ -1,5 +1,3 @@
-@use 'src/styles/colorTheme' as colorTheme;
-
 :host {
    position: relative;
    display: flex;
@@ -30,12 +28,12 @@ p {
    display: flex;
    align-items: center;
    padding: 0.75rem;
-   border: 0.25rem solid colorTheme.primaryColor(600);
+   border: 0.25rem solid var(--rd-primary);
    border-radius: 0.5rem;
    transition: border-color 250ms ease-in-out;
 
    &.selected {
-      border-color: colorTheme.primaryColorWithBlack(600);
+      border-color: var(--rd-primary-darker);
    }
 
    .toolbar-item-key {
@@ -61,23 +59,20 @@ p {
    .game-speed-button {
       display: inline-block;
       font: 1rem monospace;
+      color: var(--rd-white);
+      background-color: var(--rd-accent);
       border: none;
-      background-color: transparent;
       aspect-ratio: 1;
       padding: 0.5rem;
       border-radius: 50%;
       transition: background-color 400ms ease;
 
       &.selected {
-         background-color: rgba(black, 0.4);
+         background-color: var(--rd-accent-darker);
       }
 
       &:not(.selected) {
          cursor: pointer;
-
-         &:hover {
-            background-color: rgba(black, 0.2);
-         }
       }
 
       &:focus-visible {
@@ -92,7 +87,8 @@ p {
 
 p.game-over {
    font-size: 3rem;
-   color: colorTheme.accentColorWithBlack(500);
+   color: var(--rd-warn);
+   font-weight: 500;
 }
 
 .restart-button,

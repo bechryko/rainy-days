@@ -4,11 +4,9 @@ import { BasicDrawer } from '../drawing';
 import { GameEventHandler, GameEventType } from '../game-events';
 import { Road, Tube } from '../roads';
 import { Car } from './car';
-import { baseMapColor } from './constants';
 import { Map } from './map';
-import { Color } from './models';
 import { Direction } from './models/direction';
-import { DirectionUtils, ResizeUtils } from './utils';
+import { ColorUtils, DirectionUtils, ResizeUtils } from './utils';
 
 export class Tile {
    private static _SIZE: number;
@@ -25,7 +23,7 @@ export class Tile {
       this.resize();
    }
 
-   public color: Color = baseMapColor;
+   public color = ColorUtils.getBaseTileColor();
    private road?: Road;
    private building?: Building;
 
@@ -34,7 +32,7 @@ export class Tile {
    constructor(
       public readonly x: number,
       public readonly y: number
-   ) {}
+   ) { }
 
    public build(buildable: Building | Road): void {
       if (buildable instanceof Building && !this.building) {
@@ -51,7 +49,7 @@ export class Tile {
    }
 
    public tileAction(car: Car): void {
-      if (!(this.road instanceof Tube) && this.color !== baseMapColor) {
+      if (!(this.road instanceof Tube) && this.color !== ColorUtils.getBaseTileColor()) {
          car.color = this.color;
       }
 

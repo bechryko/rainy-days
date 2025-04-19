@@ -2,7 +2,7 @@ import { BasicDrawer } from '../drawing';
 import { Game } from '../game';
 import { GameEventHandler, GameEventType } from '../game-events';
 import { Tile } from '../map';
-import { Color } from '../map/models';
+import { ColorUtils, SystemColorToken } from '../map/utils';
 import { Building } from './building';
 
 export class Destination extends Building {
@@ -22,7 +22,7 @@ export class Destination extends Building {
 
    constructor(
       tile: Tile,
-      public readonly color: Color
+      public readonly color: string
    ) {
       super(tile, false);
 
@@ -36,7 +36,10 @@ export class Destination extends Building {
       this.health -= deltaTime;
 
       if (this.health < Game.DESTINATION_CRITICAL_HEALTH && oldHealth >= Game.DESTINATION_CRITICAL_HEALTH) {
-         GameEventHandler.getInstance().emitEvent(GameEventType.DESTINATION_CRITICAL_HEALTH, Game.DESTINATION_CRITICAL_HEALTH);
+         GameEventHandler.getInstance().emitEvent(
+            GameEventType.DESTINATION_CRITICAL_HEALTH,
+            Game.DESTINATION_CRITICAL_HEALTH
+         );
       }
    }
 
@@ -45,8 +48,18 @@ export class Destination extends Building {
    }
 
    public override draw(drawer: BasicDrawer): void {
-      drawer.circle((this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE, Tile.SIZE / 2);
+      drawer.circle(
+         (this.tile.x + 0.5) * Tile.SIZE,
+         (this.tile.y + 0.5) * Tile.SIZE,
+         Tile.SIZE / 2,
+         ColorUtils.getTokenValue(SystemColorToken.BUILDING_OUTLINE)
+      );
       drawer.circle((this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE, Tile.SIZE / 2.2, this.color);
-      drawer.text(Math.ceil(this.health) + 's', (this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE, Tile.SIZE * 0.45);
+      drawer.text(
+         Math.ceil(this.health) + 's',
+         (this.tile.x + 0.5) * Tile.SIZE,
+         (this.tile.y + 0.5) * Tile.SIZE,
+         Tile.SIZE * 0.45
+      );
    }
 }

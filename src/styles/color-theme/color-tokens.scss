@@ -1,0 +1,19 @@
+@use './material-theme';
+@use 'sass:color';
+
+:root {
+   --rd-primary-lighter: #{material-theme.primary(100)};
+   --rd-primary-lighter-alternative: #{material-theme.primary(200)};
+   --rd-primary: #{material-theme.primary(600)};
+   --rd-primary-darker: #{material-theme.primary-darker(600)};
+
+   --rd-accent-lighter: #{color.mix(material-theme.accent(200), material-theme.accent(300))};
+   --rd-accent: #{material-theme.accent(500)};
+   --rd-accent-darker: #{material-theme.accent-darker(700)};
+   --rd-accent-disabled: #896d76;
+
+   --rd-warn: #931824;
+
+   --rd-white: #fff4f8;
+   --rd-black: #000000;
+}
