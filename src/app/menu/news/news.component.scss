@@ -1,9 +1,34 @@
 :host {
    padding: 3rem;
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   grid-template-rows: repeat(4, 1fr);
+   grid-template-areas:
+      'guide guide tips'
+      'guide guide controls'
+      'versions versions versions'
+      'roadmap roadmap roadmap';
+   gap: 0.5rem;
 }
 
-h2 {
-   font-size: 2.5rem;
-   text-align: center;
-   color: var(--rd-primary-darker);
+rd-news-tile {
+   &.guide {
+      grid-area: guide;
+   }
+
+   &.tips {
+      grid-area: tips;
+   }
+
+   &.controls {
+      grid-area: controls;
+   }
+
+   &.versions {
+      grid-area: versions;
+   }
+
+   &.roadmap {
+      grid-area: roadmap;
+   }
 }

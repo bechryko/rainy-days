@@ -1,0 +1,50 @@
+:host {
+   position: relative;
+   color: var(--rd-white);
+   background-color: var(--rd-accent-lighter);
+   border-radius: 0.25rem;
+   padding: 1.5rem;
+   user-select: none;
+   transition: all 500ms ease;
+
+   &.openable {
+      cursor: pointer;
+   }
+
+   &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      box-shadow: 0 0 1rem 0.25rem var(--rd-accent);
+      opacity: 0;
+      transition: inherit;
+   }
+
+   &:hover {
+      background-color: var(--rd-accent);
+
+      &::after {
+         opacity: 1;
+      }
+   }
+}
+
+h3 {
+   font-size: 1.75rem;
+   margin: 0;
+   text-wrap: balance;
+}
+
+.description {
+   display: block;
+   font-size: 1.25rem;
+   height: 0;
+   overflow: hidden;
+   transition: height 500ms ease;
+   interpolate-size: allow-keywords;
+
+   :host:hover & {
+      height: auto;
+   }
+}

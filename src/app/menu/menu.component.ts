@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { Route } from '@rainy-days/routes';
 import { GameStartService } from 'src/app/game-start.service';
 import { ControlPanelGroup } from './models';
-import { NewsComponent } from './news';
+import { NewsComponent } from './news/news.component';
 
 @Component({
    selector: 'rd-menu',
