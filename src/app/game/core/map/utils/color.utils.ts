@@ -16,7 +16,11 @@ export enum ComponentColorToken {
    TIMED_GATE_X = '--rd-game-timed-gate-x-color'
 }
 
+export type ColorToken = SystemColorToken | ComponentColorToken;
+
 export class ColorUtils {
+   private static readonly propertyValueCache: Record<string, string> = {};
+
    public static getTokenValue(colorToken: SystemColorToken | ComponentColorToken): string {
       return this.getPropertyValue(colorToken);
    }
@@ -43,6 +47,9 @@ export class ColorUtils {
    }
 
    private static getPropertyValue(propertyName: string): string {
-      return window.getComputedStyle(document.body).getPropertyValue(propertyName);
+      if (!this.propertyValueCache[propertyName]) {
+         this.propertyValueCache[propertyName] = window.getComputedStyle(document.body).getPropertyValue(propertyName);
+      }
+      return this.propertyValueCache[propertyName];
    }
 }
