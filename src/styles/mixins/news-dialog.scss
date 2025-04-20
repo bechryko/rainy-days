@@ -1,0 +1,10 @@
+@mixin news-dialog {
+   :host {
+      display: block;
+      padding: 2rem;
+      min-height: 75dvh;
+      min-width: 50dvw;
+      box-sizing: border-box;
+      background-color: var(--rd-dialog-background-color);
+   }
+}
