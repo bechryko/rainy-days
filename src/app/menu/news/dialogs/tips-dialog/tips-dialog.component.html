@@ -1,0 +1,35 @@
+<rd-dialog-close-button></rd-dialog-close-button>
+@if (!answer) {
+   <h4>What do you want to know?</h4>
+   <div class="container">
+      @for (question of questions; track $index) {
+         <button
+            mat-stroked-button
+            color="accent"
+            [autofocus]="$first"
+            (click)="getAnswer(question)">
+            {{ question }}
+         </button>
+      }
+   </div>
+} @else {
+   <h4>{{ currentQuestion }}</h4>
+   <div class="container">
+      <p class="tip">{{ answer }}</p>
+   </div>
+   <div class="buttons-container">
+      <button
+         mat-flat-button
+         color="accent"
+         autofocus
+         (click)="getAnswer(currentQuestion!)">
+         New tip!
+      </button>
+      <button
+         mat-flat-button
+         color="accent"
+         (click)="deleteQuestion()">
+         Back to topic selection
+      </button>
+   </div>
+}
