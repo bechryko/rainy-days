@@ -1,10 +1,23 @@
-@mixin news-dialog {
+@mixin news-dialog($fix-width: false) {
    :host {
       display: block;
+      position: relative;
       padding: 2rem;
       min-height: 75dvh;
       min-width: 50dvw;
+      @if ($fix-width == true) {
+         max-width: 50dvw;
+      } @else if ($fix-width != false) {
+         @error "Invalid value for $fix-width: #{$fix-width}";
+      }
       box-sizing: border-box;
       background-color: var(--rd-dialog-background-color);
+
+      h4 {
+         color: var(--rd-primary-darker);
+         text-align: center;
+         font-size: 1.75rem;
+         margin-block: 0 2rem;
+      }
    }
 }
