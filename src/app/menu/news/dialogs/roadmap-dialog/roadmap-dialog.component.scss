@@ -1,0 +1,91 @@
+@use 'mixins';
+
+@include mixins.news-dialog;
+
+:host {
+   min-height: fit-content;
+   min-width: 0;
+   max-width: 70rem;
+}
+
+main {
+   $displayed-versions-count: 3;
+   $border: 1px solid var(--rd-primary-darker);
+
+   display: grid;
+   grid-template-columns: repeat($displayed-versions-count, 1fr);
+   border: $border;
+
+   .version-container {
+      display: grid;
+      grid-template-rows: 3rem 2.5rem 6rem 12rem;
+      grid-template-areas:
+         'version'
+         'name'
+         'description'
+         'content';
+      align-items: center;
+      padding: 1.5rem;
+      background-color: transparent;
+
+      &:not(:nth-of-type(#{$displayed-versions-count})) {
+         border-right: $border;
+      }
+
+      * {
+         margin: 0;
+      }
+
+      h5 {
+         grid-area: version;
+         font-size: 2rem;
+         color: var(--rd-primary-darker);
+      }
+
+      .version-name {
+         grid-area: name;
+         font-size: 1.5rem;
+         color: var(--rd-primary);
+         font-weight: bold;
+      }
+
+      .description {
+         grid-area: description;
+         text-align: center;
+         font-style: italic;
+         font-weight: 500;
+         justify-self: center;
+      }
+
+      .content {
+         grid-area: content;
+         font-weight: 500;
+      }
+   }
+}
+
+.rain-your-paint {
+   background-image: url('src/assets/images/menu/rain-your-paint-background.png');
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+
+   .version-container {
+      backdrop-filter: blur(0.75rem);
+   }
+}
+
+.difficulty-update {
+   background-image: url('src/assets/images/menu/trophy.webp');
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: contain;
+
+   .version-container {
+      backdrop-filter: blur(1.25rem);
+   }
+}
+
+.upgrade-update {
+   background-color: #797979;
+}
