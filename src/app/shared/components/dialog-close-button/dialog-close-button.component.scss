@@ -1,0 +1,21 @@
+:host {
+   $size: 2.25rem;
+
+   display: block;
+   position: absolute;
+   top: 0;
+   right: 0;
+   color: var(--rd-white);
+   font-size: $size;
+   height: $size;
+   width: $size;
+   background-color: var(--rd-warn);
+   border-bottom-left-radius: var(--mdc-dialog-container-shape);
+   cursor: pointer;
+}
+
+mat-icon {
+   height: inherit;
+   width: inherit;
+   font-size: inherit;
+}

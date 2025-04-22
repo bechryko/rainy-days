@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { DialogCloseButtonComponent } from '@rainy-days/shared/components';
 
 interface Control {
    keys?: string[];
@@ -11,7 +12,7 @@ interface Control {
 
 @Component({
    selector: 'rd-controls-dialog',
-   imports: [MatIconModule],
+   imports: [MatIconModule, DialogCloseButtonComponent],
    templateUrl: './controls-dialog.component.html',
    styleUrl: './controls-dialog.component.scss',
    changeDetection: ChangeDetectionStrategy.OnPush
