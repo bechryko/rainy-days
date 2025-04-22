@@ -2,3 +2,8 @@
 @if (description()) {
    <p class="description">{{ description() }}</p>
 }
+@if (icon()) {
+   <div class="icon-wrapper">
+      <rd-icon [name]="icon()!"></rd-icon>
+   </div>
+}

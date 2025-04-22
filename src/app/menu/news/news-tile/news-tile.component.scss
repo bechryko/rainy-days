@@ -1,11 +1,41 @@
+$padding: 1.5rem;
+
 :host {
    position: relative;
+   display: grid;
+   grid-template-rows: auto 3.5rem 1fr;
+   grid-template-areas:
+      'title'
+      'description'
+      'icon';
+   align-items: center;
+   gap: 1rem;
    color: var(--rd-white);
    background-color: var(--rd-accent-lighter);
    border-radius: 0.25rem;
-   padding: 1.5rem;
+   padding: $padding;
    user-select: none;
    transition: all 500ms ease;
+
+   &.no-description {
+      grid-template-rows: auto 1fr;
+      grid-template-areas:
+         'title'
+         'icon';
+   }
+
+   &.side-icon {
+      container-type: size;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto 1fr;
+      grid-template-areas:
+         'title icon'
+         'description icon';
+
+      .icon-wrapper {
+         width: 100cqh;
+      }
+   }
 
    &.openable {
       cursor: pointer;
@@ -31,20 +61,36 @@
 }
 
 h3 {
+   grid-area: title;
    font-size: 1.75rem;
    margin: 0;
    text-wrap: balance;
 }
 
 .description {
+   grid-area: description;
+   align-self: start;
    display: block;
    font-size: 1.25rem;
    height: 0;
+   margin: 0;
    overflow: hidden;
    transition: height 500ms ease;
    interpolate-size: allow-keywords;
 
    :host:hover & {
       height: auto;
+   }
+}
+
+.icon-wrapper {
+   grid-area: icon;
+   align-self: stretch;
+   container-type: size;
+
+   rd-icon {
+      height: 100cqmin;
+      width: 100cqmin;
+      place-self: center;
    }
 }
