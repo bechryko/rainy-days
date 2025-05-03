@@ -7,6 +7,7 @@ export class Car {
    private static readonly pool: Car[] = [];
    public static readonly SPEED = 1;
    private static readonly SIZE_TILE_RATIO = 0.25;
+   private static readonly COLLISION_DISTANCE = 0.2;
 
    public static get SIZE(): number {
       return Tile.SIZE * this.SIZE_TILE_RATIO;
@@ -30,7 +31,7 @@ export class Car {
    }
 
    public static checkCollision(car1: Car, car2: Car): void {
-      if ((car1.x - car2.x) ** 2 + (car1.y - car2.y) ** 2 <= Car.SIZE ** 2) {
+      if ((car1.x - car2.x) ** 2 + (car1.y - car2.y) ** 2 <= Car.COLLISION_DISTANCE ** 2) {
          Car.pool.splice(Car.pool.indexOf(car1), 1);
          Car.pool.splice(Car.pool.indexOf(car2), 1);
       }
@@ -47,22 +48,15 @@ export class Car {
       spawnTile: Tile,
       public color: string
    ) {
-      this.x = (spawnTile.x + 0.5) * Tile.SIZE;
-      this.y = (spawnTile.y + 0.5) * Tile.SIZE;
+      this.x = spawnTile.x + 0.5;
+      this.y = spawnTile.y + 0.5;
       this.destinationTile = { x: spawnTile.x, y: spawnTile.y };
       spawnTile.tileAction(this);
       Car.pool.push(this);
    }
 
    public getTile(map: Tile[][]): Tile {
-      const tile = map[Math.floor(this.x / Tile.SIZE)]?.[Math.floor(this.y / Tile.SIZE)];
-      if (!tile) {
-         console.log(
-            `${this.x} -> ${Math.floor(this.x / Tile.SIZE)}`,
-            `${this.y} -> ${Math.floor(this.y / Tile.SIZE)}`
-         );
-      }
-      return map[Math.floor(this.x / Tile.SIZE)][Math.floor(this.y / Tile.SIZE)];
+      return map[Math.floor(this.x)][Math.floor(this.y)];
    }
 
    public setDestinationIn(direction: Direction): void {
@@ -85,8 +79,13 @@ export class Car {
    }
 
    private draw(drawer: BasicDrawer): void {
-      drawer.circle(this.x, this.y, Car.SIZE / 2, ColorUtils.getTokenValue(SystemColorToken.CAR_OUTLINE));
-      drawer.circle(this.x, this.y, Car.SIZE / 2.5, this.color);
+      drawer.circle(
+         this.x * Tile.SIZE,
+         this.y * Tile.SIZE,
+         Car.SIZE / 2,
+         ColorUtils.getTokenValue(SystemColorToken.CAR_OUTLINE)
+      );
+      drawer.circle(this.x * Tile.SIZE, this.y * Tile.SIZE, Car.SIZE / 2.5, this.color);
    }
 
    private move(deltaTime: number, tiles: Tile[][]): void {
@@ -98,12 +97,12 @@ export class Car {
       }
 
       const destinationCoords = {
-         x: (this.destinationTile.x + 0.5) * Tile.SIZE,
-         y: (this.destinationTile.y + 0.5) * Tile.SIZE
+         x: this.destinationTile.x + 0.5,
+         y: this.destinationTile.y + 0.5
       };
       const oldDistanceFromDestination =
          Math.abs(this.x - destinationCoords.x) + Math.abs(this.y - destinationCoords.y);
-      const distanceMoved = Car.SPEED * Tile.SIZE * deltaTime;
+      const distanceMoved = Car.SPEED * deltaTime;
       this.x += DirectionUtils.getDx(this.currentDirection) * distanceMoved;
       this.y += DirectionUtils.getDy(this.currentDirection) * distanceMoved;
 
