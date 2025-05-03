@@ -16,8 +16,9 @@ export abstract class Road {
    public connectTo(other: Road): void {
       const neighborDirection = this.getNeighborDirection(other);
       if (neighborDirection === null) {
-         throw new Error("Can't connect to other road");
+         return;
       }
+
       this.connections[neighborDirection] = true;
       other.connections[DirectionUtils.getOpposite(neighborDirection)] = true;
    }
