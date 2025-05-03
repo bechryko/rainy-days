@@ -23,6 +23,26 @@ export class RandomUtils {
       return array[this.nextInt(array.length)];
    }
 
+   public static nextNArrayElements<T>(array: readonly T[], n: number): T[] {
+      if (array.length < n) {
+         throw new Error('Not enough elements in array to get N elements!');
+      }
+      if (array.length === n) {
+         return [...array];
+      }
+
+      const elements: T[] = [];
+      const possibleElements = [...array];
+
+      while (elements.length < n) {
+         const newElement = this.nextArrayElement(possibleElements);
+         possibleElements.remove(newElement);
+         elements.push(newElement);
+      }
+
+      return elements;
+   }
+
    public static nextChance(chance = 0.5): boolean {
       if (!this.random) {
          throw new Error('Random seed not registered!');

@@ -62,10 +62,7 @@ export class Toolbar {
    private selectedToolbarItem!: ToolbarItem;
 
    constructor() {
-      const possibleColors = ColorUtils.getGameObjectColors();
-      this.gate1Color = RandomUtils.nextArrayElement(possibleColors);
-      possibleColors.splice(possibleColors.indexOf(this.gate1Color));
-      this.gate2Color = RandomUtils.nextArrayElement(possibleColors);
+      [this.gate1Color, this.gate2Color] = RandomUtils.nextNArrayElements(ColorUtils.getGameObjectColors(), 2);
 
       GameEventHandler.getInstance().watchEvents(GameEventType.SELECT_TOOLBAR_ITEM, toolbarItemIndex => {
          this.selectedToolbarItem = this.items[toolbarItemIndex];
