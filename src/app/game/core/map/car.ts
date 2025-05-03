@@ -6,7 +6,11 @@ import { ColorUtils, DirectionUtils, SystemColorToken } from './utils';
 export class Car {
    private static readonly pool: Car[] = [];
    public static readonly SPEED = 1;
-   public static readonly SIZE = 12.5;
+   private static readonly SIZE_TILE_RATIO = 0.25;
+
+   public static get SIZE(): number {
+      return Tile.SIZE * this.SIZE_TILE_RATIO;
+   }
 
    public static tickAll(deltaTime: number, tiles: Tile[][]): void {
       this.pool.forEach(car => car.tick(deltaTime, tiles));
