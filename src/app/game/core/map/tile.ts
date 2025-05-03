@@ -32,7 +32,7 @@ export class Tile {
    constructor(
       public readonly x: number,
       public readonly y: number
-   ) { }
+   ) {}
 
    public build(buildable: Building | Road): void {
       if (buildable instanceof Building && !this.building) {
@@ -89,8 +89,9 @@ export class Tile {
 
    public connectRoadTo(other: Tile): void {
       if (!this.road || !other.road) {
-         throw new Error("Can't connect tiles without road");
+         return;
       }
+
       this.road?.connectTo(other.road);
    }
 
