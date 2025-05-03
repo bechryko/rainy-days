@@ -25,16 +25,18 @@ export class ToolbarComponent {
    public readonly gameStatus = input.required<GameStatus>();
    public readonly gameSpeedChange = output<number>();
 
-   public readonly possibleGameSpeeds = [0, 1, 2, 4];
-   private readonly possibleGameSpeedKeys = ['q', 'w', 'e'];
+   public readonly possibleGameSpeeds = [0, 1, 2, 4, 8];
+   private readonly possibleGameSpeedKeys = ['q', 'w', 'e', 'r'];
    public readonly gameToolbar = Toolbar.inject();
 
    constructor() {
-      fromEvent<KeyboardEvent>(document, "keydown").pipe(
-         takeUntilDestroyed(),
-         map(event => event.key),
-         filter(key => this.possibleGameSpeedKeys.includes(key))
-      ).subscribe(key => this.setGameSpeed(this.possibleGameSpeeds[this.possibleGameSpeedKeys.indexOf(key) + 1]));
+      fromEvent<KeyboardEvent>(document, 'keydown')
+         .pipe(
+            takeUntilDestroyed(),
+            map(event => event.key),
+            filter(key => this.possibleGameSpeedKeys.includes(key))
+         )
+         .subscribe(key => this.setGameSpeed(this.possibleGameSpeeds[this.possibleGameSpeedKeys.indexOf(key) + 1]));
    }
 
    public restartGame(): void {

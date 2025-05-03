@@ -17,7 +17,7 @@ export class TimedGate extends Gate implements TimedPauseBuilding {
    public timedPause = false;
 
    constructor(tile: Tile) {
-      super(tile, true);
+      super(tile);
    }
 
    public switch(): void {

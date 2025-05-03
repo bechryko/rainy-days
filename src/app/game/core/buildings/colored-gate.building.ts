@@ -9,7 +9,7 @@ export class ColoredGate extends Gate {
       tile: Tile,
       public readonly color: string
    ) {
-      super(tile, true);
+      super(tile);
    }
 
    public doesLetPass(car: Car): boolean {

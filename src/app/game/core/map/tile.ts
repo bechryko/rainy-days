@@ -35,8 +35,10 @@ export class Tile {
    ) {}
 
    public build(buildable: Building | Road): void {
-      if (buildable instanceof Building && !this.building) {
-         this.building = buildable;
+      if (buildable instanceof Building) {
+         if (!this.building || buildable.isSpawned()) {
+            this.building = buildable;
+         }
       } else if (buildable instanceof Road && !this.road) {
          this.road = buildable;
       }
@@ -113,8 +115,8 @@ export class Tile {
       return Boolean(this.building);
    }
 
-   public hasInDestructibleBuilding(): boolean {
-      return this.hasBuilding() && !this.building!.destructible;
+   public hasSpawnedBuilding(): boolean {
+      return this.hasBuilding() && this.building!.isSpawned();
    }
 
    public hasRoad(): boolean {
