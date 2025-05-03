@@ -21,7 +21,7 @@ import { ContextMenuService } from './context-menu.service';
       '[style.left]': 'xPos()',
       '[style.top.px]': 'yPosPx()',
       '[style.width.rem]': 'widthRem',
-      '[class.visible]': 'contextMenuBuilding()',
+      '[class.visible]': 'contextMenuBuilding() && contextMenuComponent()',
       '[class.is-on-bottom]': 'isOnBottom()'
    }
 })
@@ -33,7 +33,8 @@ export class ContextMenuComponent {
 
    public readonly contextMenuComponent = computed<Type<any> | null>(() => {
       const [contextMenuType, contextMenuData] =
-         Object.entries(contextMenuMap).find(([_, data]) => this.contextMenuBuilding() instanceof data.buildingType) ?? [];
+         Object.entries(contextMenuMap).find(([_, data]) => this.contextMenuBuilding() instanceof data.buildingType) ??
+         [];
       if (contextMenuType === undefined || contextMenuData === undefined) {
          return null;
       }
@@ -59,7 +60,8 @@ export class ContextMenuComponent {
       const isOnLeft = this.calcIsOnLeft(building);
       const displayedTileX = building.tile.x + (isOnLeft ? 2 : -1);
       const clampedDisplayedTileX = Math.min(Map.COLUMN_COUNT, Math.max(0, displayedTileX));
-      const x = clampedDisplayedTileX * Tile.SIZE + (isOnLeft ? -ResizeUtils.remToPx(ResizeUtils.CANVAS_BORDER_WIDTH_REM) : 0);
+      const x =
+         clampedDisplayedTileX * Tile.SIZE + (isOnLeft ? -ResizeUtils.remToPx(ResizeUtils.CANVAS_BORDER_WIDTH_REM) : 0);
       if (isOnLeft) {
          return `calc(${x}px - ${this.widthRem}rem)`;
       }
@@ -73,7 +75,11 @@ export class ContextMenuComponent {
       }
 
       const tilesWidth = building.tile.y * Tile.SIZE;
-      return tilesWidth + ResizeUtils.remToPx(ResizeUtils.CANVAS_BORDER_WIDTH_REM) + (this.calcIsOnBottom(building) ? Tile.SIZE : 0);
+      return (
+         tilesWidth +
+         ResizeUtils.remToPx(ResizeUtils.CANVAS_BORDER_WIDTH_REM) +
+         (this.calcIsOnBottom(building) ? Tile.SIZE : 0)
+      );
    });
 
    constructor() {
