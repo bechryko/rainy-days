@@ -1,0 +1,38 @@
+@use 'mixins';
+
+@include mixins.news-dialog;
+
+:host {
+   $heading-height: 4.125rem;
+
+   display: grid;
+   grid-template-rows: $heading-height calc(100% - $heading-height);
+   min-height: 0;
+   height: 75dvh;
+   max-height: 45rem;
+   overflow: hidden;
+}
+
+main {
+   display: grid;
+   grid-template-columns: 1fr 3fr;
+   gap: 1.5rem;
+}
+
+.guide-item-selector {
+   display: flex;
+   flex-direction: column;
+
+   button {
+      border-radius: 0;
+
+      &.selected {
+         cursor: default;
+         pointer-events: none;
+      }
+
+      &:not(.selected) {
+         background-color: var(--rd-accent-lighter);
+      }
+   }
+}

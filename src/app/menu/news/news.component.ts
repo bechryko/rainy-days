@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
    ControlsDialogComponent,
+   GuideDialogComponent,
    RoadmapDialogComponent,
    TipsDialogComponent,
    VersionHistoryDialogComponent
@@ -15,6 +16,7 @@ import { NewsTileComponent } from './news-tile/news-tile.component';
    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewsComponent {
+   public readonly GuideDialogComponent = GuideDialogComponent;
    public readonly ControlsDialogComponent = ControlsDialogComponent;
    public readonly TipsDialogComponent = TipsDialogComponent;
    public readonly VersionHistoryDialogComponent = VersionHistoryDialogComponent;
