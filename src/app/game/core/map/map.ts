@@ -11,8 +11,10 @@ export class Map {
    private static readonly MIN_CLOUD_COVERAGE_RATIO = 0.6;
    private static readonly MAX_CLOUD_COVERAGE_RATIO = 0.7;
    private static readonly CLOUD_SIZE_GROWTH_CHANCE_CONSTANT = 0.4;
+   private static readonly PADDING_FILTER_PAIR_LIMIT = 3;
 
    private readonly tiles: Tile[][] = [];
+   private spawnerAndDestinationPairs = 0;
 
    constructor() {
       this.initTiles();
@@ -25,8 +27,11 @@ export class Map {
    }
 
    public spawnSpawnerAndDestination(): void {
-      BuildingSpawnerUtils.spawnSpawner(this.tiles);
-      BuildingSpawnerUtils.spawnDestination(this.tiles);
+      const enablePaddingFilter = this.spawnerAndDestinationPairs < Map.PADDING_FILTER_PAIR_LIMIT;
+      BuildingSpawnerUtils.spawnSpawner(this.tiles, enablePaddingFilter);
+      BuildingSpawnerUtils.spawnDestination(this.tiles, enablePaddingFilter);
+
+      this.spawnerAndDestinationPairs++;
    }
 
    public draw(drawer: BasicDrawer): void {
