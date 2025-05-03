@@ -19,7 +19,11 @@ export class Spawner extends Building implements TimedPauseBuilding {
       tile: Tile,
       private readonly color: string
    ) {
-      super(tile, false);
+      super(tile);
+   }
+
+   public override isSpawned(): boolean {
+      return true;
    }
 
    public tick(deltaTime: number): void {

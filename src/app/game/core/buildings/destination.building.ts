@@ -24,11 +24,15 @@ export class Destination extends Building {
       tile: Tile,
       public readonly color: string
    ) {
-      super(tile, false);
+      super(tile);
 
       this.health = Destination.CURRENT_HEALTH;
       Destination.CURRENT_HEALTH += Destination.HEALTH_INCREASE;
       Destination.list.push(this);
+   }
+
+   public override isSpawned(): boolean {
+      return true;
    }
 
    public tick(deltaTime: number): void {

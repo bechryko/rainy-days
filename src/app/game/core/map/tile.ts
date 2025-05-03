@@ -113,8 +113,8 @@ export class Tile {
       return Boolean(this.building);
    }
 
-   public hasInDestructibleBuilding(): boolean {
-      return this.hasBuilding() && !this.building!.destructible;
+   public hasSpawnedBuilding(): boolean {
+      return this.hasBuilding() && this.building!.isSpawned();
    }
 
    public hasRoad(): boolean {
