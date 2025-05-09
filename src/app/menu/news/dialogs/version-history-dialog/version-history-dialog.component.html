@@ -1,0 +1,68 @@
+<rd-dialog-close-button></rd-dialog-close-button>
+<h4>Version history</h4>
+<main>
+   <mat-tree
+      #tree
+      class="version-chooser"
+      [dataSource]="versions"
+      [childrenAccessor]="childrenAccessor">
+      <mat-tree-node
+         class="version-node leaf"
+         *matTreeNodeDef="let node"
+         matTreeNodePadding
+         [class.selected]="node.version === displayedVersion?.version"
+         (click)="selectVersionToDisplay(node.version)">
+         {{ node.version }}
+      </mat-tree-node>
+      <mat-tree-node
+         class="version-node"
+         *matTreeNodeDef="let node; when: hasChild"
+         matTreeNodePadding
+         matTreeNodeToggle
+         [class.selected]="node.version === displayedVersion?.version"
+         [cdkTreeNodeTypeaheadLabel]="node.version"
+         (click)="selectVersionToDisplay(node.version)">
+         <button
+            mat-icon-button
+            color="accent"
+            matTreeNodeToggle
+            [attr.aria-label]="'Toggle ' + node.version">
+            <mat-icon class="mat-icon-rtl-mirror">
+               {{ tree.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+            </mat-icon>
+         </button>
+         {{ node.version }}
+      </mat-tree-node>
+   </mat-tree>
+   @if (displayedVersion) {
+      <div class="version-data">
+         <h5>{{ displayedVersion.version }}</h5>
+         @if (displayedVersion.name) {
+            <p class="version-name">{{ displayedVersion.name }}</p>
+         }
+         @if (displayedVersion.isSnapshot) {
+            <p class="snapshot-warning">
+               This is just a snapshot version! The final changes can differ from the ones below!
+            </p>
+         }
+         <ul class="changes-list">
+            @for (change of displayedVersion.changes; track $index) {
+               <li>
+                  <p>{{ change.description }}</p>
+                  @if (change.children) {
+                     <ul>
+                        @for (childChange of change.children; track $index) {
+                           <li>
+                              <p>{{ childChange }}</p>
+                           </li>
+                        }
+                     </ul>
+                  }
+               </li>
+            }
+         </ul>
+      </div>
+   } @else {
+      <p class="no-version">Select a version!</p>
+   }
+</main>

@@ -16,4 +16,6 @@
 
    --rd-white: #fff4f8;
    --rd-black: #000000;
+
+   --rd-dialog-background-color: #{color.mix(material-theme.primary(100), material-theme.primary(200))};
 }

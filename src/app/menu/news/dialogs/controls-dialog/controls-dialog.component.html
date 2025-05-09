@@ -1,0 +1,41 @@
+<rd-dialog-close-button></rd-dialog-close-button>
+<h4>Controls</h4>
+<div class="table-wrapper">
+   <table>
+      <tr>
+         <th colspan="2">Control</th>
+         <th>Description</th>
+      </tr>
+      @for (control of controls; track $index) {
+         @for (description of control.descriptions; track $index) {
+            <tr>
+               @if ($first) {
+                  @let rows = control.descriptions.length;
+                  <td [rowSpan]="rows">
+                     <div class="keys-container">
+                        @if (control.keys) {
+                           @for (key of control.keys; track $index) {
+                              <kbd class="key">{{ key }}</kbd>
+                           }
+                        } @else if (control.keyNames) {
+                           @for (keyName of control.keyNames; track $index) {
+                              <span class="key-name">{{ keyName }}</span>
+                           }
+                        }
+                        @if (control.icon) {
+                           <mat-icon>{{ control.icon }}</mat-icon>
+                        }
+                     </div>
+                  </td>
+                  <td
+                     class="name"
+                     [rowSpan]="rows">
+                     {{ control.name }}
+                  </td>
+               }
+               <td class="description">{{ description }}</td>
+            </tr>
+         }
+      }
+   </table>
+</div>

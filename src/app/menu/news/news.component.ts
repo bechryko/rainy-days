@@ -1,25 +1,24 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { MatTab, MatTabGroup } from '@angular/material/tabs';
-import { NewsObject, PatchNote, TipObject } from '../model';
-import { gameTips, patchNotes, trendingNews } from '../textObjects';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+   ControlsDialogComponent,
+   GuideDialogComponent,
+   RoadmapDialogComponent,
+   TipsDialogComponent,
+   VersionHistoryDialogComponent
+} from './dialogs';
+import { NewsTileComponent } from './news-tile/news-tile.component';
 
 @Component({
    selector: 'rd-news',
    templateUrl: './news.component.html',
    styleUrls: ['./news.component.scss'],
-   imports: [MatTabGroup, MatTab],
+   imports: [NewsTileComponent],
    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewsComponent implements OnInit {
-   readonly gameVersion = 'Beta 1';
-
-   trendingNews: NewsObject[] = [];
-   latestPatchNote?: PatchNote;
-   currentTips: TipObject[] = [];
-
-   ngOnInit() {
-      this.trendingNews = trendingNews;
-      this.latestPatchNote = patchNotes[patchNotes.length - 1];
-      this.currentTips = gameTips.filter(tip => tip.version === this.gameVersion)[0].tips;
-   }
+export class NewsComponent {
+   public readonly GuideDialogComponent = GuideDialogComponent;
+   public readonly ControlsDialogComponent = ControlsDialogComponent;
+   public readonly TipsDialogComponent = TipsDialogComponent;
+   public readonly VersionHistoryDialogComponent = VersionHistoryDialogComponent;
+   public readonly RoadmapDialogComponent = RoadmapDialogComponent;
 }

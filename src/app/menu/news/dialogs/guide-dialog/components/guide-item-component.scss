@@ -1,0 +1,42 @@
+$text-indent: 1rem;
+
+:host {
+   background-color: var(--rd-primary-lighter);
+   max-width: 35rem;
+   align-self: stretch;
+   justify-self: center;
+   padding: 1.5rem;
+   overflow-y: auto;
+}
+
+h5,
+h6 {
+   color: var(--rd-primary);
+   text-wrap: balance;
+}
+
+h5 {
+   font-size: 2rem;
+   text-align: center;
+   margin-block: 1.5rem;
+}
+
+h6 {
+   font-size: 1.25rem;
+   margin-block: 1.5rem 1rem;
+   margin-left: $text-indent;
+}
+
+p {
+   text-wrap: pretty;
+   text-indent: $text-indent;
+   text-align: justify;
+
+   &:not(:first-child) {
+      margin-top: 0;
+   }
+
+   &:not(:last-child) {
+      margin-bottom: 0.25rem;
+   }
+}

@@ -1,0 +1,25 @@
+<h5>Cars</h5>
+<p>
+   Cars are the main driving force behind the game. They spawn, they follow the road, they get painted over by the rain,
+   and then, if the player has planned their infrastructure cleverly, they arrive at the destination of the same color
+   as them.
+</p>
+<p>At normal (x1) game speed, they move at the rate of exactly 1 tile per second.</p>
+<h6>Movement</h6>
+<p>Cars follow the road they are on. When they reach a dead end, they turn back.</p>
+<h6>Intersections</h6>
+<p>
+   When a car reaches an intersection, it will take the first possible route from the right. The easiest way to control
+   this behavior is to use different gates.
+</p>
+<h6>Collision</h6>
+<p>
+   Because there is only room for one car on the roads, when two cars driving in opposite directions meet, they collide.
+   Both cars are then destroyed.
+</p>
+<h6>Cars off the road</h6>
+<p>
+   If a car is moved off the road (for example, because the player has wiped it out underneath), it will be unable to
+   move, even if there is a road on a tile next to it. It can only start moving again if there is a road underneath it
+   from which it can reach a road on an adjacent tile.
+</p>

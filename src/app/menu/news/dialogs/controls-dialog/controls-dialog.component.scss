@@ -1,0 +1,81 @@
+@use 'mixins';
+
+@include mixins.news-dialog;
+
+:host {
+   overflow-y: auto;
+   max-height: 90dvh;
+}
+
+.table-wrapper {
+   padding: 1.5rem;
+   background-color: var(--rd-primary-lighter);
+}
+
+table {
+   $border: 1px solid var(--rd-primary);
+
+   table-layout: fixed;
+   border-collapse: collapse;
+
+   th,
+   td {
+      padding: 1rem 1.5rem;
+
+      &:not(:first-child),
+      &:only-child {
+         border-left: $border;
+      }
+   }
+
+   th {
+      color: var(--rd-primary-darker);
+      text-align: center;
+      font-size: 1.25rem;
+   }
+
+   td {
+      border-top: $border;
+
+      &:nth-child(1),
+      &:nth-child(2) {
+         width: 15rem;
+      }
+
+      &:nth-child(3) {
+         width: 25rem;
+      }
+
+      .keys-container {
+         display: inline-flex;
+         gap: 0.5rem;
+         align-items: center;
+         user-select: none;
+         width: 100%;
+
+         .key {
+            font-size: 1rem;
+            padding: 0.25rem 0.5rem;
+            background-color: var(--rd-white);
+            box-shadow: 0.25rem 0.1875rem var(--rd-primary-darker);
+            border-radius: 0.25rem;
+         }
+
+         .key-name {
+            font-size: 1rem;
+            font-family: monospace;
+         }
+
+         mat-icon {
+            margin-left: auto;
+            padding-top: 0.125rem;
+         }
+      }
+
+      &.description,
+      &.name {
+         text-wrap: pretty;
+         text-align: center;
+      }
+   }
+}

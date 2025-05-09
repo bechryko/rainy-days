@@ -1,3 +1,4 @@
 //@index('./*', (f, _) => `@forward '${f.name}';`)
+@forward 'mat-button';
 @forward 'mat-checkbox';
 //@endindex

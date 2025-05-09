@@ -1,0 +1,33 @@
+<h5>The goal</h5>
+<p>
+   The aim of the game is to get company cars from their starting point to their destination. They appear in the game in
+   the form of spawner and destination buildings, which are created continuously every 45 seconds during the game.
+</p>
+<h6>Spawners</h6>
+<p>
+   Spawners are small, circular buildings that spawn a car every 4 seconds, in the same color as the spawner itself. It
+   launches the car clockwise from north in the first direction the car can go.
+</p>
+<p>
+   Right-clicking on the spawner with the Editor tool (key 0) selected opens a context menu that shows information about
+   when exactly the car will spawn, as well as the possibility to delay the remaining time. In addition, you can set a
+   timed pause, which stops the game when a new car spawns.
+</p>
+<h6>Destinations</h6>
+<p>
+   Destinations are large, circular buildings with a given life. Every second this life decreases by one, and if any
+   destination's life drops to 0, the game is over. However, their health can be replenished by getting cars into the
+   destination, in the same color as the destination. (Cars of other colors are ignored.) Cars that get in will extend
+   the life of a destination by 5 seconds, meaning that if a spawner can continuously supply a destination, its health
+   will keep increasing. The first destination spawns with 45 health, and each subsequent destination spawns with 1 more
+   health than the previous one.
+</p>
+<h6>Spawning of spawners and destinations</h6>
+<p>
+   These two buildings spawn every 45 seconds. The main spawning rule is that the new spawned building must be at least
+   5 steps (up, right, down, left) away from any previous one. If there is not enough space, they try to spawn 4 steps
+   away, if not, 3, then 2, and if that is not possible either, the game is over. At the start of the game (during the
+   first 3 spawns) they try to spawn in the middle of the playing area, i.e. anywhere by skipping the first and last 4
+   rows and columns. However, if they cannot keep the 5 steps distance during the first 3 spawns, they can spawn
+   outside.
+</p>

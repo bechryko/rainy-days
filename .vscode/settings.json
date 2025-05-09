@@ -26,5 +26,5 @@
       "editor.suggest.insertMode": "replace",
       "editor.defaultFormatter": "vscode.json-language-features"
    },
-   "cSpell.words": ["endindex", "cooldown"]
+   "cSpell.words": ["endindex", "cooldown", "cqmin"]
 }

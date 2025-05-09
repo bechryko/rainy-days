@@ -1,30 +1,33 @@
-<h2>News</h2>
-<mat-tab-group color="accent">
-  <mat-tab label="Trending">
-    @for (article of trendingNews; track article) {
-      <article>
-        <h3>{{article.title}}</h3>
-        @for (text of article.text; track text) {
-          <p>{{text}}</p>
-        }
-      </article>
-    }
-  </mat-tab>
-  <mat-tab label="Latest patch notes">
-    <h3>{{latestPatchNote?.version}}</h3>
-    <p>Released: {{latestPatchNote?.date}}</p>
-    <ul>
-      @for (note of latestPatchNote?.content; track note) {
-        <li>{{note}}</li>
-      }
-    </ul>
-  </mat-tab>
-  <mat-tab label="Newest tips">
-    @for (tip of currentTips; track tip) {
-      <article>
-        <h3>{{tip.name}}</h3>
-        <p>{{tip.description}}</p>
-      </article>
-    }
-  </mat-tab>
-</mat-tab-group>
+<rd-news-tile
+   class="guide"
+   tileTitle="Gameplay guide"
+   icon="guide"
+   description="Learn how to play and how the game mechanics work"
+   quickKey="g"
+   [dialog]="GuideDialogComponent"></rd-news-tile>
+<rd-news-tile
+   class="tips"
+   tileTitle="Tips & tricks"
+   icon="info"
+   quickKey="t"
+   [dialog]="TipsDialogComponent"></rd-news-tile>
+<rd-news-tile
+   class="controls"
+   tileTitle="Controls"
+   icon="controller"
+   quickKey="c"
+   [dialog]="ControlsDialogComponent"></rd-news-tile>
+<rd-news-tile
+   class="versions side-icon"
+   tileTitle="Version history"
+   description="Browse the latest additions to Rainy Days"
+   icon="history"
+   quickKey="v"
+   [dialog]="VersionHistoryDialogComponent"></rd-news-tile>
+<rd-news-tile
+   class="roadmap side-icon"
+   tileTitle="Roadmap"
+   description="Discover what's to come to the game"
+   icon="road"
+   quickKey="r"
+   [dialog]="RoadmapDialogComponent"></rd-news-tile>
