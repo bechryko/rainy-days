@@ -56,6 +56,12 @@ p {
    padding: 0.5rem;
    left: 0;
    border-bottom-right-radius: $border-radius;
+   opacity: 1;
+   transition: opacity 200ms ease;
+
+   &:hover {
+      opacity: 0.5;
+   }
 
    .game-speed-button {
       display: inline-block;
