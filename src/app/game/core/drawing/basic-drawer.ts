@@ -1,6 +1,7 @@
 import { ColorUtils, SystemColorToken } from '../map/utils';
 
 type CanvasRenderingContext2DInterface = Pick<CanvasRenderingContext2D, 'beginPath' | 'lineTo' | 'moveTo' | 'stroke'>;
+type Color = string | CanvasGradient;
 
 export class BasicDrawer {
    private readonly _ctx: CanvasRenderingContext2D;
@@ -23,7 +24,7 @@ export class BasicDrawer {
       this._ctx.stroke();
    }
 
-   public square(x: number, y: number, side: number, color: string, fill = true): void {
+   public square(x: number, y: number, side: number, color: Color, fill = true): void {
       if (fill) {
          this.fillStyle = color;
       } else {
@@ -34,7 +35,7 @@ export class BasicDrawer {
       this._ctx[fill ? 'fill' : 'stroke']();
    }
 
-   public circle(x: number, y: number, radius: number, color: string, fill = true): void {
+   public circle(x: number, y: number, radius: number, color: Color, fill = true): void {
       if (fill) {
          this.fillStyle = color;
       } else {
@@ -55,13 +56,26 @@ export class BasicDrawer {
       this._ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
    }
 
-   public set strokeStyle(color: string) {
+   public createRadialGradient(
+      x: number,
+      y: number,
+      r: number,
+      ...colorStops: Array<[number, string]>
+   ): CanvasGradient {
+      const gradient = this._ctx.createRadialGradient(x, y, 0, x, y, r);
+      colorStops.forEach(([offset, color]) => {
+         gradient.addColorStop(offset, color);
+      });
+      return gradient;
+   }
+
+   public set strokeStyle(color: Color) {
       if (this._ctx.strokeStyle !== color) {
          this._ctx.strokeStyle = color;
       }
    }
 
-   public set fillStyle(color: string) {
+   public set fillStyle(color: Color) {
       if (this._ctx.fillStyle !== color) {
          this._ctx.fillStyle = color;
       }

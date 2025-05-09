@@ -6,7 +6,7 @@ import { Selection } from './models';
 import { Toolbar } from './toolbar';
 
 export class Controller {
-   private selectedTile?: Tile;
+   private _selectedTile?: Tile;
    private leftMouseDown: boolean = false;
    private rightMouseDown: boolean = false;
    private readonly toolbar = new Toolbar();
@@ -149,5 +149,21 @@ export class Controller {
 
    private onScrollUp(_: WheelEvent): void {
       this.toolbar.stepSelectedItem(-1);
+   }
+
+   private set selectedTile(tile: Tile | undefined) {
+      this.setTileSelection(this._selectedTile, false);
+      this._selectedTile = tile;
+      this.setTileSelection(this._selectedTile, true);
+   }
+
+   private get selectedTile(): Tile | undefined {
+      return this._selectedTile;
+   }
+
+   private setTileSelection(tile: Tile | undefined, isSelected: boolean): void {
+      if (tile) {
+         tile.selected = isSelected;
+      }
    }
 }

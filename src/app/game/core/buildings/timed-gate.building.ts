@@ -1,7 +1,7 @@
 import { Signal, signal } from '@angular/core';
 import { BehaviorSubject, distinctUntilChanged, Observable } from 'rxjs';
 import { BasicDrawer } from '../drawing';
-import { toFraction } from '../functions';
+import { toFraction, transparent } from '../functions';
 import { GameEventHandler, GameEventType } from '../game-events';
 import { Tile } from '../map';
 import { ColorUtils, ComponentColorToken, SystemColorToken } from '../map/utils';
@@ -46,15 +46,31 @@ export class TimedGate extends Gate implements TimedPauseBuilding {
    }
 
    public override draw(drawer: BasicDrawer): void {
+      const color = this.closed()
+         ? ColorUtils.getTokenValue(ComponentColorToken.TIMED_GATE_CLOSED)
+         : ColorUtils.getTokenValue(ComponentColorToken.TIMED_GATE_OPEN);
+
+      if (this.tile.selected) {
+         drawer.circle(
+            (this.tile.x + 0.5) * Tile.SIZE,
+            (this.tile.y + 0.5) * Tile.SIZE,
+            Tile.SIZE * 0.75,
+            drawer.createRadialGradient(
+               (this.tile.x + 0.5) * Tile.SIZE,
+               (this.tile.y + 0.5) * Tile.SIZE,
+               Tile.SIZE / 2,
+               [0.45, color],
+               [1, transparent()]
+            )
+         );
+      }
+
       drawer.square(
          (this.tile.x + 0.25) * Tile.SIZE,
          (this.tile.y + 0.25) * Tile.SIZE,
          Tile.SIZE / 2,
          ColorUtils.getTokenValue(SystemColorToken.BUILDING_OUTLINE)
       );
-      const color = this.closed()
-         ? ColorUtils.getTokenValue(ComponentColorToken.TIMED_GATE_CLOSED)
-         : ColorUtils.getTokenValue(ComponentColorToken.TIMED_GATE_OPEN);
       drawer.square((this.tile.x + 0.3) * Tile.SIZE, (this.tile.y + 0.3) * Tile.SIZE, Tile.SIZE * 0.4, color);
 
       if (this.closed()) {

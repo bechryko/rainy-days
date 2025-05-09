@@ -26,6 +26,7 @@ export class Tile {
    public color = ColorUtils.getBaseTileColor();
    private road?: Road;
    private building?: Building;
+   public selected = false;
 
    private readonly neighborMap: Record<Direction, Tile | null> = {} as any;
 
