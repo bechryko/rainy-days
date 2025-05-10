@@ -21,8 +21,6 @@
       "useDefineForClassFields": false,
       "lib": ["ES2022", "dom"],
       "paths": {
-         "@rainy-days/menu/*": ["./src/app/menu/*"],
-         "@rainy-days/game/*": ["./src/app/game/*"],
          "@rainy-days/shared/*": ["./src/app/shared/*"],
          "@rainy-days/core/*": ["./src/app/game/core/*"],
          "@rainy-days/routes": ["./src/app/app.routes.ts"]
