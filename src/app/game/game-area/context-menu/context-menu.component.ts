@@ -3,7 +3,8 @@ import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, input
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Building } from '@rainy-days/core/buildings';
 import { GameEventHandler, GameEventType } from '@rainy-days/core/game-events';
-import { Map, ResizeUtils, Tile } from '@rainy-days/core/map';
+import { Map, Tile } from '@rainy-days/core/map';
+import { ResizeUtils } from '@rainy-days/core/map/utils';
 import { filter, fromEvent, map } from 'rxjs';
 import { contextMenuMap } from './context-menu-map';
 import { ContextMenuService } from './context-menu.service';

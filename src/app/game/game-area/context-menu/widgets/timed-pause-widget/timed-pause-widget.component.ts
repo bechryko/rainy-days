@@ -8,7 +8,7 @@ import {
    ViewChild
 } from '@angular/core';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
-import { TimedPauseBuilding } from '@rainy-days/core/buildings';
+import { TimedPauseBuilding } from '@rainy-days/core/buildings/models';
 import { GameEventHandler, GameEventType } from '@rainy-days/core/game-events';
 import { ContextMenuService } from '../../context-menu.service';
 

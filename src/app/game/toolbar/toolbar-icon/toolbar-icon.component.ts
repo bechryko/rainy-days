@@ -2,9 +2,10 @@ import { ChangeDetectionStrategy, Component, computed, ElementRef, input, viewCh
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
 import { Building, TimedGate } from '@rainy-days/core/buildings';
-import { Selection, ToolbarItem } from '@rainy-days/core/control';
+import { Selection, ToolbarItem } from '@rainy-days/core/control/models';
 import { BasicDrawer } from '@rainy-days/core/drawing';
-import { Direction, Tile } from '@rainy-days/core/map';
+import { Tile } from '@rainy-days/core/map';
+import { Direction } from '@rainy-days/core/map/models';
 import { Road } from '@rainy-days/core/roads';
 import { filter, map, switchMap } from 'rxjs';
 
