@@ -8,12 +8,13 @@ import { Route } from '@rainy-days/routes';
 import { filter, fromEvent, map } from 'rxjs';
 import { GameStatus } from '../models';
 import { CalculateTrueGameSpeedPipe } from './pipes';
+import { ToolbarIconComponent } from './toolbar-icon/toolbar-icon.component';
 
 @Component({
    selector: 'rd-toolbar',
    templateUrl: './toolbar.component.html',
    styleUrls: ['./toolbar.component.scss'],
-   imports: [MatFabButton, MatTooltip, MatButton, CalculateTrueGameSpeedPipe],
+   imports: [MatFabButton, MatTooltip, MatButton, CalculateTrueGameSpeedPipe, ToolbarIconComponent],
    changeDetection: ChangeDetectionStrategy.OnPush,
    host: {
       '[class.game-over]': '!gameStatus().isGameGoing'

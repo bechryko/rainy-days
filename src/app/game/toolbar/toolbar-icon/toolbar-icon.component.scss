@@ -1,0 +1,17 @@
+:host {
+   display: grid;
+   place-items: center;
+   width: 2.8rem;
+   aspect-ratio: 1;
+}
+
+mat-icon {
+   font-size: 1.75rem;
+   height: unset;
+   width: unset;
+}
+
+canvas {
+   width: 100%;
+   aspect-ratio: 1;
+}
