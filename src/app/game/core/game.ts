@@ -56,16 +56,21 @@ export class Game {
 
    private main(deltaTime: number): boolean {
       if (!this.paused) {
+         // Tick
          for (let i = 0; i < this.gameSpeed(); i++) {
             deltaTime = Math.min(deltaTime, 0.1);
             this.timedActions(deltaTime);
             this.map.tick(deltaTime);
          }
       }
+
       // Mouse actions
       this.controller.handleMouseActions();
+
       // Draw
       this.map.draw(this.drawer);
+      this.controller.draw(this.drawer);
+
       return this.paused || !Destination.anyWithZeroHealth();
    }
 

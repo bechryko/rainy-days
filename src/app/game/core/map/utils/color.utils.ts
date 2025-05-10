@@ -4,7 +4,8 @@ export enum SystemColorToken {
    GRID = '--rd-game-grid-color',
    BUILDING_OUTLINE = '--rd-game-building-outline-color',
    CAR_OUTLINE = '--rd-game-car-outline-color',
-   TEXT = '--rd-game-text-color'
+   TEXT = '--rd-game-text-color',
+   WARN = '--rd-game-warn-color'
 }
 
 export enum ComponentColorToken {
@@ -12,8 +13,7 @@ export enum ComponentColorToken {
    TUBE_OUTLINE = '--rd-game-tube-outline-color',
    TUBE = '--rd-game-tube-color',
    TIMED_GATE_OPEN = '--rd-game-timed-gate-open-color',
-   TIMED_GATE_CLOSED = '--rd-game-timed-gate-closed-color',
-   TIMED_GATE_X = '--rd-game-timed-gate-x-color'
+   TIMED_GATE_CLOSED = '--rd-game-timed-gate-closed-color'
 }
 
 export type ColorToken = SystemColorToken | ComponentColorToken;

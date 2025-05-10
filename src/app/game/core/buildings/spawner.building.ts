@@ -1,6 +1,6 @@
 import { BehaviorSubject, distinctUntilChanged, Observable } from 'rxjs';
 import { BasicDrawer } from '../drawing';
-import { toFraction } from '../functions';
+import { toFraction, transparent } from '../functions';
 import { GameEventHandler, GameEventType } from '../game-events';
 import { Tile } from '../map';
 import { Car } from '../map/car';
@@ -62,20 +62,21 @@ export class Spawner extends Building implements TimedPauseBuilding {
    public override draw(drawer: BasicDrawer): void {
       drawer.lineWidth = 2;
 
-      drawer.circle((this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE, Tile.SIZE / 4, this.color);
-      drawer.circle(
-         (this.tile.x + 0.5) * Tile.SIZE,
-         (this.tile.y + 0.5) * Tile.SIZE,
-         Tile.SIZE / 4,
-         ColorUtils.getTokenValue(SystemColorToken.BUILDING_OUTLINE),
-         false
-      );
-      drawer.text(
-         Math.ceil(this.timer) + 's',
-         (this.tile.x + 0.5) * Tile.SIZE,
-         (this.tile.y + 0.5) * Tile.SIZE,
-         Tile.SIZE * 0.35
-      );
+      const drawX = (this.tile.x + 0.5) * Tile.SIZE;
+      const drawY = (this.tile.y + 0.5) * Tile.SIZE;
+
+      if (this.tile.selected) {
+         drawer.circle(
+            drawX,
+            drawY,
+            Tile.SIZE * 0.75,
+            drawer.createRadialGradient(drawX, drawY, Tile.SIZE / 2, [0.5, this.color], [1, transparent()])
+         );
+      }
+
+      drawer.circle(drawX, drawY, Tile.SIZE / 4, this.color);
+      drawer.circle(drawX, drawY, Tile.SIZE / 4, ColorUtils.getTokenValue(SystemColorToken.BUILDING_OUTLINE), false);
+      drawer.text(Math.ceil(this.timer) + 's', drawX, drawY, Tile.SIZE * 0.35);
    }
 
    public get displayTimer$(): Observable<string> {

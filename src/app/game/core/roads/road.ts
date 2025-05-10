@@ -39,6 +39,8 @@ export abstract class Road {
 
    public abstract draw(drawer: BasicDrawer): void;
 
+   public abstract drawRoadSegment(drawer: BasicDrawer, x1: number, y1: number, x2: number, y2: number): void;
+
    protected drawRoadBase(drawer: BasicDrawer, color: string, size: number): void {
       drawer.strokeStyle = color;
       drawer.lineWidth = size;

@@ -1,18 +1,23 @@
+import { BasicDrawer } from '../drawing';
 import { GameEventHandler, GameEventType } from '../game-events';
 import { Tile } from '../map';
 import { Map } from '../map/map';
+import { ColorUtils, SystemColorToken } from '../map/utils';
 import { EventListener } from '../models';
 import { Selection } from './models';
 import { Toolbar } from './toolbar';
 
 export class Controller {
-   private selectedTile?: Tile;
+   private static readonly ROAD_CONNECTION_PREVIEW_ALPHA = 0.4;
+
+   private _selectedTile?: Tile;
    private leftMouseDown: boolean = false;
    private rightMouseDown: boolean = false;
    private readonly toolbar = new Toolbar();
    private readonly eventListeners: EventListener<any>[] = [];
 
    private roadConnectionBase?: Tile;
+   private readonly cursor = { x: 0, y: 0 };
 
    constructor(private readonly tiles: Tile[][]) {}
 
@@ -88,6 +93,28 @@ export class Controller {
       }
    }
 
+   public draw(drawer: BasicDrawer): void {
+      if (this.roadConnectionBase) {
+         const roadTileX = (this.roadConnectionBase.x + 0.5) * Tile.SIZE;
+         const roadTileY = (this.roadConnectionBase.y + 0.5) * Tile.SIZE;
+         const distance = Math.sqrt((roadTileX - this.cursor.x) ** 2 + (roadTileY - this.cursor.y) ** 2);
+
+         drawer.alpha = Controller.ROAD_CONNECTION_PREVIEW_ALPHA;
+         this.roadConnectionBase.road!.drawRoadSegment(drawer, roadTileX, roadTileY, this.cursor.x, this.cursor.y);
+         drawer.alpha = 1;
+
+         if (distance > Tile.SIZE * 2) {
+            drawer.text(
+               '!',
+               (roadTileX + this.cursor.x) / 2,
+               (roadTileY + this.cursor.y) / 2,
+               Tile.SIZE * 1.5,
+               ColorUtils.getTokenValue(SystemColorToken.WARN)
+            );
+         }
+      }
+   }
+
    private onLeftMouseDown(_: MouseEvent): void {
       this.leftMouseDown = true;
 
@@ -113,6 +140,9 @@ export class Controller {
    }
 
    private onMouseMove(event: MouseEvent): void {
+      this.cursor.x = event.offsetX;
+      this.cursor.y = event.offsetY;
+
       if (!(event.target instanceof HTMLCanvasElement)) {
          return;
       }
@@ -149,5 +179,21 @@ export class Controller {
 
    private onScrollUp(_: WheelEvent): void {
       this.toolbar.stepSelectedItem(-1);
+   }
+
+   private set selectedTile(tile: Tile | undefined) {
+      this.setTileSelection(this._selectedTile, false);
+      this._selectedTile = tile;
+      this.setTileSelection(this._selectedTile, true);
+   }
+
+   private get selectedTile(): Tile | undefined {
+      return this._selectedTile;
+   }
+
+   private setTileSelection(tile: Tile | undefined, isSelected: boolean): void {
+      if (tile) {
+         tile.selected = isSelected;
+      }
    }
 }
