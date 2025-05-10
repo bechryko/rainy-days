@@ -1,3 +1,4 @@
+import { BasicDrawer } from '../drawing';
 import { GameEventHandler, GameEventType } from '../game-events';
 import { Tile } from '../map';
 import { Map } from '../map/map';
@@ -6,6 +7,8 @@ import { Selection } from './models';
 import { Toolbar } from './toolbar';
 
 export class Controller {
+   private static readonly ROAD_CONNECTION_PREVIEW_ALPHA = 0.4;
+
    private _selectedTile?: Tile;
    private leftMouseDown: boolean = false;
    private rightMouseDown: boolean = false;
@@ -13,6 +16,7 @@ export class Controller {
    private readonly eventListeners: EventListener<any>[] = [];
 
    private roadConnectionBase?: Tile;
+   private readonly cursor = { x: 0, y: 0 };
 
    constructor(private readonly tiles: Tile[][]) {}
 
@@ -88,6 +92,20 @@ export class Controller {
       }
    }
 
+   public draw(drawer: BasicDrawer): void {
+      if (this.roadConnectionBase) {
+         drawer.alpha = Controller.ROAD_CONNECTION_PREVIEW_ALPHA;
+         this.roadConnectionBase.road!.drawRoadSegment(
+            drawer,
+            (this.roadConnectionBase.x + 0.5) * Tile.SIZE,
+            (this.roadConnectionBase.y + 0.5) * Tile.SIZE,
+            this.cursor.x,
+            this.cursor.y
+         );
+         drawer.alpha = 1;
+      }
+   }
+
    private onLeftMouseDown(_: MouseEvent): void {
       this.leftMouseDown = true;
 
@@ -113,6 +131,9 @@ export class Controller {
    }
 
    private onMouseMove(event: MouseEvent): void {
+      this.cursor.x = event.offsetX;
+      this.cursor.y = event.offsetY;
+
       if (!(event.target instanceof HTMLCanvasElement)) {
          return;
       }

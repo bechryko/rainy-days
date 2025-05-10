@@ -93,6 +93,12 @@ export class BasicDrawer {
       }
    }
 
+   public set alpha(a: number) {
+      if (this._ctx.globalAlpha !== a) {
+         this._ctx.globalAlpha = a;
+      }
+   }
+
    private set fontSize(size: number) {
       const font = size + 'px Serif';
       if (this._ctx.font !== font) {
