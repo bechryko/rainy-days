@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
-import { TimedPauseBuilding } from '@rainy-days/game/core/buildings/models';
-import { GameEventHandler, GameEventType } from '@rainy-days/game/core/game-events';
+import { TimedPauseBuilding } from '@rainy-days/core/buildings';
+import { GameEventHandler, GameEventType } from '@rainy-days/core/game-events';
 
 @Injectable()
 export class ContextMenuService {
    private timedPauseBuilding?: TimedPauseBuilding;
 
    constructor() {
-      GameEventHandler.getInstance().watchEvents(GameEventType.COMPLETE_TIMED_PAUSE, () => (this.timedPauseBuilding = undefined));
+      GameEventHandler.getInstance().watchEvents(
+         GameEventType.COMPLETE_TIMED_PAUSE,
+         () => (this.timedPauseBuilding = undefined)
+      );
    }
 
    public setTimedPauseBuilding(building: TimedPauseBuilding): void {

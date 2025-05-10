@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, ElementRef, input, viewChild } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
-import { Building, TimedGate } from '@rainy-days/game/core/buildings';
-import { Selection, ToolbarItem } from '@rainy-days/game/core/control/models';
-import { BasicDrawer } from '@rainy-days/game/core/drawing';
-import { Tile } from '@rainy-days/game/core/map';
-import { Direction } from '@rainy-days/game/core/map/models';
-import { Road } from '@rainy-days/game/core/roads';
+import { Building, TimedGate } from '@rainy-days/core/buildings';
+import { Selection, ToolbarItem } from '@rainy-days/core/control';
+import { BasicDrawer } from '@rainy-days/core/drawing';
+import { Direction, Tile } from '@rainy-days/core/map';
+import { Road } from '@rainy-days/core/roads';
 import { filter, map, switchMap } from 'rxjs';
 
 @Component({

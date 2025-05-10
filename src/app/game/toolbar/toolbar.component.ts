@@ -3,7 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButton, MatFabButton } from '@angular/material/button';
 import { MatTooltip } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
-import { Toolbar } from '@rainy-days/core/control/toolbar';
+import { Toolbar } from '@rainy-days/core/control';
 import { Route } from '@rainy-days/routes';
 import { filter, fromEvent, map } from 'rxjs';
 import { GameStatus } from '../models';

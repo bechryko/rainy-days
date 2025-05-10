@@ -1,7 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { MatRipple } from '@angular/material/core';
-import { TimedGate } from '@rainy-days/game/core/buildings';
+import { TimedGate } from '@rainy-days/core/buildings';
 import { TimedPauseWidgetComponent } from '../widgets';
 
 @Component({

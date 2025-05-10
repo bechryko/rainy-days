@@ -1,7 +1,15 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, input, ViewChild } from '@angular/core';
+import {
+   ChangeDetectionStrategy,
+   ChangeDetectorRef,
+   Component,
+   ElementRef,
+   inject,
+   input,
+   ViewChild
+} from '@angular/core';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
-import { TimedPauseBuilding } from '@rainy-days/game/core/buildings/models';
-import { GameEventHandler, GameEventType } from '@rainy-days/game/core/game-events';
+import { TimedPauseBuilding } from '@rainy-days/core/buildings';
+import { GameEventHandler, GameEventType } from '@rainy-days/core/game-events';
 import { ContextMenuService } from '../../context-menu.service';
 
 @Component({
