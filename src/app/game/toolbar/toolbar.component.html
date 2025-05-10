@@ -13,7 +13,9 @@
             <button
                mat-fab
                (click)="selectTool($index)">
-               {{ toolbarItem.displayName }}
+               <rd-toolbar-icon
+                  [item]="toolbarItem"
+                  [matTooltip]="toolbarItem.displayName"></rd-toolbar-icon>
             </button>
          </div>
       }

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { GameStatus } from '@rainy-days/game/models';
+import { GameStatus } from '../../models';
 
 @Pipe({
    name: 'calculateTrueGameSpeed'

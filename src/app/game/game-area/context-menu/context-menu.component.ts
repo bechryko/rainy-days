@@ -1,11 +1,9 @@
 import { NgComponentOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, input, Type } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Building } from '@rainy-days/game/core/buildings';
-import { GameEventHandler, GameEventType } from '@rainy-days/game/core/game-events';
-import { Tile } from '@rainy-days/game/core/map';
-import { Map } from '@rainy-days/game/core/map/map';
-import { ResizeUtils } from '@rainy-days/game/core/map/utils';
+import { Building } from '@rainy-days/core/buildings';
+import { GameEventHandler, GameEventType } from '@rainy-days/core/game-events';
+import { Map, ResizeUtils, Tile } from '@rainy-days/core/map';
 import { filter, fromEvent, map } from 'rxjs';
 import { contextMenuMap } from './context-menu-map';
 import { ContextMenuService } from './context-menu.service';

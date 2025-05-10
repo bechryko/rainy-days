@@ -52,7 +52,10 @@ export class GameComponent {
          }))
       );
       GameEventHandler.getInstance().watchEvents(GameEventType.UPDATE_SPAWN_TIMER, timer => {
-         if (this.gameStatus().spawnTimer > Game.BUILDING_SPAWN_MESSAGE_TIME && timer <= Game.BUILDING_SPAWN_MESSAGE_TIME) {
+         if (
+            this.gameStatus().spawnTimer > Game.BUILDING_SPAWN_MESSAGE_TIME &&
+            timer <= Game.BUILDING_SPAWN_MESSAGE_TIME
+         ) {
             this.snackbarMessage(`New spawner and destination spawns in ${timer} seconds`, 'Understood');
          }
          this.gameStatus.update(status => ({

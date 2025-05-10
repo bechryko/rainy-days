@@ -1,3 +1,8 @@
 button[mat-stroked-button] {
    background-color: var(--rd-white);
 }
+
+.mat-mdc-fab-base .mdc-button__label {
+   display: inline-grid;
+   place-items: center;
+}

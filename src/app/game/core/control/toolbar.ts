@@ -40,13 +40,13 @@ export class Toolbar {
          selectionMatchFn: obj => obj instanceof Tube
       },
       {
-         displayName: 'Colored gate 1', // TODO
+         displayName: 'Colored gate',
          selection: Selection.COLORED_GATE_1,
          factory: tile => new ColoredGate(tile, this.gate1Color),
          selectionMatchFn: obj => obj instanceof ColoredGate && obj.color === this.gate1Color
       },
       {
-         displayName: 'Colored gate 2', // TODO
+         displayName: 'Colored gate',
          selection: Selection.COLORED_GATE_2,
          factory: tile => new ColoredGate(tile, this.gate2Color),
          selectionMatchFn: obj => obj instanceof ColoredGate && obj.color === this.gate2Color
