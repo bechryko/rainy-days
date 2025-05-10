@@ -2,6 +2,7 @@ import { BasicDrawer } from '../drawing';
 import { GameEventHandler, GameEventType } from '../game-events';
 import { Tile } from '../map';
 import { Map } from '../map/map';
+import { ColorUtils, SystemColorToken } from '../map/utils';
 import { EventListener } from '../models';
 import { Selection } from './models';
 import { Toolbar } from './toolbar';
@@ -94,15 +95,23 @@ export class Controller {
 
    public draw(drawer: BasicDrawer): void {
       if (this.roadConnectionBase) {
+         const roadTileX = (this.roadConnectionBase.x + 0.5) * Tile.SIZE;
+         const roadTileY = (this.roadConnectionBase.y + 0.5) * Tile.SIZE;
+         const distance = Math.sqrt((roadTileX - this.cursor.x) ** 2 + (roadTileY - this.cursor.y) ** 2);
+
          drawer.alpha = Controller.ROAD_CONNECTION_PREVIEW_ALPHA;
-         this.roadConnectionBase.road!.drawRoadSegment(
-            drawer,
-            (this.roadConnectionBase.x + 0.5) * Tile.SIZE,
-            (this.roadConnectionBase.y + 0.5) * Tile.SIZE,
-            this.cursor.x,
-            this.cursor.y
-         );
+         this.roadConnectionBase.road!.drawRoadSegment(drawer, roadTileX, roadTileY, this.cursor.x, this.cursor.y);
          drawer.alpha = 1;
+
+         if (distance > Tile.SIZE * 2) {
+            drawer.text(
+               '!',
+               (roadTileX + this.cursor.x) / 2,
+               (roadTileY + this.cursor.y) / 2,
+               Tile.SIZE * 1.5,
+               ColorUtils.getTokenValue(SystemColorToken.WARN)
+            );
+         }
       }
    }
 

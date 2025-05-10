@@ -74,7 +74,7 @@ export class TimedGate extends Gate implements TimedPauseBuilding {
       drawer.square((this.tile.x + 0.3) * Tile.SIZE, (this.tile.y + 0.3) * Tile.SIZE, Tile.SIZE * 0.4, color);
 
       if (this.closed()) {
-         drawer.strokeStyle = ColorUtils.getTokenValue(ComponentColorToken.TIMED_GATE_X);
+         drawer.strokeStyle = ColorUtils.getTokenValue(SystemColorToken.WARN);
 
          const width = Tile.SIZE * 0.05;
          drawer.line(

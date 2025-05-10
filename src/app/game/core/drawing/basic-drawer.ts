@@ -46,8 +46,8 @@ export class BasicDrawer {
       this._ctx[fill ? 'fill' : 'stroke']();
    }
 
-   public text(text: string, x: number, y: number, fontSize: number): void {
-      this.fillStyle = ColorUtils.getTokenValue(SystemColorToken.TEXT);
+   public text(text: string, x: number, y: number, fontSize: number, color?: Color): void {
+      this.fillStyle = color ?? ColorUtils.getTokenValue(SystemColorToken.TEXT);
       this.fontSize = fontSize;
       this._ctx.fillText(text, x, y);
    }
