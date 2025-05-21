@@ -3,6 +3,7 @@
    display: flex;
    gap: 1rem;
    align-items: center;
+   background-color: var(--rd-primary);
    padding-inline: 3rem;
    user-select: none;
 
@@ -98,8 +99,7 @@ p.game-over {
    font-weight: 500;
 }
 
-.restart-button,
-.back-button {
+.end-of-game-button {
    font-size: 1.5rem;
    height: 3.625rem;
    flex-basis: 14rem;

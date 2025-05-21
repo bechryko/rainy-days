@@ -33,18 +33,10 @@
 } @else {
    <p class="game-over">Game Over!</p>
    <button
-      class="restart-button"
+      class="end-of-game-button"
       mat-flat-button
       color="accent"
-      (click)="restartGame()">
-      Restart
+      (click)="openEndOfGameDialog.emit()">
+      Open end of game dialog
    </button>
-   <button
-      class="back-button"
-      mat-flat-button
-      color="accent"
-      (click)="backToMenu()">
-      Back to menu
-   </button>
-   <p class="game-over">Score: {{ gameStatus().score }}</p>
 }

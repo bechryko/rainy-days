@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TimedPauseBuilding } from '@rainy-days/core/buildings';
+import { TimedPauseBuilding } from '@rainy-days/core/buildings/models';
 import { GameEventHandler, GameEventType } from '@rainy-days/core/game-events';
 
 @Injectable()

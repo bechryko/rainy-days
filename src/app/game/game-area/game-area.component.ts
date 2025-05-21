@@ -4,13 +4,11 @@ import {
    computed,
    effect,
    ElementRef,
-   inject,
    input,
    OnDestroy,
    signal,
    viewChild
 } from '@angular/core';
-import { GameStartService } from 'src/app/game-start.service';
 import { Building } from '../core/buildings';
 import { Game } from '../core/game';
 import { GameEventHandler, GameEventType } from '../core/game-events';
@@ -28,9 +26,8 @@ import { ContextMenuComponent } from './context-menu/context-menu.component';
    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameAreaComponent implements OnDestroy {
-   private readonly gameStartService = inject(GameStartService);
-
    public readonly gameStatus = input.required<GameStatus>();
+   public readonly seed = input.required<string>();
    private readonly gameCanvas = viewChild<ElementRef<HTMLCanvasElement>>('gameCanvas');
    private game?: Game;
    private onResizeFn?: () => void;
@@ -38,8 +35,12 @@ export class GameAreaComponent implements OnDestroy {
    public readonly contextMenuBuilding = signal<Building | undefined>(undefined);
 
    constructor() {
-      GameEventHandler.getInstance().watchEvents(GameEventType.OPEN_CONTEXT_MENU, building => this.contextMenuBuilding.set(building));
-      GameEventHandler.getInstance().watchEvents(GameEventType.CLOSE_CONTEXT_MENU, () => this.contextMenuBuilding.set(undefined));
+      GameEventHandler.getInstance().watchEvents(GameEventType.OPEN_CONTEXT_MENU, building =>
+         this.contextMenuBuilding.set(building)
+      );
+      GameEventHandler.getInstance().watchEvents(GameEventType.CLOSE_CONTEXT_MENU, () =>
+         this.contextMenuBuilding.set(undefined)
+      );
 
       effect(() => {
          const gameCanvas = this.gameCanvas();
@@ -56,10 +57,8 @@ export class GameAreaComponent implements OnDestroy {
          );
 
          const canvas = gameCanvas.nativeElement;
-         const parameters = this.gameStartService.getStartingParams();
-         const seed = !parameters.seed ? Math.random().toString() : parameters.seed;
-         RandomUtils.registerSeed(seed);
-         console.log(`Game seed: "${seed}"`);
+         RandomUtils.registerSeed(this.seed());
+         console.log(`Game seed: "${this.seed()}"`);
          this.game = new Game(
             canvas,
             computed(() => this.gameStatus().gameSpeed)

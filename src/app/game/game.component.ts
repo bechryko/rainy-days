@@ -1,8 +1,14 @@
 import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Game } from '@rainy-days/core/game';
 import { GameEventHandler, GameEventType } from '@rainy-days/core/game-events';
+import { filter, map, pairwise } from 'rxjs';
+import { GameStartService } from '../game-start.service';
+import { EndOfGameDialogData } from './end-of-game-dialog/end-of-game-dialog-data';
+import { EndOfGameDialogComponent } from './end-of-game-dialog/end-of-game-dialog.component';
 import { GameAreaComponent } from './game-area';
 import { GameStatus } from './models';
 import { ToolbarComponent } from './toolbar';
@@ -15,7 +21,9 @@ import { ToolbarComponent } from './toolbar';
    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameComponent {
-   private snackbar = inject(MatSnackBar);
+   private readonly snackbar = inject(MatSnackBar);
+   private readonly dialog = inject(MatDialog);
+   private readonly gameStartService = inject(GameStartService);
 
    public readonly gameStatus = signal<GameStatus>({
       isGameGoing: false,
@@ -25,8 +33,11 @@ export class GameComponent {
       score: 0,
       spawnTimer: 0
    });
+   public seed: string;
 
    constructor() {
+      this.seed = this.getSeed();
+
       GameEventHandler.getInstance().watchEvents(GameEventType.IS_GAME_GOING, isGameGoing =>
          this.gameStatus.update(status => ({
             ...status,
@@ -56,7 +67,7 @@ export class GameComponent {
             this.gameStatus().spawnTimer > Game.BUILDING_SPAWN_MESSAGE_TIME &&
             timer <= Game.BUILDING_SPAWN_MESSAGE_TIME
          ) {
-            this.snackbarMessage(`New spawner and destination spawns in ${timer} seconds`, 'Understood');
+            this.openSnackbarMessage(`New spawner and destination spawns in ${timer} seconds`, 'Understood');
          }
          this.gameStatus.update(status => ({
             ...status,
@@ -64,8 +75,17 @@ export class GameComponent {
          }));
       });
       GameEventHandler.getInstance().watchEvents(GameEventType.DESTINATION_CRITICAL_HEALTH, health => {
-         this.snackbarMessage(`One of your destinations has ${health} health!`, "I'll fix it!");
+         this.openSnackbarMessage(`One of your destinations has ${health} health!`, "I'll fix it!");
       });
+
+      toObservable(this.gameStatus)
+         .pipe(
+            map(status => status.isGameGoing),
+            pairwise(),
+            filter(([oldIsGameGoing, newIsGameGoing]) => oldIsGameGoing !== newIsGameGoing && !newIsGameGoing),
+            takeUntilDestroyed()
+         )
+         .subscribe(() => this.openEndOfGameDialog());
    }
 
    public onGameSpeedChange(gameSpeed: number): void {
@@ -84,7 +104,21 @@ export class GameComponent {
       }
    }
 
-   snackbarMessage(message: string, action: string) {
+   public openEndOfGameDialog(): void {
+      const data: EndOfGameDialogData = {
+         score: this.gameStatus().score,
+         seed: this.seed
+      };
+
+      this.dialog.open(EndOfGameDialogComponent, { data });
+   }
+
+   public openSnackbarMessage(message: string, action: string): void {
       this.snackbar.open(message, action, { duration: 3000 });
+   }
+
+   private getSeed(): string {
+      const seed = this.gameStartService.getStartingParams().seed;
+      return seed ? seed : Math.random().toString();
    }
 }
