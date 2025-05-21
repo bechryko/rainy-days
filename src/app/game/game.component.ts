@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Game } from '@rainy-days/core/game';
 import { GameEventHandler, GameEventType } from '@rainy-days/core/game-events';
+import { StorageID, StorageService } from '@rainy-days/shared/services';
 import { filter, map, pairwise } from 'rxjs';
 import { GameStartService } from '../game-start.service';
 import { EndOfGameDialogData } from './end-of-game-dialog/end-of-game-dialog-data';
@@ -24,6 +25,7 @@ export class GameComponent {
    private readonly snackbar = inject(MatSnackBar);
    private readonly dialog = inject(MatDialog);
    private readonly gameStartService = inject(GameStartService);
+   private readonly storageService = inject(StorageService);
 
    public readonly gameStatus = signal<GameStatus>({
       isGameGoing: false,
@@ -34,6 +36,7 @@ export class GameComponent {
       spawnTimer: 0
    });
    public seed: string;
+   private isNewBest = false;
 
    constructor() {
       this.seed = this.getSeed();
@@ -85,7 +88,7 @@ export class GameComponent {
             filter(([oldIsGameGoing, newIsGameGoing]) => oldIsGameGoing !== newIsGameGoing && !newIsGameGoing),
             takeUntilDestroyed()
          )
-         .subscribe(() => this.openEndOfGameDialog());
+         .subscribe(() => this.onEndOfGame());
    }
 
    public onGameSpeedChange(gameSpeed: number): void {
@@ -104,9 +107,21 @@ export class GameComponent {
       }
    }
 
+   public onEndOfGame(): void {
+      const score = this.gameStatus().score;
+      if (score > this.storageService.read(StorageID.PERSONAL_BEST)) {
+         this.storageService.save(StorageID.PERSONAL_BEST, score);
+         this.isNewBest = true;
+      }
+
+      this.openEndOfGameDialog();
+   }
+
    public openEndOfGameDialog(): void {
       const data: EndOfGameDialogData = {
          score: this.gameStatus().score,
+         best: this.storageService.read(StorageID.PERSONAL_BEST),
+         isNewBest: this.isNewBest,
          seed: this.seed
       };
 

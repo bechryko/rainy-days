@@ -28,8 +28,23 @@ h2 {
    margin: 0;
 }
 
-.score {
-   font-size: 1.5rem;
+.score-container {
+   margin-block: 1.5rem;
+
+   .score,
+   .best {
+      font-size: 1.5rem;
+      text-align: center;
+      margin: 0;
+
+      &:not(:first-child) {
+         margin-top: 0.5rem;
+      }
+   }
+
+   .best {
+      color: var(--rd-accent);
+   }
 }
 
 .buttons-container {
