@@ -29,13 +29,12 @@ h2 {
 }
 
 .score-container {
+   table-layout: fixed;
    margin-block: 1.5rem;
 
    .score,
    .best {
       font-size: 1.5rem;
-      text-align: center;
-      margin: 0;
 
       &:not(:first-child) {
          margin-top: 0.5rem;
@@ -44,6 +43,24 @@ h2 {
 
    .best {
       color: var(--rd-accent);
+   }
+
+   td {
+      width: 50%;
+
+      &:first-child {
+         text-align: end;
+         padding-right: 0.5rem;
+      }
+
+      &:last-child {
+         text-align: start;
+      }
+
+      &[colspan='2'] {
+         text-align: center;
+         padding-right: revert-layer;
+      }
    }
 }
 
