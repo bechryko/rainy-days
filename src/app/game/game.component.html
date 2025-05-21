@@ -5,5 +5,7 @@
 <div
    class="game-area-wrapper"
    [ngClass]="{ gameOver: !gameStatus().isGameGoing, paused: gameStatus().isPaused }">
-   <rd-game-area [gameStatus]="gameStatus()"></rd-game-area>
+   <rd-game-area
+      [gameStatus]="gameStatus()"
+      [seed]="seed"></rd-game-area>
 </div>

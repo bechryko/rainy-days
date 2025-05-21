@@ -1,8 +1,12 @@
 :host {
+   $width: 30dvw;
+   $padding: 2rem;
+
    display: grid;
+   grid-template-columns: calc($width - 2 * $padding);
    background-color: var(--rd-primary);
-   padding: 2rem;
-   width: 30dvw;
+   padding: $padding;
+   width: $width;
    height: 70dvh;
    min-height: 37.5rem;
    box-sizing: border-box;
@@ -37,5 +41,33 @@ h2 {
       flex: 1;
       font-size: 1.25rem;
       height: 3rem;
+   }
+}
+
+.seed-container {
+   width: 100%;
+
+   > * {
+      color: var(--rd-white);
+      font-size: 1.25rem;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 100%;
+      height: 3rem;
+      background-color: var(--rd-accent);
+      border: none;
+      border-radius: var(--mdc-filled-button-container-shape);
+   }
+
+   button {
+      cursor: pointer;
+   }
+
+   div {
+      text-align: center;
+      line-height: 2rem;
+      padding: 0.5rem;
+      box-sizing: border-box;
    }
 }

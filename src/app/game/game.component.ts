@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Game } from '@rainy-days/core/game';
 import { GameEventHandler, GameEventType } from '@rainy-days/core/game-events';
 import { filter, map, pairwise } from 'rxjs';
+import { GameStartService } from '../game-start.service';
 import { EndOfGameDialogData } from './end-of-game-dialog/end-of-game-dialog-data';
 import { EndOfGameDialogComponent } from './end-of-game-dialog/end-of-game-dialog.component';
 import { GameAreaComponent } from './game-area';
@@ -22,6 +23,7 @@ import { ToolbarComponent } from './toolbar';
 export class GameComponent {
    private readonly snackbar = inject(MatSnackBar);
    private readonly dialog = inject(MatDialog);
+   private readonly gameStartService = inject(GameStartService);
 
    public readonly gameStatus = signal<GameStatus>({
       isGameGoing: false,
@@ -31,8 +33,11 @@ export class GameComponent {
       score: 0,
       spawnTimer: 0
    });
+   public seed: string;
 
    constructor() {
+      this.seed = this.getSeed();
+
       GameEventHandler.getInstance().watchEvents(GameEventType.IS_GAME_GOING, isGameGoing =>
          this.gameStatus.update(status => ({
             ...status,
@@ -101,7 +106,8 @@ export class GameComponent {
 
    public openEndOfGameDialog(): void {
       const data: EndOfGameDialogData = {
-         score: this.gameStatus().score
+         score: this.gameStatus().score,
+         seed: this.seed
       };
 
       this.dialog.open(EndOfGameDialogComponent, { data });
@@ -109,5 +115,10 @@ export class GameComponent {
 
    public openSnackbarMessage(message: string, action: string): void {
       this.snackbar.open(message, action, { duration: 3000 });
+   }
+
+   private getSeed(): string {
+      const seed = this.gameStartService.getStartingParams().seed;
+      return seed ? seed : Math.random().toString();
    }
 }

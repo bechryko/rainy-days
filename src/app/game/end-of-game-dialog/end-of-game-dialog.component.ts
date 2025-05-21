@@ -18,6 +18,8 @@ export class EndOfGameDialogComponent {
    private readonly dialogRef = inject(DialogRef);
    private readonly router = inject(Router);
 
+   public isSeedRevealed = false;
+
    public playAgain(): void {
       window.location.reload();
    }
@@ -25,5 +27,9 @@ export class EndOfGameDialogComponent {
    public backToMenu(): void {
       this.router.navigateByUrl(Route.MENU);
       this.dialogRef.close();
+   }
+
+   public revealSeed(): void {
+      this.isSeedRevealed = true;
    }
 }

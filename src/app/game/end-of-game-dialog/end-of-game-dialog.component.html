@@ -15,4 +15,11 @@
          Back to menu
       </button>
    </div>
+   <div class="seed-container">
+      @if (!isSeedRevealed) {
+         <button (click)="revealSeed()">Reveal seed</button>
+      } @else {
+         <div>{{ dialogData.seed }}</div>
+      }
+   </div>
 </div>
