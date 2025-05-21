@@ -2,6 +2,9 @@
 <div class="control-panel">
    @if (buttonGroup === ControlPanelGroup.MAIN_MENU) {
       <div class="menu-buttons control-panel-inputs-container">
+         @if (personalBest !== 0) {
+            <p class="personal-best">Personal best: {{ personalBest }}</p>
+         }
          <button
             mat-flat-button
             color="accent"
@@ -53,4 +56,3 @@
    }
 </div>
 <rd-news></rd-news>
-

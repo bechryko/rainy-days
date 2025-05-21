@@ -23,6 +23,7 @@ h1 {
    $border-width: 2px;
    $border: $border-width solid var(--rd-primary);
    $border-radius: 1rem;
+   $item-height: 3rem;
 
    grid-area: control-panel;
    width: 60%;
@@ -61,13 +62,22 @@ h1 {
 
       button {
          font-size: 1.75rem;
-         height: 3rem;
+         height: $item-height;
       }
    }
 
    .menu-buttons {
       height: 100%;
       box-sizing: border-box;
+
+      .personal-best {
+         text-align: center;
+         color: var(--rd-accent);
+         font-size: 1.75rem;
+         line-height: $item-height;
+         font-weight: bold;
+         margin: 0;
+      }
    }
 }
 
