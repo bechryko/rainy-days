@@ -1,6 +1,7 @@
 <rd-toolbar
    [gameStatus]="gameStatus()"
-   (gameSpeedChange)="onGameSpeedChange($event)"></rd-toolbar>
+   (gameSpeedChange)="onGameSpeedChange($event)"
+   (openEndOfGameDialog)="openEndOfGameDialog()"></rd-toolbar>
 <div
    class="game-area-wrapper"
    [ngClass]="{ gameOver: !gameStatus().isGameGoing, paused: gameStatus().isPaused }">

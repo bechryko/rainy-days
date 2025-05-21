@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Game } from '@rainy-days/core/game';
 import { GameEventHandler, GameEventType } from '@rainy-days/core/game-events';
 import { filter, map, pairwise } from 'rxjs';
+import { EndOfGameDialogData } from './end-of-game-dialog/end-of-game-dialog-data';
 import { EndOfGameDialogComponent } from './end-of-game-dialog/end-of-game-dialog.component';
 import { GameAreaComponent } from './game-area';
 import { GameStatus } from './models';
@@ -99,7 +100,11 @@ export class GameComponent {
    }
 
    public openEndOfGameDialog(): void {
-      this.dialog.open(EndOfGameDialogComponent);
+      const data: EndOfGameDialogData = {
+         score: this.gameStatus().score
+      };
+
+      this.dialog.open(EndOfGameDialogComponent, { data });
    }
 
    public openSnackbarMessage(message: string, action: string): void {

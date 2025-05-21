@@ -1,1 +1,18 @@
-<p>end-of-game-dialog works!</p>
+<div class="end-of-game-dialog-wrapper">
+   <h2>Game Over!</h2>
+   <p class="score">Score: {{ dialogData.score }}</p>
+   <div class="buttons-container">
+      <button
+         mat-flat-button
+         color="accent"
+         (click)="playAgain()">
+         Play again
+      </button>
+      <button
+         mat-flat-button
+         color="accent"
+         (click)="backToMenu()">
+         Back to menu
+      </button>
+   </div>
+</div>
