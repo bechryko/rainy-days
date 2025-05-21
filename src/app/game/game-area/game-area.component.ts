@@ -58,7 +58,7 @@ export class GameAreaComponent implements OnDestroy {
 
          const canvas = gameCanvas.nativeElement;
          RandomUtils.registerSeed(this.seed());
-         console.log(`Game seed: "${this.seed()}"`);
+
          this.game = new Game(
             canvas,
             computed(() => this.gameStatus().gameSpeed)

@@ -1,6 +1,21 @@
 <div class="end-of-game-dialog-wrapper">
    <h2>Game Over!</h2>
-   <p class="score">Score: {{ dialogData.score }}</p>
+   <table class="score-container">
+      <tr
+         class="score"
+         [class.best]="dialogData.isNewBest">
+         <td>Score:</td>
+         <td>{{ dialogData.score }}</td>
+      </tr>
+      <tr class="best">
+         @if (!dialogData.isNewBest) {
+            <td>Best:</td>
+            <td>{{ dialogData.best }}</td>
+         } @else {
+            <td colspan="2">New personal best!</td>
+         }
+      </tr>
+   </table>
    <div class="buttons-container">
       <button
          mat-flat-button
