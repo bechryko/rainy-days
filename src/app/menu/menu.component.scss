@@ -76,7 +76,10 @@ h1 {
          font-size: 1.75rem;
          line-height: $item-height;
          font-weight: bold;
+         width: fit-content;
+         padding-inline: 1rem;
          margin: 0;
+         user-select: none;
       }
    }
 }

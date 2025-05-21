@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 
 export enum StorageID {
-   PERSONAL_BEST = 'personal-best'
+   PERSONAL_BEST = 'personal-best',
+   PERSONAL_BEST_TIME = 'personal-best-time'
 }
 
 interface StorageIDDataMap {
    [StorageID.PERSONAL_BEST]: number;
+   [StorageID.PERSONAL_BEST_TIME]: number | null;
 }
 
 @Injectable({
@@ -27,6 +29,11 @@ export class StorageService {
          case StorageID.PERSONAL_BEST:
             if (item === null) {
                return 0;
+            }
+            return Number(item);
+         case StorageID.PERSONAL_BEST_TIME:
+            if (item === null) {
+               return null as StorageIDDataMap[T];
             }
             return Number(item);
       }

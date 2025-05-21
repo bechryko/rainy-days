@@ -111,6 +111,7 @@ export class GameComponent {
       const score = this.gameStatus().score;
       if (score > this.storageService.read(StorageID.PERSONAL_BEST)) {
          this.storageService.save(StorageID.PERSONAL_BEST, score);
+         this.storageService.save(StorageID.PERSONAL_BEST_TIME, Date.now());
          this.isNewBest = true;
       }
 
