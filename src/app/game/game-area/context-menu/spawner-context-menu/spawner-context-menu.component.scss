@@ -4,11 +4,7 @@
 @include mixins.context-menu;
 
 p {
-   margin-block: 0;
-
-   &:last-of-type {
-      margin-bottom: 0.5rem;
-   }
+   margin-block: 0 0.5rem;
 }
 
 .delay-button {

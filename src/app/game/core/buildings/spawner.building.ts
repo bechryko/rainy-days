@@ -13,6 +13,9 @@ export class Spawner extends Building implements TimedPauseBuilding {
 
    private timer = 0;
    private readonly _displayTimer$ = new BehaviorSubject(toFraction(this.timer));
+   private carsSpawned = 0;
+   private readonly _displayCarsSpawned$ = new BehaviorSubject(this.carsSpawned);
+
    public timedPause = false;
 
    constructor(
@@ -33,22 +36,8 @@ export class Spawner extends Building implements TimedPauseBuilding {
 
       this.timer -= deltaTime;
       if (this.timer < 0) {
+         this.spawnCar();
          this.timer = Spawner.GENERAL_CAR_SPAWN_TIMER;
-         const car = new Car(this.tile, this.color);
-
-         DirectionUtils.forEachDirection((direction, _x, _y, breakFn) => {
-            const neighbor = this.tile.getTileInDirection(direction);
-            if (neighbor && neighbor.isUnlocked(car, this.tile)) {
-               car.setDestinationIn(direction);
-               breakFn();
-            }
-         });
-
-         if (this.timedPause) {
-            GameEventHandler.getInstance().emitEvent(GameEventType.TOGGLE_PAUSE, null);
-            GameEventHandler.getInstance().emitEvent(GameEventType.COMPLETE_TIMED_PAUSE, null);
-            this.timedPause = false;
-         }
       }
 
       this.emit();
@@ -81,6 +70,31 @@ export class Spawner extends Building implements TimedPauseBuilding {
 
    public get displayTimer$(): Observable<string> {
       return this._displayTimer$.pipe(distinctUntilChanged());
+   }
+
+   public get displayCarsSpawned$(): Observable<number> {
+      return this._displayCarsSpawned$.asObservable();
+   }
+
+   private spawnCar(): void {
+      const car = new Car(this.tile, this.color);
+
+      DirectionUtils.forEachDirection((direction, _x, _y, breakFn) => {
+         const neighbor = this.tile.getTileInDirection(direction);
+         if (neighbor && neighbor.isUnlocked(car, this.tile)) {
+            car.setDestinationIn(direction);
+            breakFn();
+         }
+      });
+
+      if (this.timedPause) {
+         GameEventHandler.getInstance().emitEvent(GameEventType.TOGGLE_PAUSE, null);
+         GameEventHandler.getInstance().emitEvent(GameEventType.COMPLETE_TIMED_PAUSE, null);
+         this.timedPause = false;
+      }
+
+      this.carsSpawned++;
+      this._displayCarsSpawned$.next(this.carsSpawned);
    }
 
    private emit(): void {
