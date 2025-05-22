@@ -83,7 +83,15 @@ export class Game {
    private timedActions(deltaTime: number): void {
       if ((this.spawnTimer -= deltaTime) < 0) {
          this.spawnTimer = Building.MAIN_SPAWN_TIMER;
-         this.map.spawnSpawnerAndDestination();
+         try {
+            this.map.spawnSpawnerAndDestination();
+         } catch (error) {
+            if (error instanceof NoRoomForSpawnError) {
+               this.victory = true;
+            } else {
+               throw error;
+            }
+         }
       }
       GameEventHandler.getInstance().emitEvent(GameEventType.UPDATE_SPAWN_TIMER, Math.floor(this.spawnTimer));
    }

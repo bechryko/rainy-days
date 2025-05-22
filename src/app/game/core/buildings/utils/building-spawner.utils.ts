@@ -1,3 +1,4 @@
+import { NoRoomForSpawnError } from '@rainy-days/shared/errors';
 import { Tile } from '../../map';
 import { Map } from '../../map/map';
 import { ColorUtils, DirectionUtils } from '../../map/utils';
@@ -54,7 +55,7 @@ export class BuildingSpawnerUtils {
          }
       }
 
-      throw new Error('No available tiles for spawning!');
+      throw new NoRoomForSpawnError('No available tiles for spawning!');
    }
 
    private static getAvailableBuildingLocations(tiles: Tile[][], clearRange: number): Tile[] {
