@@ -31,7 +31,11 @@
       }
    </div>
 } @else {
-   <p class="game-over">Game Over!</p>
+   @if (gameStatus().isVictory) {
+      <p class="victory">Victory!</p>
+   } @else {
+      <p class="defeat">Game Over!</p>
+   }
    <button
       class="end-of-game-button"
       mat-flat-button

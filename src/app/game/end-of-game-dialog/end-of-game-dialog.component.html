@@ -1,5 +1,14 @@
 <div class="end-of-game-dialog-wrapper">
-   <h2>Game Over!</h2>
+   @if (dialogData.isVictory) {
+      <hgroup class="victory">
+         <h2>Victory</h2>
+         <p class="subtitle">for now...</p>
+      </hgroup>
+   } @else {
+      <hgroup class="defeat">
+         <h2>Game Over!</h2>
+      </hgroup>
+   }
    <table class="score-container">
       <tr
          class="score"

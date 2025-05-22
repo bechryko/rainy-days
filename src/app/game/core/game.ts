@@ -1,4 +1,5 @@
 import { Signal } from '@angular/core';
+import { NoRoomForSpawnError } from '@rainy-days/shared/errors';
 import { Building, Destination } from './buildings';
 import { Controller } from './control';
 import { BasicDrawer } from './drawing';
@@ -16,6 +17,7 @@ export class Game {
    private spawnTimer = 0;
    public paused = false;
    private exited = false;
+   private victory = false;
 
    constructor(
       canvas: HTMLCanvasElement,
@@ -49,7 +51,7 @@ export class Game {
          requestAnimationFrame(() => this.gameInterval(currentTime));
       } else {
          this.controller.unregisterEventListeners();
-         GameEventHandler.getInstance().emitEvent(GameEventType.IS_GAME_GOING, false);
+         GameEventHandler.getInstance().emitEvent(GameEventType.GAME_OVER, this.victory);
          GameEventHandler.getInstance().emitEvent(GameEventType.CLOSE_CONTEXT_MENU, null);
       }
    }
@@ -71,13 +73,25 @@ export class Game {
       this.map.draw(this.drawer);
       this.controller.draw(this.drawer);
 
-      return this.paused || !Destination.anyWithZeroHealth();
+      return this.paused || !this.isEndOfGame();
+   }
+
+   private isEndOfGame(): boolean {
+      return Destination.anyWithZeroHealth() || this.victory;
    }
 
    private timedActions(deltaTime: number): void {
       if ((this.spawnTimer -= deltaTime) < 0) {
          this.spawnTimer = Building.MAIN_SPAWN_TIMER;
-         this.map.spawnSpawnerAndDestination();
+         try {
+            this.map.spawnSpawnerAndDestination();
+         } catch (error) {
+            if (error instanceof NoRoomForSpawnError) {
+               this.victory = true;
+            } else {
+               throw error;
+            }
+         }
       }
       GameEventHandler.getInstance().emitEvent(GameEventType.UPDATE_SPAWN_TIMER, Math.floor(this.spawnTimer));
    }

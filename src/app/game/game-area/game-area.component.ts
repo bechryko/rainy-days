@@ -85,7 +85,7 @@ export class GameAreaComponent implements OnDestroy {
    }
 
    public startGame(): void {
-      GameEventHandler.getInstance().emitEvent(GameEventType.IS_GAME_GOING, true);
+      GameEventHandler.getInstance().emitEvent(GameEventType.START_GAME, null);
       this.game!.startGame();
    }
 }
