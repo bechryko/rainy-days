@@ -1,6 +1,6 @@
 import { ComponentType } from '@angular/cdk/portal';
 import { NgComponentOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { DialogCloseButtonComponent } from '@rainy-days/shared/components';
 import {
@@ -51,5 +51,22 @@ export class GuideDialogComponent {
 
    public selectItem(item: GuideItem): void {
       this.selectedItem = item;
+   }
+
+   @HostListener('keydown', ['$event'])
+   public onKeyDown(event: KeyboardEvent): void {
+      if (['ArrowUp', 'KeyW'].includes(event.code)) {
+         this.nextItem(-1);
+      } else if (['ArrowDown', 'KeyS'].includes(event.code)) {
+         this.nextItem(1);
+      }
+   }
+
+   private nextItem(step: number): void {
+      this.selectItem(this.items[(this.selectedItemIndex + this.items.length + step) % this.items.length]);
+   }
+
+   private get selectedItemIndex(): number {
+      return this.items.indexOf(this.selectedItem);
    }
 }
