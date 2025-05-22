@@ -29,6 +29,7 @@ export class GameComponent {
 
    public readonly gameStatus = signal<GameStatus>({
       isGameGoing: false,
+      isVictory: false,
       isPaused: false,
       gameSpeed: 1,
       selectedToolbarItem: 0,
@@ -41,10 +42,10 @@ export class GameComponent {
    constructor() {
       this.seed = this.getSeed();
 
-      GameEventHandler.getInstance().watchEvents(GameEventType.IS_GAME_GOING, isGameGoing =>
+      GameEventHandler.getInstance().watchEvents(GameEventType.START_GAME, () =>
          this.gameStatus.update(status => ({
             ...status,
-            isGameGoing
+            isGameGoing: true
          }))
       );
       GameEventHandler.getInstance().watchEvents(GameEventType.TOGGLE_PAUSE, () =>
@@ -80,6 +81,13 @@ export class GameComponent {
       GameEventHandler.getInstance().watchEvents(GameEventType.DESTINATION_CRITICAL_HEALTH, health => {
          this.openSnackbarMessage(`One of your destinations has ${health} health!`, "I'll fix it!");
       });
+      GameEventHandler.getInstance().watchEvents(GameEventType.GAME_OVER, isVictory =>
+         this.gameStatus.update(status => ({
+            ...status,
+            isGameGoing: false,
+            isVictory
+         }))
+      );
 
       toObservable(this.gameStatus)
          .pipe(
@@ -123,6 +131,7 @@ export class GameComponent {
          score: this.gameStatus().score,
          best: this.storageService.read(StorageID.PERSONAL_BEST),
          isNewBest: this.isNewBest,
+         isVictory: this.gameStatus().isVictory,
          seed: this.seed
       };
 

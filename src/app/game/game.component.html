@@ -1,11 +1,16 @@
+@let status = gameStatus();
 <rd-toolbar
-   [gameStatus]="gameStatus()"
+   [gameStatus]="status"
    (gameSpeedChange)="onGameSpeedChange($event)"
    (openEndOfGameDialog)="openEndOfGameDialog()"></rd-toolbar>
 <div
    class="game-area-wrapper"
-   [ngClass]="{ gameOver: !gameStatus().isGameGoing, paused: gameStatus().isPaused }">
+   [ngClass]="{
+      defeat: !status.isGameGoing && !status.isVictory,
+      victory: !status.isGameGoing && status.isVictory,
+      paused: status.isPaused
+   }">
    <rd-game-area
-      [gameStatus]="gameStatus()"
+      [gameStatus]="status"
       [seed]="seed"></rd-game-area>
 </div>

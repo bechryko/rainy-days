@@ -17,7 +17,11 @@
       background-color: var(--rd-accent-disabled);
    }
 
-   &.gameOver {
+   &.defeat {
       background-color: var(--rd-warn);
+   }
+
+   &.victory {
+      background-color: var(--rd-white);
    }
 }

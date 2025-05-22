@@ -93,10 +93,18 @@ p {
    }
 }
 
-p.game-over {
+p.defeat,
+p.victory {
    font-size: 3rem;
-   color: var(--rd-warn);
    font-weight: 500;
+}
+
+p.defeat {
+   color: var(--rd-warn);
+}
+
+p.victory {
+   color: var(--rd-primary-darker);
 }
 
 .end-of-game-button {
