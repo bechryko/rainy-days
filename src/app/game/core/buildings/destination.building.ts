@@ -1,4 +1,6 @@
+import { BehaviorSubject, Observable } from 'rxjs';
 import { BasicDrawer } from '../drawing';
+import { transparent } from '../functions';
 import { Game } from '../game';
 import { GameEventHandler, GameEventType } from '../game-events';
 import { Tile } from '../map';
@@ -17,6 +19,9 @@ export class Destination extends Building {
    public static anyWithZeroHealth(): boolean {
       return Destination.list.some(destination => destination.health <= 0);
    }
+
+   private carsReached = 0;
+   private readonly _displayCarsReached$ = new BehaviorSubject(this.carsReached);
 
    private health: number;
 
@@ -47,23 +52,32 @@ export class Destination extends Building {
       }
    }
 
-   public heal(): void {
+   public onCarArrive(): void {
       this.health += Destination.HEALING_PER_CAR;
+
+      this.carsReached++;
+      this._displayCarsReached$.next(this.carsReached);
    }
 
    public override draw(drawer: BasicDrawer): void {
-      drawer.circle(
-         (this.tile.x + 0.5) * Tile.SIZE,
-         (this.tile.y + 0.5) * Tile.SIZE,
-         Tile.SIZE / 2,
-         ColorUtils.getTokenValue(SystemColorToken.BUILDING_OUTLINE)
-      );
-      drawer.circle((this.tile.x + 0.5) * Tile.SIZE, (this.tile.y + 0.5) * Tile.SIZE, Tile.SIZE / 2.2, this.color);
-      drawer.text(
-         Math.ceil(this.health) + 's',
-         (this.tile.x + 0.5) * Tile.SIZE,
-         (this.tile.y + 0.5) * Tile.SIZE,
-         Tile.SIZE * 0.45
-      );
+      const drawX = (this.tile.x + 0.5) * Tile.SIZE;
+      const drawY = (this.tile.y + 0.5) * Tile.SIZE;
+
+      if (this.tile.selected) {
+         drawer.circle(
+            drawX,
+            drawY,
+            Tile.SIZE,
+            drawer.createRadialGradient(drawX, drawY, Tile.SIZE * 0.75, [0.5, this.color], [1, transparent()])
+         );
+      }
+
+      drawer.circle(drawX, drawY, Tile.SIZE / 2, ColorUtils.getTokenValue(SystemColorToken.BUILDING_OUTLINE));
+      drawer.circle(drawX, drawY, Tile.SIZE / 2.2, this.color);
+      drawer.text(Math.ceil(this.health) + 's', drawX, drawY, Tile.SIZE * 0.45);
+   }
+
+   public get displayCarsReached$(): Observable<number> {
+      return this._displayCarsReached$.asObservable();
    }
 }
