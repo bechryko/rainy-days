@@ -58,7 +58,7 @@ export class Tile {
 
       if (this.hasBuilding() && this.building instanceof Destination && this.building.color === car.color) {
          car.destroy(); //TODO: object pool
-         this.building.heal();
+         this.building.onCarArrive();
          GameEventHandler.getInstance().emitEvent(GameEventType.GAIN_SCORE, null);
       }
    }
