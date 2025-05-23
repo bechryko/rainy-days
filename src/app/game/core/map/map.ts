@@ -5,12 +5,20 @@ import { Car } from './car';
 import { Tile } from './tile';
 import { ColorUtils, SystemColorToken } from './utils';
 
+interface ColorCountObject {
+   color: string;
+   count: number;
+}
+
 export class Map {
    public static readonly ROW_COUNT = 15;
    public static readonly COLUMN_COUNT = 30;
    private static readonly MIN_CLOUD_COVERAGE_RATIO = 0.6;
-   private static readonly MAX_CLOUD_COVERAGE_RATIO = 0.7;
-   private static readonly CLOUD_SIZE_GROWTH_CHANCE_CONSTANT = 0.4;
+   private static readonly MAX_CLOUD_COVERAGE_RATIO = 0.65;
+   private static readonly MIN_CLOUD_SIZE_GROWTH_CHANCE_CONSTANT = 0.4;
+   private static readonly MAX_CLOUD_SIZE_GROWTH_CHANCE_CONSTANT = 0.45;
+   private static readonly MIN_COLOR_COUNT = 10;
+   private static readonly MAX_COLOR_INCREASE_COUNT = Infinity;
    private static readonly PADDING_FILTER_PAIR_LIMIT = 3;
 
    private readonly tiles: Tile[][] = [];
@@ -18,7 +26,7 @@ export class Map {
 
    constructor() {
       this.initTiles();
-      this.spread();
+      this.initTileColors();
    }
 
    public tick(deltaTime: number): void {
@@ -51,50 +59,61 @@ export class Map {
       });
    }
 
-   private spread(): void {
+   private initTileColors(): void {
       const minSpreads = Map.ROW_COUNT * Map.COLUMN_COUNT * Map.MIN_CLOUD_COVERAGE_RATIO;
       const maxSpreads = Map.ROW_COUNT * Map.COLUMN_COUNT * Map.MAX_CLOUD_COVERAGE_RATIO;
       let spreads = 0;
 
       while (spreads < minSpreads) {
-         const spreadList: Tile[] = [this.getRandomTile()];
-         const spreadColor = this.chooseSpreadColor();
+         spreads += this.spread(this.chooseSpreadColor(), this.getRandomGrowthChanceConstant(), maxSpreads - spreads);
+      }
 
-         while (spreadList.length > 0) {
-            const tile = spreadList.splice(0, 1)[0];
-            if (tile.color === spreadColor) {
-               continue;
-            }
-
-            if (tile.color === ColorUtils.getBaseTileColor()) {
-               spreads++;
-            } else if (RandomUtils.nextChance()) {
-               continue;
-            }
-            tile.color = spreadColor;
-
-            tile.forEachNeighbor(tile => {
-               if (RandomUtils.nextChance(Map.CLOUD_SIZE_GROWTH_CHANCE_CONSTANT) && spreads < maxSpreads) {
-                  spreadList.push(tile);
-               }
-            });
-         }
+      let minColorCountObject: ColorCountObject;
+      while ((minColorCountObject = this.getColorCounts()[0]).count < Map.MIN_COLOR_COUNT) {
+         this.spread(
+            minColorCountObject.color,
+            this.getRandomGrowthChanceConstant(),
+            Map.MAX_COLOR_INCREASE_COUNT,
+            true
+         );
       }
    }
 
-   private chooseSpreadColor(): string {
-      const colorCountMap: Record<string, number> = {};
-      let minColor: string | undefined;
+   private spread(
+      color: string,
+      growthChanceConstant: number,
+      spreadsLeft: number,
+      spreadOnColoredTiles = false
+   ): number {
+      const spreadList: Tile[] = [this.getRandomTile(spreadOnColoredTiles)];
+      let spreads = 0;
 
-      for (const color of ColorUtils.getGameObjectColors()) {
-         colorCountMap[color] = this.tiles.flat().filter(tile => tile.color === color).length;
-
-         if (!minColor || colorCountMap[minColor] > colorCountMap[color]) {
-            minColor = color;
+      while (spreadList.length > 0) {
+         const tile = spreadList.splice(0, 1)[0];
+         if (tile.color === color) {
+            continue;
          }
+
+         const isColored = tile.color !== ColorUtils.getBaseTileColor();
+         if (spreadOnColoredTiles !== isColored) {
+            continue;
+         }
+
+         tile.color = color;
+         spreads++;
+
+         tile.forEachNeighbor(tile => {
+            if (spreads < spreadsLeft && RandomUtils.nextChance(growthChanceConstant)) {
+               spreadList.push(tile);
+            }
+         });
       }
 
-      return minColor!;
+      return spreads;
+   }
+
+   private chooseSpreadColor(): string {
+      return RandomUtils.nextArrayElement(ColorUtils.getGameObjectColors());
    }
 
    private drawMapGrid(drawer: BasicDrawer): void {
@@ -121,7 +140,32 @@ export class Map {
       this.tiles.flat().forEach(tile => tile.assignNeighbors(this.tiles));
    }
 
-   private getRandomTile(): Tile {
-      return RandomUtils.nextArrayElement(this.tiles.flat());
+   private getColorCounts(): ColorCountObject[] {
+      const counts = ColorUtils.getGameObjectColors().reduce<ColorCountObject[]>(
+         (acc, color) => [...acc, { color, count: 0 }],
+         []
+      );
+
+      this.tiles.flat().forEach(tile => {
+         const countObject = counts.find(c => c.color === tile.color);
+         if (countObject) {
+            countObject.count++;
+         }
+      });
+
+      counts.sort((c1, c2) => c1.count - c2.count);
+      return counts;
+   }
+
+   private getRandomGrowthChanceConstant(): number {
+      return RandomUtils.between(Map.MIN_CLOUD_SIZE_GROWTH_CHANCE_CONSTANT, Map.MAX_CLOUD_SIZE_GROWTH_CHANCE_CONSTANT);
+   }
+
+   private getRandomTile(isColored: boolean): Tile {
+      const baseTileColor = ColorUtils.getBaseTileColor();
+      const condition = isColored
+         ? (tile: Tile) => tile.color !== baseTileColor
+         : (tile: Tile) => tile.color === baseTileColor;
+      return RandomUtils.nextArrayElement(this.tiles.flat().filter(condition));
    }
 }
