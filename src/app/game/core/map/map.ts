@@ -17,6 +17,8 @@ export class Map {
    private static readonly MAX_CLOUD_COVERAGE_RATIO = 0.65;
    private static readonly MIN_CLOUD_SIZE_GROWTH_CHANCE_CONSTANT = 0.35;
    private static readonly MAX_CLOUD_SIZE_GROWTH_CHANCE_CONSTANT = 0.4;
+   private static readonly MIN_COLOR_COUNT = 3;
+   private static readonly MAX_COLOR_INCREASE_COUNT = 10;
    private static readonly PADDING_FILTER_PAIR_LIMIT = 3;
 
    private readonly tiles: Tile[][] = [];
@@ -64,6 +66,16 @@ export class Map {
 
       while (spreads < minSpreads) {
          spreads += this.spread(this.chooseSpreadColor(), this.getRandomGrowthChanceConstant(), maxSpreads - spreads);
+      }
+
+      let minColorCountObject: ColorCountObject;
+      while ((minColorCountObject = this.getColorCounts()[0]).count < Map.MIN_COLOR_COUNT) {
+         this.spread(
+            minColorCountObject.color,
+            this.getRandomGrowthChanceConstant(),
+            Map.MAX_COLOR_INCREASE_COUNT,
+            true
+         );
       }
    }
 
