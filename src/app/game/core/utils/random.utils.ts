@@ -7,16 +7,20 @@ export class RandomUtils {
       this.random = seedrandom(seed);
    }
 
-   public static nextInt(max: number): number {
-      return this.nextIntRange(0, max);
-   }
-
-   public static nextIntRange(min: number, max: number): number {
+   public static between(min: number, max: number): number {
       if (!this.random) {
          throw new Error('Random seed not registered!');
       }
 
-      return Math.floor(this.random() * (max - min) + min);
+      return this.random() * (max - min) + min;
+   }
+
+   public static nextIntRange(min: number, max: number): number {
+      return Math.floor(this.between(min, max));
+   }
+
+   public static nextInt(max: number): number {
+      return this.nextIntRange(0, max);
    }
 
    public static nextArrayElement<T>(array: readonly T[]): T {
