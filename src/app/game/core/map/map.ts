@@ -15,10 +15,10 @@ export class Map {
    public static readonly COLUMN_COUNT = 30;
    private static readonly MIN_CLOUD_COVERAGE_RATIO = 0.6;
    private static readonly MAX_CLOUD_COVERAGE_RATIO = 0.65;
-   private static readonly MIN_CLOUD_SIZE_GROWTH_CHANCE_CONSTANT = 0.35;
-   private static readonly MAX_CLOUD_SIZE_GROWTH_CHANCE_CONSTANT = 0.4;
-   private static readonly MIN_COLOR_COUNT = 3;
-   private static readonly MAX_COLOR_INCREASE_COUNT = 10;
+   private static readonly MIN_CLOUD_SIZE_GROWTH_CHANCE_CONSTANT = 0.4;
+   private static readonly MAX_CLOUD_SIZE_GROWTH_CHANCE_CONSTANT = 0.45;
+   private static readonly MIN_COLOR_COUNT = 10;
+   private static readonly MAX_COLOR_INCREASE_COUNT = Infinity;
    private static readonly PADDING_FILTER_PAIR_LIMIT = 3;
 
    private readonly tiles: Tile[][] = [];
@@ -113,7 +113,7 @@ export class Map {
    }
 
    private chooseSpreadColor(): string {
-      return this.getColorCounts()[0].color;
+      return RandomUtils.nextArrayElement(ColorUtils.getGameObjectColors());
    }
 
    private drawMapGrid(drawer: BasicDrawer): void {
@@ -141,14 +141,14 @@ export class Map {
    }
 
    private getColorCounts(): ColorCountObject[] {
-      const colors = [...ColorUtils.getGameObjectColors(), ColorUtils.getBaseTileColor()];
-      const counts = colors.reduce<ColorCountObject[]>((acc, color) => [...acc, { color, count: 0 }], []);
+      const counts = ColorUtils.getGameObjectColors().reduce<ColorCountObject[]>(
+         (acc, color) => [...acc, { color, count: 0 }],
+         []
+      );
 
       this.tiles.flat().forEach(tile => {
          const countObject = counts.find(c => c.color === tile.color);
-         if (!countObject) {
-            throw new Error(`Unknown color: ${tile.color}!`);
-         } else {
+         if (countObject) {
             countObject.count++;
          }
       });
