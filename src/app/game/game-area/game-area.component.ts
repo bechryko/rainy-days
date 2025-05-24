@@ -1,7 +1,6 @@
 import {
    ChangeDetectionStrategy,
    Component,
-   computed,
    effect,
    ElementRef,
    input,
@@ -59,10 +58,7 @@ export class GameAreaComponent implements OnDestroy {
          const canvas = gameCanvas.nativeElement;
          RandomUtils.registerSeed(this.seed());
 
-         this.game = new Game(
-            canvas,
-            computed(() => this.gameStatus().gameSpeed)
-         );
+         this.game = new Game(canvas, this.gameStatus);
 
          this.onResizeFn = () => {
             Tile.resize();
