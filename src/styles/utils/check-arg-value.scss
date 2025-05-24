@@ -1,0 +1,13 @@
+@mixin check-arg-value($value, $possible-values, $arg-name) {
+   $unknown-value: true;
+
+   @each $val in $possible-values {
+      @if $val == $value {
+         $unknown-value: false;
+      }
+   }
+
+   @if $unknown-value == true {
+      @error "Unknown value for arg $#{$arg-name}: #{$value}";
+   }
+}

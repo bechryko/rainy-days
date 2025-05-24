@@ -1,0 +1,32 @@
+@use 'utils';
+
+@mixin scrollbar($orientation: vertical, $color: primary, $always-visible: false) {
+   @include utils.check-arg-value($orientation, (vertical, horizontal, both), orientation);
+   @include utils.check-arg-value($color, (primary, accent), color);
+   @include utils.check-arg-value($always-visible, (true, false), always-visible);
+
+   #{get-overflow-property-name($orientation)}: get-overflow-property-value($always-visible);
+   @if $color == primary {
+      scrollbar-color: var(--rd-primary) var(--rd-primary-lighter-alternative);
+   } @else {
+      scrollbar-color: var(--rd-accent) var(--rd-accent-lighter);
+   }
+   scroll-behavior: smooth;
+}
+
+@function get-overflow-property-name($orientation) {
+   @if $orientation == vertical {
+      @return overflow-y;
+   }
+   @if $orientation == horizontal {
+      @return overflow-x;
+   }
+   @return overflow;
+}
+
+@function get-overflow-property-value($always-visible) {
+   @if $always-visible == true {
+      @return scroll;
+   }
+   @return auto;
+}

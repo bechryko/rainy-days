@@ -85,7 +85,8 @@ main {
 
       &.changes-list {
          margin-top: 1.5rem;
-         overflow-y: auto;
+
+         @include mixins.scrollbar;
       }
 
       li {

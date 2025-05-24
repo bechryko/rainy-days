@@ -1,3 +1,5 @@
+@use 'mixins';
+
 $text-indent: 1rem;
 
 :host {
@@ -6,7 +8,8 @@ $text-indent: 1rem;
    align-self: stretch;
    justify-self: center;
    padding: 1.5rem;
-   overflow-y: auto;
+
+   @include mixins.scrollbar($always-visible: true);
 }
 
 h5,
