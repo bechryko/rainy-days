@@ -31,7 +31,7 @@ export class GameComponent {
       isGameGoing: false,
       isVictory: false,
       isPaused: false,
-      gameSpeed: 1,
+      gameSpeed: this.storageService.read(StorageID.GAME_SPEED),
       selectedToolbarItem: 0,
       score: 0,
       spawnTimer: 0
@@ -112,6 +112,7 @@ export class GameComponent {
             ...status,
             gameSpeed
          }));
+         this.storageService.save(StorageID.GAME_SPEED, gameSpeed);
       }
    }
 
