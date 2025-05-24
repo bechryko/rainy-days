@@ -11,9 +11,7 @@ import {
 import { Building } from '../core/buildings';
 import { Game } from '../core/game';
 import { GameEventHandler, GameEventType } from '../core/game-events';
-import { Tile } from '../core/map';
-import { Map } from '../core/map/map';
-import { RandomUtils } from '../core/utils';
+import { ConstantUtils, RandomUtils } from '../core/utils';
 import { GameStatus } from '../models';
 import { ContextMenuComponent } from './context-menu/context-menu.component';
 
@@ -61,9 +59,9 @@ export class GameAreaComponent implements OnDestroy {
          this.game = new Game(canvas, this.gameStatus);
 
          this.onResizeFn = () => {
-            Tile.resize();
-            canvas.style.width = (canvas.width = Map.COLUMN_COUNT * Tile.SIZE) + 'px';
-            canvas.style.height = (canvas.height = Map.ROW_COUNT * Tile.SIZE) + 'px';
+            ConstantUtils.resize();
+            canvas.style.width = (canvas.width = ConstantUtils.unit(ConstantUtils.COLUMN_COUNT)) + 'px';
+            canvas.style.height = (canvas.height = ConstantUtils.unit(ConstantUtils.ROW_COUNT)) + 'px';
             this.game!.onResize();
          };
          window.addEventListener('resize', this.onResizeFn);

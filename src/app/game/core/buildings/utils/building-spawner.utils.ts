@@ -1,8 +1,7 @@
 import { NoRoomForSpawnError } from '@rainy-days/shared/errors';
 import { Tile } from '../../map';
-import { Map } from '../../map/map';
 import { ColorUtils, DirectionUtils } from '../../map/utils';
-import { RandomUtils } from '../../utils';
+import { ConstantUtils, RandomUtils } from '../../utils';
 import { Destination } from '../destination.building';
 import { Spawner } from '../spawner.building';
 
@@ -74,8 +73,8 @@ export class BuildingSpawnerUtils {
    }
 
    private static getTileDistancesFromSpawnedBuildings(tiles: Tile[][]): number[][] {
-      const distances: number[][] = Array.from({ length: Map.COLUMN_COUNT }, () =>
-         Array.from({ length: Map.ROW_COUNT }, () => Infinity)
+      const distances: number[][] = Array.from({ length: ConstantUtils.COLUMN_COUNT }, () =>
+         Array.from({ length: ConstantUtils.ROW_COUNT }, () => Infinity)
       );
       const spawnedBuildingTiles = tiles.flat().filter(tile => tile.hasSpawnedBuilding());
       spawnedBuildingTiles.forEach(tile => {
@@ -85,7 +84,13 @@ export class BuildingSpawnerUtils {
    }
 
    private static setDistances(distances: number[][], x: number, y: number, distance: number): void {
-      if (x < 0 || x >= Map.COLUMN_COUNT || y < 0 || y >= Map.ROW_COUNT || distances[x][y] <= distance) {
+      if (
+         x < 0 ||
+         x >= ConstantUtils.COLUMN_COUNT ||
+         y < 0 ||
+         y >= ConstantUtils.ROW_COUNT ||
+         distances[x][y] <= distance
+      ) {
          return;
       }
 
@@ -100,9 +105,9 @@ export class BuildingSpawnerUtils {
       return tiles.filter(
          tile =>
             tile.x >= this.SPAWNING_PADDING &&
-            tile.x < Map.COLUMN_COUNT - this.SPAWNING_PADDING &&
+            tile.x < ConstantUtils.COLUMN_COUNT - this.SPAWNING_PADDING &&
             tile.y >= this.SPAWNING_PADDING &&
-            tile.y < Map.ROW_COUNT - this.SPAWNING_PADDING
+            tile.y < ConstantUtils.ROW_COUNT - this.SPAWNING_PADDING
       );
    }
 }

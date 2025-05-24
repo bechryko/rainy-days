@@ -3,26 +3,12 @@ import { Toolbar } from '../control/toolbar';
 import { BasicDrawer } from '../drawing';
 import { GameEventHandler, GameEventType } from '../game-events';
 import { Road, Tube } from '../roads';
+import { ConstantUtils } from '../utils';
 import { Car } from './car';
-import { Map } from './map';
 import { Direction } from './models/direction';
-import { ColorUtils, DirectionUtils, ResizeUtils } from './utils';
+import { ColorUtils, DirectionUtils } from './utils';
 
 export class Tile {
-   private static _SIZE: number;
-
-   public static get SIZE(): number {
-      return this._SIZE;
-   }
-
-   public static resize(): void {
-      this._SIZE = ResizeUtils.getMaxTileSize();
-   }
-
-   static {
-      this.resize();
-   }
-
    public color = ColorUtils.getBaseTileColor();
    public road?: Road;
    private building?: Building;
@@ -132,7 +118,7 @@ export class Tile {
       DirectionUtils.forEachDirection(direction => {
          const x = this.x + DirectionUtils.getDx(direction);
          const y = this.y + DirectionUtils.getDy(direction);
-         if (x < 0 || x >= Map.COLUMN_COUNT || y < 0 || y >= Map.ROW_COUNT) {
+         if (x < 0 || x >= ConstantUtils.COLUMN_COUNT || y < 0 || y >= ConstantUtils.ROW_COUNT) {
             this.neighborMap[direction] = null;
          } else {
             this.neighborMap[direction] = tiles[x][y];
@@ -141,7 +127,7 @@ export class Tile {
    }
 
    public draw(drawer: BasicDrawer): void {
-      drawer.square(this.x * Tile.SIZE, this.y * Tile.SIZE, Tile.SIZE, this.color);
+      drawer.square(ConstantUtils.unit(this.x), ConstantUtils.unit(this.y), ConstantUtils.unit(), this.color);
    }
 
    public drawBuilding(drawer: BasicDrawer): void {

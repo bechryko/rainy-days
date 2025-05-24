@@ -1,7 +1,7 @@
 import { Signal } from '@angular/core';
 import { NoRoomForSpawnError } from '@rainy-days/shared/errors';
 import { GameStatus } from '../models';
-import { Building, Destination } from './buildings';
+import { Destination } from './buildings';
 import { Controller } from './control';
 import { BasicDrawer } from './drawing';
 import { GameEventHandler, GameEventType } from './game-events';
@@ -9,13 +9,12 @@ import { Map } from './map/map';
 import { GameCleanupUtils } from './utils';
 
 export class Game {
-   public static readonly BUILDING_SPAWN_MESSAGE_TIME = 10;
-   public static readonly DESTINATION_CRITICAL_HEALTH = 15;
+   private static readonly BUILDING_SPAWN_TIMER = 45;
 
    private readonly drawer: BasicDrawer;
    private readonly controller: Controller;
    private readonly map: Map;
-   private spawnTimer = Building.MAIN_SPAWN_TIMER;
+   private spawnTimer = Game.BUILDING_SPAWN_TIMER;
    private exited = false;
    private victory = false;
 
@@ -81,7 +80,7 @@ export class Game {
 
    private timedActions(deltaTime: number): void {
       if ((this.spawnTimer -= deltaTime) <= 0) {
-         this.spawnTimer = Building.MAIN_SPAWN_TIMER;
+         this.spawnTimer = Game.BUILDING_SPAWN_TIMER;
          try {
             this.map.spawnSpawnerAndDestination();
          } catch (error) {
