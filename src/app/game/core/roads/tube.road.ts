@@ -20,4 +20,8 @@ export class Tube extends Road {
       drawer.strokeStyle = ColorUtils.getTokenValue(ComponentColorToken.TUBE);
       drawer.line(x1, y1, x2, y2, Tile.SIZE / 2.5);
    }
+
+   public override getName(): string {
+      return 'Tube';
+   }
 }
