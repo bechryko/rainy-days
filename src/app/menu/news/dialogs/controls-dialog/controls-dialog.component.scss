@@ -3,8 +3,9 @@
 @include mixins.news-dialog;
 
 :host {
-   overflow-y: auto;
    max-height: 90dvh;
+
+   @include mixins.scrollbar;
 }
 
 .table-wrapper {

@@ -21,6 +21,10 @@ body {
    color: var(--rd-white);
 }
 
+* {
+   overflow: visible;
+}
+
 .center-content {
    display: flex;
    flex-direction: column;
