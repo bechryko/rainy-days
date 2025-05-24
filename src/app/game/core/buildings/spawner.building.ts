@@ -5,6 +5,7 @@ import { GameEventHandler, GameEventType } from '../game-events';
 import { Tile } from '../map';
 import { Car } from '../map/car';
 import { ColorUtils, DirectionUtils, SystemColorToken } from '../map/utils';
+import { ConstantUtils } from '../utils';
 import { Building } from './building';
 import { TimedPauseBuilding } from './models';
 
@@ -51,21 +52,27 @@ export class Spawner extends Building implements TimedPauseBuilding {
    public override draw(drawer: BasicDrawer): void {
       drawer.lineWidth = 2;
 
-      const drawX = (this.tile.x + 0.5) * Tile.SIZE;
-      const drawY = (this.tile.y + 0.5) * Tile.SIZE;
+      const drawX = ConstantUtils.unit(this.tile.x + 0.5);
+      const drawY = ConstantUtils.unit(this.tile.y + 0.5);
 
       if (this.tile.selected) {
          drawer.circle(
             drawX,
             drawY,
-            Tile.SIZE * 0.75,
-            drawer.createRadialGradient(drawX, drawY, Tile.SIZE / 2, [0.5, this.color], [1, transparent()])
+            ConstantUtils.unit(0.75),
+            drawer.createRadialGradient(drawX, drawY, ConstantUtils.unit(0.5), [0.5, this.color], [1, transparent()])
          );
       }
 
-      drawer.circle(drawX, drawY, Tile.SIZE / 4, this.color);
-      drawer.circle(drawX, drawY, Tile.SIZE / 4, ColorUtils.getTokenValue(SystemColorToken.BUILDING_OUTLINE), false);
-      drawer.text(Math.ceil(this.timer) + 's', drawX, drawY, Tile.SIZE * 0.35);
+      drawer.circle(drawX, drawY, ConstantUtils.unit(0.25), this.color);
+      drawer.circle(
+         drawX,
+         drawY,
+         ConstantUtils.unit(0.25),
+         ColorUtils.getTokenValue(SystemColorToken.BUILDING_OUTLINE),
+         false
+      );
+      drawer.text(Math.ceil(this.timer) + 's', drawX, drawY, ConstantUtils.unit(0.35));
    }
 
    public get displayTimer$(): Observable<string> {

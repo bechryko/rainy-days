@@ -5,6 +5,7 @@ import { toFraction, transparent } from '../functions';
 import { GameEventHandler, GameEventType } from '../game-events';
 import { Tile } from '../map';
 import { ColorUtils, ComponentColorToken, SystemColorToken } from '../map/utils';
+import { ConstantUtils } from '../utils';
 import { Gate } from './gate';
 import { TimedPauseBuilding } from './models';
 
@@ -52,13 +53,13 @@ export class TimedGate extends Gate implements TimedPauseBuilding {
 
       if (this.tile.selected) {
          drawer.circle(
-            (this.tile.x + 0.5) * Tile.SIZE,
-            (this.tile.y + 0.5) * Tile.SIZE,
-            Tile.SIZE * 0.75,
+            ConstantUtils.unit(this.tile.x + 0.5),
+            ConstantUtils.unit(this.tile.y + 0.5),
+            ConstantUtils.unit(0.75),
             drawer.createRadialGradient(
-               (this.tile.x + 0.5) * Tile.SIZE,
-               (this.tile.y + 0.5) * Tile.SIZE,
-               Tile.SIZE / 2,
+               ConstantUtils.unit(this.tile.x + 0.5),
+               ConstantUtils.unit(this.tile.y + 0.5),
+               ConstantUtils.unit(0.5),
                [0.45, color],
                [1, transparent()]
             )
@@ -66,29 +67,34 @@ export class TimedGate extends Gate implements TimedPauseBuilding {
       }
 
       drawer.square(
-         (this.tile.x + 0.25) * Tile.SIZE,
-         (this.tile.y + 0.25) * Tile.SIZE,
-         Tile.SIZE / 2,
+         ConstantUtils.unit(this.tile.x + 0.25),
+         ConstantUtils.unit(this.tile.y + 0.25),
+         ConstantUtils.unit(0.5),
          ColorUtils.getTokenValue(SystemColorToken.BUILDING_OUTLINE)
       );
-      drawer.square((this.tile.x + 0.3) * Tile.SIZE, (this.tile.y + 0.3) * Tile.SIZE, Tile.SIZE * 0.4, color);
+      drawer.square(
+         ConstantUtils.unit(this.tile.x + 0.3),
+         ConstantUtils.unit(this.tile.y + 0.3),
+         ConstantUtils.unit(0.4),
+         color
+      );
 
       if (this.closed()) {
          drawer.strokeStyle = ColorUtils.getTokenValue(SystemColorToken.WARN);
 
-         const width = Tile.SIZE * 0.05;
+         const width = ConstantUtils.unit(0.05);
          drawer.line(
-            (this.tile.x + 0.3) * Tile.SIZE + width / 2,
-            (this.tile.y + 0.3) * Tile.SIZE + width / 2,
-            (this.tile.x + 0.7) * Tile.SIZE - width / 2,
-            (this.tile.y + 0.7) * Tile.SIZE - width / 2,
+            ConstantUtils.unit(this.tile.x + 0.3) + width / 2,
+            ConstantUtils.unit(this.tile.y + 0.3) + width / 2,
+            ConstantUtils.unit(this.tile.x + 0.7) - width / 2,
+            ConstantUtils.unit(this.tile.y + 0.7) - width / 2,
             width
          );
          drawer.line(
-            (this.tile.x + 0.3) * Tile.SIZE + width / 2,
-            (this.tile.y + 0.7) * Tile.SIZE - width / 2,
-            (this.tile.x + 0.7) * Tile.SIZE - width / 2,
-            (this.tile.y + 0.3) * Tile.SIZE + width / 2,
+            ConstantUtils.unit(this.tile.x + 0.3) + width / 2,
+            ConstantUtils.unit(this.tile.y + 0.7) - width / 2,
+            ConstantUtils.unit(this.tile.x + 0.7) - width / 2,
+            ConstantUtils.unit(this.tile.y + 0.3) + width / 2,
             width
          );
       }

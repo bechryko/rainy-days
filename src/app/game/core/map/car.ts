@@ -1,4 +1,5 @@
 import { BasicDrawer } from '../drawing';
+import { ConstantUtils } from '../utils';
 import { Direction } from './models';
 import { Tile } from './tile';
 import { ColorUtils, DirectionUtils, SystemColorToken } from './utils';
@@ -11,7 +12,7 @@ export class Car {
    private static readonly COLLISION_DISTANCE = 0.2;
 
    private static get SIZE(): number {
-      return Tile.SIZE * this.SIZE_TILE_RATIO;
+      return ConstantUtils.unit(this.SIZE_TILE_RATIO);
    }
 
    public static tickAll(deltaTime: number, tiles: Tile[][]): void {
@@ -81,12 +82,12 @@ export class Car {
 
    private draw(drawer: BasicDrawer): void {
       drawer.circle(
-         this.x * Tile.SIZE,
-         this.y * Tile.SIZE,
+         ConstantUtils.unit(this.x),
+         ConstantUtils.unit(this.y),
          Car.SIZE / 2,
          ColorUtils.getTokenValue(SystemColorToken.CAR_OUTLINE)
       );
-      drawer.circle(this.x * Tile.SIZE, this.y * Tile.SIZE, Car.SIZE / 2.5, this.color);
+      drawer.circle(ConstantUtils.unit(this.x), ConstantUtils.unit(this.y), Car.SIZE / 2.5, this.color);
    }
 
    private move(deltaTime: number, tiles: Tile[][]): void {

@@ -120,10 +120,16 @@ export class Map {
       drawer.lineWidth = 1;
 
       for (let x = 1; x < ConstantUtils.COLUMN_COUNT; x++) {
-         drawer.line(x * Tile.SIZE, 0, x * Tile.SIZE, ConstantUtils.ROW_COUNT * Tile.SIZE, 1);
+         drawer.line(ConstantUtils.unit(x), 0, ConstantUtils.unit(x), ConstantUtils.unit(ConstantUtils.ROW_COUNT), 1);
       }
       for (let y = 1; y < ConstantUtils.ROW_COUNT; y++) {
-         drawer.line(0, y * Tile.SIZE, ConstantUtils.COLUMN_COUNT * Tile.SIZE, y * Tile.SIZE, 1);
+         drawer.line(
+            0,
+            ConstantUtils.unit(y),
+            ConstantUtils.unit(ConstantUtils.COLUMN_COUNT),
+            ConstantUtils.unit(y),
+            1
+         );
       }
    }
 

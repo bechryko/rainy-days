@@ -7,6 +7,7 @@ import { BasicDrawer } from '@rainy-days/core/drawing';
 import { Tile } from '@rainy-days/core/map';
 import { Direction } from '@rainy-days/core/map/models';
 import { Road } from '@rainy-days/core/roads';
+import { ConstantUtils } from '@rainy-days/core/utils';
 import { filter, map, switchMap } from 'rxjs';
 
 @Component({
@@ -54,7 +55,7 @@ export class ToolbarIconComponent {
    }
 
    private initCanvas(canvas: HTMLCanvasElement, widthInTiles: number): void {
-      canvas.height = canvas.width = Tile.SIZE * widthInTiles;
+      canvas.height = canvas.width = ConstantUtils.unit(widthInTiles);
    }
 
    private initBuilding(building: Building | Road): void {

@@ -3,7 +3,6 @@ import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, input
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Building } from '@rainy-days/core/buildings';
 import { GameEventHandler, GameEventType } from '@rainy-days/core/game-events';
-import { Tile } from '@rainy-days/core/map';
 import { ResizeUtils } from '@rainy-days/core/map/utils';
 import { ConstantUtils } from '@rainy-days/core/utils';
 import { filter, fromEvent, map } from 'rxjs';
@@ -61,7 +60,8 @@ export class ContextMenuComponent {
       const displayedTileX = building.tile.x + (isOnLeft ? 2 : -1);
       const clampedDisplayedTileX = Math.min(ConstantUtils.COLUMN_COUNT, Math.max(0, displayedTileX));
       const x =
-         clampedDisplayedTileX * Tile.SIZE + (isOnLeft ? -ResizeUtils.remToPx(ResizeUtils.CANVAS_BORDER_WIDTH_REM) : 0);
+         ConstantUtils.unit(clampedDisplayedTileX) +
+         (isOnLeft ? -ResizeUtils.remToPx(ResizeUtils.CANVAS_BORDER_WIDTH_REM) : 0);
       if (isOnLeft) {
          return `calc(${x}px - ${this.widthRem}rem)`;
       }
@@ -74,11 +74,11 @@ export class ContextMenuComponent {
          return 0;
       }
 
-      const tilesWidth = building.tile.y * Tile.SIZE;
+      const tilesWidth = ConstantUtils.unit(building.tile.y);
       return (
          tilesWidth +
          ResizeUtils.remToPx(ResizeUtils.CANVAS_BORDER_WIDTH_REM) +
-         (this.calcIsOnBottom(building) ? Tile.SIZE : 0)
+         (this.calcIsOnBottom(building) ? ConstantUtils.unit() : 0)
       );
    });
 

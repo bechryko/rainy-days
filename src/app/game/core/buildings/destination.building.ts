@@ -4,6 +4,7 @@ import { transparent } from '../functions';
 import { GameEventHandler, GameEventType } from '../game-events';
 import { Tile } from '../map';
 import { ColorUtils, SystemColorToken } from '../map/utils';
+import { ConstantUtils } from '../utils';
 import { Building } from './building';
 
 export class Destination extends Building {
@@ -60,21 +61,21 @@ export class Destination extends Building {
    }
 
    public override draw(drawer: BasicDrawer): void {
-      const drawX = (this.tile.x + 0.5) * Tile.SIZE;
-      const drawY = (this.tile.y + 0.5) * Tile.SIZE;
+      const drawX = ConstantUtils.unit(this.tile.x + 0.5);
+      const drawY = ConstantUtils.unit(this.tile.y + 0.5);
 
       if (this.tile.selected) {
          drawer.circle(
             drawX,
             drawY,
-            Tile.SIZE,
-            drawer.createRadialGradient(drawX, drawY, Tile.SIZE * 0.75, [0.5, this.color], [1, transparent()])
+            ConstantUtils.unit(),
+            drawer.createRadialGradient(drawX, drawY, ConstantUtils.unit(0.75), [0.5, this.color], [1, transparent()])
          );
       }
 
-      drawer.circle(drawX, drawY, Tile.SIZE / 2, ColorUtils.getTokenValue(SystemColorToken.BUILDING_OUTLINE));
-      drawer.circle(drawX, drawY, Tile.SIZE / 2.2, this.color);
-      drawer.text(Math.ceil(this.health) + 's', drawX, drawY, Tile.SIZE * 0.45);
+      drawer.circle(drawX, drawY, ConstantUtils.unit(0.5), ColorUtils.getTokenValue(SystemColorToken.BUILDING_OUTLINE));
+      drawer.circle(drawX, drawY, ConstantUtils.unit(0.45), this.color);
+      drawer.text(Math.ceil(this.health) + 's', drawX, drawY, ConstantUtils.unit(0.45));
    }
 
    public get displayCarsReached$(): Observable<number> {

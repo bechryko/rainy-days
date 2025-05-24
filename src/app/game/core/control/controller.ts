@@ -95,20 +95,20 @@ export class Controller {
 
    public draw(drawer: BasicDrawer): void {
       if (this.roadConnectionBase) {
-         const roadTileX = (this.roadConnectionBase.x + 0.5) * Tile.SIZE;
-         const roadTileY = (this.roadConnectionBase.y + 0.5) * Tile.SIZE;
+         const roadTileX = ConstantUtils.unit(this.roadConnectionBase.x + 0.5);
+         const roadTileY = ConstantUtils.unit(this.roadConnectionBase.y + 0.5);
          const distance = Math.sqrt((roadTileX - this.cursor.x) ** 2 + (roadTileY - this.cursor.y) ** 2);
 
          drawer.alpha = Controller.ROAD_CONNECTION_PREVIEW_ALPHA;
          this.roadConnectionBase.road!.drawRoadSegment(drawer, roadTileX, roadTileY, this.cursor.x, this.cursor.y);
          drawer.alpha = 1;
 
-         if (distance > Tile.SIZE * 2) {
+         if (distance > ConstantUtils.unit(2)) {
             drawer.text(
                '!',
                (roadTileX + this.cursor.x) / 2,
                (roadTileY + this.cursor.y) / 2,
-               Tile.SIZE * 1.5,
+               ConstantUtils.unit(1.5),
                ColorUtils.getTokenValue(SystemColorToken.WARN)
             );
          }
@@ -147,8 +147,8 @@ export class Controller {
          return;
       }
 
-      const x = Math.floor(event.offsetX / Tile.SIZE);
-      const y = Math.floor(event.offsetY / Tile.SIZE);
+      const x = Math.floor(event.offsetX / ConstantUtils.unit());
+      const y = Math.floor(event.offsetY / ConstantUtils.unit());
       if (x < 0 || x >= ConstantUtils.COLUMN_COUNT || y < 0 || y >= ConstantUtils.ROW_COUNT) {
          this.selectedTile = undefined;
          return;
