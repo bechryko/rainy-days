@@ -37,7 +37,7 @@ export class NewsTileComponent implements OnDestroy {
             this.subscription.unsubscribe();
          }
          this.subscription = fromEvent<KeyboardEvent>(document, 'keydown')
-            .pipe(filter(event => event.key === quickKey))
+            .pipe(filter(event => event.key === quickKey && !event.ctrlKey && !event.altKey && !event.shiftKey))
             .subscribe(() => this.openDialog());
       });
    }
