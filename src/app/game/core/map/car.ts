@@ -5,11 +5,12 @@ import { ColorUtils, DirectionUtils, SystemColorToken } from './utils';
 
 export class Car {
    private static readonly pool: Car[] = [];
-   public static readonly SPEED = 1;
+
+   private static readonly SPEED = 1;
    private static readonly SIZE_TILE_RATIO = 0.25;
    private static readonly COLLISION_DISTANCE = 0.2;
 
-   public static get SIZE(): number {
+   private static get SIZE(): number {
       return Tile.SIZE * this.SIZE_TILE_RATIO;
    }
 

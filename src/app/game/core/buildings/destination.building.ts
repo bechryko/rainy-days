@@ -1,7 +1,6 @@
 import { BehaviorSubject, Observable } from 'rxjs';
 import { BasicDrawer } from '../drawing';
 import { transparent } from '../functions';
-import { Game } from '../game';
 import { GameEventHandler, GameEventType } from '../game-events';
 import { Tile } from '../map';
 import { ColorUtils, SystemColorToken } from '../map/utils';
@@ -10,9 +9,10 @@ import { Building } from './building';
 export class Destination extends Building {
    private static readonly list: Destination[] = [];
 
-   public static readonly STARTING_HEALTH = 45;
-   public static readonly HEALTH_INCREASE = 1;
-   public static readonly HEALING_PER_CAR = 5;
+   private static readonly STARTING_HEALTH = 45;
+   private static readonly HEALTH_INCREASE = 1;
+   private static readonly HEALING_PER_CAR = 5;
+   private static readonly CRITICAL_HEALTH = 15;
 
    private static CURRENT_HEALTH = Destination.STARTING_HEALTH;
 
@@ -44,10 +44,10 @@ export class Destination extends Building {
       const oldHealth = this.health;
       this.health -= deltaTime;
 
-      if (this.health < Game.DESTINATION_CRITICAL_HEALTH && oldHealth >= Game.DESTINATION_CRITICAL_HEALTH) {
+      if (this.health < Destination.CRITICAL_HEALTH && oldHealth >= Destination.CRITICAL_HEALTH) {
          GameEventHandler.getInstance().emitEvent(
             GameEventType.DESTINATION_CRITICAL_HEALTH,
-            Game.DESTINATION_CRITICAL_HEALTH
+            Destination.CRITICAL_HEALTH
          );
       }
    }

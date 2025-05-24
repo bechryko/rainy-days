@@ -1,9 +1,9 @@
 import { BasicDrawer } from '../drawing';
 import { GameEventHandler, GameEventType } from '../game-events';
 import { Tile } from '../map';
-import { Map } from '../map/map';
 import { ColorUtils, SystemColorToken } from '../map/utils';
 import { EventListener } from '../models';
+import { ConstantUtils } from '../utils';
 import { Selection } from './models';
 import { Toolbar } from './toolbar';
 
@@ -149,7 +149,7 @@ export class Controller {
 
       const x = Math.floor(event.offsetX / Tile.SIZE);
       const y = Math.floor(event.offsetY / Tile.SIZE);
-      if (x < 0 || x >= Map.COLUMN_COUNT || y < 0 || y >= Map.ROW_COUNT) {
+      if (x < 0 || x >= ConstantUtils.COLUMN_COUNT || y < 0 || y >= ConstantUtils.ROW_COUNT) {
          this.selectedTile = undefined;
          return;
       }

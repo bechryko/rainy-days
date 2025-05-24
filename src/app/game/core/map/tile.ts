@@ -3,8 +3,8 @@ import { Toolbar } from '../control/toolbar';
 import { BasicDrawer } from '../drawing';
 import { GameEventHandler, GameEventType } from '../game-events';
 import { Road, Tube } from '../roads';
+import { ConstantUtils } from '../utils';
 import { Car } from './car';
-import { Map } from './map';
 import { Direction } from './models/direction';
 import { ColorUtils, DirectionUtils, ResizeUtils } from './utils';
 
@@ -132,7 +132,7 @@ export class Tile {
       DirectionUtils.forEachDirection(direction => {
          const x = this.x + DirectionUtils.getDx(direction);
          const y = this.y + DirectionUtils.getDy(direction);
-         if (x < 0 || x >= Map.COLUMN_COUNT || y < 0 || y >= Map.ROW_COUNT) {
+         if (x < 0 || x >= ConstantUtils.COLUMN_COUNT || y < 0 || y >= ConstantUtils.ROW_COUNT) {
             this.neighborMap[direction] = null;
          } else {
             this.neighborMap[direction] = tiles[x][y];

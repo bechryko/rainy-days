@@ -3,7 +3,6 @@ import { ChangeDetectionStrategy, Component, inject, signal, WritableSignal } fr
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Game } from '@rainy-days/core/game';
 import { GameEventHandler, GameEventType } from '@rainy-days/core/game-events';
 import { StorageID, StorageService } from '@rainy-days/shared/services';
 import { filter, map, pairwise } from 'rxjs';
@@ -22,6 +21,8 @@ import { ToolbarComponent } from './toolbar';
    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GameComponent {
+   private static readonly BUILDING_SPAWN_MESSAGE_TIME = 10;
+
    private readonly snackbar = inject(MatSnackBar);
    private readonly dialog = inject(MatDialog);
    private readonly gameStartService = inject(GameStartService);
@@ -71,8 +72,8 @@ export class GameComponent {
       );
       GameEventHandler.getInstance().watchEvents(GameEventType.UPDATE_SPAWN_TIMER, timer => {
          if (
-            this.gameStatus().spawnTimer > Game.BUILDING_SPAWN_MESSAGE_TIME &&
-            timer <= Game.BUILDING_SPAWN_MESSAGE_TIME
+            this.gameStatus().spawnTimer > GameComponent.BUILDING_SPAWN_MESSAGE_TIME &&
+            timer <= GameComponent.BUILDING_SPAWN_MESSAGE_TIME
          ) {
             this.openSnackbarMessage(`New spawner and destination spawns in ${timer} seconds`, 'Understood');
          }

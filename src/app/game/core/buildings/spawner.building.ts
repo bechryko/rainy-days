@@ -9,7 +9,7 @@ import { Building } from './building';
 import { TimedPauseBuilding } from './models';
 
 export class Spawner extends Building implements TimedPauseBuilding {
-   public static readonly GENERAL_CAR_SPAWN_TIMER = 4;
+   private static readonly CAR_SPAWN_TIMER = 4;
 
    private timer = 0;
    private readonly _displayTimer$ = new BehaviorSubject(toFraction(this.timer));
@@ -37,7 +37,7 @@ export class Spawner extends Building implements TimedPauseBuilding {
       this.timer -= deltaTime;
       if (this.timer < 0) {
          this.spawnCar();
-         this.timer = Spawner.GENERAL_CAR_SPAWN_TIMER;
+         this.timer = Spawner.CAR_SPAWN_TIMER;
       }
 
       this.emit();

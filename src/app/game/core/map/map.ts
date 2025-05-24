@@ -1,6 +1,6 @@
 import { BuildingSpawnerUtils } from '../buildings/utils';
 import { BasicDrawer } from '../drawing';
-import { RandomUtils } from '../utils';
+import { ConstantUtils, RandomUtils } from '../utils';
 import { Car } from './car';
 import { Tile } from './tile';
 import { ColorUtils, SystemColorToken } from './utils';
@@ -11,8 +11,6 @@ interface ColorCountObject {
 }
 
 export class Map {
-   public static readonly ROW_COUNT = 15;
-   public static readonly COLUMN_COUNT = 30;
    private static readonly MIN_CLOUD_COVERAGE_RATIO = 0.6;
    private static readonly MAX_CLOUD_COVERAGE_RATIO = 0.65;
    private static readonly MIN_CLOUD_SIZE_GROWTH_CHANCE_CONSTANT = 0.4;
@@ -60,8 +58,8 @@ export class Map {
    }
 
    private initTileColors(): void {
-      const minSpreads = Map.ROW_COUNT * Map.COLUMN_COUNT * Map.MIN_CLOUD_COVERAGE_RATIO;
-      const maxSpreads = Map.ROW_COUNT * Map.COLUMN_COUNT * Map.MAX_CLOUD_COVERAGE_RATIO;
+      const minSpreads = ConstantUtils.ROW_COUNT * ConstantUtils.COLUMN_COUNT * Map.MIN_CLOUD_COVERAGE_RATIO;
+      const maxSpreads = ConstantUtils.ROW_COUNT * ConstantUtils.COLUMN_COUNT * Map.MAX_CLOUD_COVERAGE_RATIO;
       let spreads = 0;
 
       while (spreads < minSpreads) {
@@ -121,18 +119,18 @@ export class Map {
       drawer.lineCap = 'square';
       drawer.lineWidth = 1;
 
-      for (let x = 1; x < Map.COLUMN_COUNT; x++) {
-         drawer.line(x * Tile.SIZE, 0, x * Tile.SIZE, Map.ROW_COUNT * Tile.SIZE, 1);
+      for (let x = 1; x < ConstantUtils.COLUMN_COUNT; x++) {
+         drawer.line(x * Tile.SIZE, 0, x * Tile.SIZE, ConstantUtils.ROW_COUNT * Tile.SIZE, 1);
       }
-      for (let y = 1; y < Map.ROW_COUNT; y++) {
-         drawer.line(0, y * Tile.SIZE, Map.COLUMN_COUNT * Tile.SIZE, y * Tile.SIZE, 1);
+      for (let y = 1; y < ConstantUtils.ROW_COUNT; y++) {
+         drawer.line(0, y * Tile.SIZE, ConstantUtils.COLUMN_COUNT * Tile.SIZE, y * Tile.SIZE, 1);
       }
    }
 
    private initTiles(): void {
-      for (let x = 0; x < Map.COLUMN_COUNT; x++) {
+      for (let x = 0; x < ConstantUtils.COLUMN_COUNT; x++) {
          this.tiles[x] = [];
-         for (let y = 0; y < Map.ROW_COUNT; y++) {
+         for (let y = 0; y < ConstantUtils.ROW_COUNT; y++) {
             this.tiles[x][y] = new Tile(x, y);
          }
       }

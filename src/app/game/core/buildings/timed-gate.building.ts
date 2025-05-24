@@ -9,7 +9,7 @@ import { Gate } from './gate';
 import { TimedPauseBuilding } from './models';
 
 export class TimedGate extends Gate implements TimedPauseBuilding {
-   public static readonly BARRIER_TIMER = 4;
+   private static readonly BARRIER_TIMER = 4;
 
    private timer = TimedGate.BARRIER_TIMER;
    private readonly _displayTimer$ = new BehaviorSubject(toFraction(this.timer));
