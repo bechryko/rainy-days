@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, WritableSignal } from '@angular/core';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -27,20 +27,23 @@ export class GameComponent {
    private readonly gameStartService = inject(GameStartService);
    private readonly storageService = inject(StorageService);
 
-   public readonly gameStatus = signal<GameStatus>({
-      isGameGoing: false,
-      isVictory: false,
-      isPaused: false,
-      gameSpeed: 1,
-      selectedToolbarItem: 0,
-      score: 0,
-      spawnTimer: 0
-   });
+   public readonly gameStatus: WritableSignal<GameStatus>;
    public seed: string;
    private isNewBest = false;
 
    constructor() {
       this.seed = this.getSeed();
+
+      const gameSpeed = this.storageService.read(StorageID.GAME_SPEED);
+      this.gameStatus = signal<GameStatus>({
+         isGameGoing: false,
+         isVictory: false,
+         isPaused: gameSpeed > 2,
+         gameSpeed,
+         selectedToolbarItem: 0,
+         score: 0,
+         spawnTimer: 0
+      });
 
       GameEventHandler.getInstance().watchEvents(GameEventType.START_GAME, () =>
          this.gameStatus.update(status => ({
@@ -112,6 +115,7 @@ export class GameComponent {
             ...status,
             gameSpeed
          }));
+         this.storageService.save(StorageID.GAME_SPEED, gameSpeed);
       }
    }
 

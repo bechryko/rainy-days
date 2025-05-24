@@ -1,5 +1,6 @@
 import { Signal } from '@angular/core';
 import { NoRoomForSpawnError } from '@rainy-days/shared/errors';
+import { GameStatus } from '../models';
 import { Building, Destination } from './buildings';
 import { Controller } from './control';
 import { BasicDrawer } from './drawing';
@@ -14,20 +15,18 @@ export class Game {
    private readonly drawer: BasicDrawer;
    private readonly controller: Controller;
    private readonly map: Map;
-   private spawnTimer = 0;
-   public paused = false;
+   private spawnTimer = Building.MAIN_SPAWN_TIMER;
    private exited = false;
    private victory = false;
 
    constructor(
       canvas: HTMLCanvasElement,
-      private readonly gameSpeed: Signal<number>
+      private readonly status: Signal<GameStatus>
    ) {
       this.map = new Map();
+      this.map.spawnSpawnerAndDestination();
       this.controller = new Controller(this.map['tiles']);
       this.drawer = new BasicDrawer(canvas);
-
-      GameEventHandler.getInstance().watchEvents(GameEventType.TOGGLE_PAUSE, () => (this.paused = !this.paused));
    }
 
    public startGame(): void {
@@ -57,9 +56,9 @@ export class Game {
    }
 
    private main(deltaTime: number): boolean {
-      if (!this.paused) {
+      if (!this.status().isPaused) {
          // Tick
-         for (let i = 0; i < this.gameSpeed(); i++) {
+         for (let i = 0; i < this.status().gameSpeed; i++) {
             deltaTime = Math.min(deltaTime, 0.1);
             this.timedActions(deltaTime);
             this.map.tick(deltaTime);
@@ -73,7 +72,7 @@ export class Game {
       this.map.draw(this.drawer);
       this.controller.draw(this.drawer);
 
-      return this.paused || !this.isEndOfGame();
+      return this.status().isPaused || !this.isEndOfGame();
    }
 
    private isEndOfGame(): boolean {
@@ -81,7 +80,7 @@ export class Game {
    }
 
    private timedActions(deltaTime: number): void {
-      if ((this.spawnTimer -= deltaTime) < 0) {
+      if ((this.spawnTimer -= deltaTime) <= 0) {
          this.spawnTimer = Building.MAIN_SPAWN_TIMER;
          try {
             this.map.spawnSpawnerAndDestination();

@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 
 export enum StorageID {
    PERSONAL_BEST = 'personal-best',
-   PERSONAL_BEST_TIME = 'personal-best-time'
+   PERSONAL_BEST_TIME = 'personal-best-time',
+   GAME_SPEED = 'game-speed'
 }
 
 interface StorageIDDataMap {
    [StorageID.PERSONAL_BEST]: number;
    [StorageID.PERSONAL_BEST_TIME]: number | null;
+   [StorageID.GAME_SPEED]: number;
 }
 
 @Injectable({
@@ -27,15 +29,11 @@ export class StorageService {
    private parseItem<T extends StorageID>(id: T, item: string | null): StorageIDDataMap[T] {
       switch (id) {
          case StorageID.PERSONAL_BEST:
-            if (item === null) {
-               return 0;
-            }
-            return Number(item);
+            return item === null ? 0 : Number(item);
          case StorageID.PERSONAL_BEST_TIME:
-            if (item === null) {
-               return null as StorageIDDataMap[T];
-            }
-            return Number(item);
+            return item === null ? (null as StorageIDDataMap[T]) : Number(item);
+         case StorageID.GAME_SPEED:
+            return item === null ? 1 : Number(item);
       }
    }
 
