@@ -3,10 +3,11 @@
   "version": "Beta 1",
   "scripts": {
     "start": "ng serve --open",
+    "prestart-pwa": "npm run build",
+    "start-pwa": "npx http-server -p 8080 -c-1 dist/rainy-days/browser",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "server": "ng build && http-server -p 8080 -c-1 dist/chess",
     "format": "prettier \"src/**/*.ts\" --write",
     "clean": "rm -rf node_modules .angular"
   },

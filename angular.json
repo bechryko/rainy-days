@@ -44,7 +44,10 @@
                 ".",
                 "./src/styles"
               ]
-            }
+            },
+            "allowedCommonJsDependencies": [
+              "seedrandom"
+            ]
           },
           "configurations": {
             "production": {
@@ -60,7 +63,8 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "serviceWorker": "ngsw-config.json"
             },
             "development": {
               "optimization": false,
