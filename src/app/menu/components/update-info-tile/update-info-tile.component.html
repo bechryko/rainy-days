@@ -1,0 +1,11 @@
+@if (flags().isLoading) {
+   <mat-spinner
+      class="loading-indicator"
+      mode="indeterminate"
+      [diameter]="32"></mat-spinner>
+} @else if (flags().isSuccessful) {
+   <mat-icon>check</mat-icon>
+} @else if (flags().isError) {
+   <mat-icon>close</mat-icon>
+}
+<p>{{ message() }}</p>

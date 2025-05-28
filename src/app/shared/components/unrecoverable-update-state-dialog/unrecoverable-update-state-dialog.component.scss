@@ -1,0 +1,48 @@
+@use 'mixins';
+
+@include mixins.menu-dialog($main-heading-level: 2);
+
+:host {
+   min-width: unset;
+   width: 40dvw;
+   min-height: unset;
+}
+
+p {
+   text-align: justify;
+   margin: 0;
+
+   &:first-of-type {
+      margin-top: 2rem;
+   }
+
+   &:last-of-type {
+      margin-bottom: 2rem;
+   }
+}
+
+details {
+   $padding: 0.5rem 1rem;
+
+   padding: 1rem 0;
+   background-color: var(--rd-primary-lighter);
+   margin-block: 2rem;
+   width: 100%;
+   box-sizing: border-box;
+
+   summary {
+      color: var(--rd-primary-darker);
+      padding: $padding;
+      cursor: pointer;
+      user-select: none;
+   }
+
+   .error-message {
+      display: block;
+      color: var(--rd-warn);
+      text-wrap: wrap;
+      width: 100%;
+      padding: $padding;
+      box-sizing: border-box;
+   }
+}
