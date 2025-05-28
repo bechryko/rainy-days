@@ -1,6 +1,6 @@
 @use 'mixins';
 
-@include mixins.news-dialog($fix-width: true);
+@include mixins.menu-dialog($fix-width: true);
 
 :host {
    display: grid;

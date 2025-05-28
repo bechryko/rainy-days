@@ -1,6 +1,6 @@
 @use 'mixins';
 
-@include mixins.news-dialog;
+@include mixins.menu-dialog;
 
 :host {
    min-height: fit-content;
