@@ -1,6 +1,6 @@
 @use 'mixins';
 
-@include mixins.news-dialog($fix-width: true);
+@include mixins.menu-dialog($fix-width: true);
 
 :host {
    display: grid;
@@ -51,13 +51,11 @@ $containers-width: 60%;
 }
 
 .buttons-container {
-   display: flex;
    gap: 0.5rem;
    width: $containers-width;
    margin: auto;
 
-   > * {
-      flex: 1;
+   button {
       min-width: fit-content;
    }
 }

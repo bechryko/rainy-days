@@ -1,0 +1,35 @@
+:host {
+   display: flex;
+   align-items: center;
+   gap: 1rem;
+   color: var(--rd-primary-darker);
+   border: 2px solid var(--rd-primary);
+   border-radius: 1rem;
+   padding: 1rem;
+   background-color: var(--rd-primary-lighter-alternative);
+   opacity: 0.75;
+   transition-property: opacity;
+   transition-delay: 3s;
+   transition-duration: 3s;
+   user-select: none;
+
+   &.hidden {
+      opacity: 0;
+   }
+
+   &.clickable {
+      cursor: pointer;
+   }
+}
+
+mat-icon {
+   --size: 32px;
+
+   font-size: var(--size);
+   height: var(--size);
+   width: var(--size);
+}
+
+p {
+   margin: 0;
+}

@@ -1,5 +1,6 @@
 //@index('./*', (f, _) => `@forward '${f.name}' show ${f.name};`)
 @forward 'context-menu' show context-menu;
-@forward 'news-dialog' show news-dialog;
+@forward 'ellipsis' show ellipsis;
+@forward 'menu-dialog' show menu-dialog;
 @forward 'scrollbar' show scrollbar;
 //@endindex

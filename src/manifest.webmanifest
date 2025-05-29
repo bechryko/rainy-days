@@ -1,9 +1,16 @@
 {
-  "name": "RainyDays",
-  "short_name": "RainyDays",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
-  "display": "standalone",
+  "$schema": "https://json.schemastore.org/web-manifest",
+  "name": "Rainy Days",
+  "short_name": "Rainy Days",
+  "description": "Rainy Days is a strategy game where you have to build roads and buildings to get the cars to their destination. All this in a world where colorful rain pours down from the sky, making your job difficult in a world of demanding companies.",
+  "categories": [
+    "entertainment",
+    "games"
+  ],
+  "theme_color": "#d81b60",
+  "background_color": "#dcedc8",
+  "display": "fullscreen",
+  "orientation": "landscape",
   "scope": "./",
   "start_url": "./",
   "icons": [
@@ -55,5 +62,6 @@
       "type": "image/png",
       "purpose": "maskable any"
     }
-  ]
+  ],
+  "prefer_related_applications": false
 }

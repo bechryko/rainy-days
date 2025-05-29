@@ -1,4 +1,9 @@
 <h1>Rainy Days</h1>
+@if (serviceWorkersEnabled) {
+   <rd-update-info-tile
+      [state]="updateState()"
+      (openDialog)="openVersionUpdateDialog()"></rd-update-info-tile>
+}
 <div class="control-panel">
    @if (buttonGroup === ControlPanelGroup.MAIN_MENU) {
       <div class="menu-buttons control-panel-inputs-container">

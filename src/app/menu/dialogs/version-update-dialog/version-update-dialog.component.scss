@@ -1,0 +1,14 @@
+@use 'mixins';
+
+@include mixins.menu-dialog($main-heading-level: 2);
+
+:host {
+   min-width: unset;
+   width: 40dvw;
+   min-height: unset;
+}
+
+p {
+   text-align: justify;
+   margin-block: 2rem;
+}

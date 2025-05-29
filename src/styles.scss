@@ -25,10 +25,11 @@ body {
    overflow: visible;
 }
 
-.center-content {
+.buttons-container {
    display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-   height: 100%;
+   gap: 1rem;
+
+   button {
+      flex: 1;
+   }
 }

@@ -1,6 +1,6 @@
 @use 'utils';
 
-@mixin news-dialog($fix-width: false) {
+@mixin menu-dialog($fix-width: false, $main-heading-level: 4) {
    @include utils.check-arg-value($fix-width, (true, false), fix-width);
 
    :host {
@@ -15,7 +15,7 @@
       box-sizing: border-box;
       background-color: var(--rd-dialog-background-color);
 
-      h4 {
+      h#{$main-heading-level} {
          color: var(--rd-primary-darker);
          text-align: center;
          font-size: 1.75rem;

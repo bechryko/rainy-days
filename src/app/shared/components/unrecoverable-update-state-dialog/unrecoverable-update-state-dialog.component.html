@@ -1,0 +1,15 @@
+<h2>Unrecoverable state!</h2>
+<p>An error occurred regarding the updates that the game cannot recover from!</p>
+<p>Restart to fix it!</p>
+<details>
+   <summary>View the error</summary>
+   <samp class="error-message">{{ errorReason }}</samp>
+</details>
+<div class="buttons-container">
+   <button
+      mat-flat-button
+      color="accent"
+      (click)="restartGame()">
+      Restart game
+   </button>
+</div>
