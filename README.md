@@ -12,4 +12,4 @@ Run `npm run start` for a dev server. Navigate to `http://localhost:4200/`. The 
 
 ## Run as PWA
 
-Run `npm run server` to build the project and open it with a http-server. Navigate to `http://localhost:8080/`. You can now install the application and use it in offline mode.
+Run `npm run start-pwa` to build the project and open it with an HTTP server. Navigate to `http://localhost:8080/`. You can now install the application and use it in offline mode.
