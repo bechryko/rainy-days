@@ -2,7 +2,7 @@ import { Building, Gate } from '../buildings';
 import { Toolbar } from '../control/toolbar';
 import { BasicDrawer } from '../drawing';
 import { GameEventHandler, GameEventType } from '../game-events';
-import { Road, Tube } from '../roads';
+import { Road } from '../roads';
 import { ConstantUtils } from '../utils';
 import { Car } from './car';
 import { Direction } from './models/direction';
@@ -38,7 +38,7 @@ export class Tile {
    }
 
    public tileAction(car: Car): void {
-      if (!(this.road instanceof Tube) && this.color !== ColorUtils.getBaseTileColor()) {
+      if (this.color !== ColorUtils.getBaseTileColor() && !this.road?.protectsFromRain) {
          car.color = this.color;
       }
 

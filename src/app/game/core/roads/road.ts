@@ -12,7 +12,10 @@ export abstract class Road {
       [Direction.LEFT]: false
    };
 
-   constructor(protected readonly tile: Tile) {}
+   constructor(
+      protected readonly tile: Tile,
+      public readonly protectsFromRain: boolean
+   ) {}
 
    public connectTo(other: Road): void {
       const neighborDirection = this.getNeighborDirection(other);
