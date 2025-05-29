@@ -1,4 +1,4 @@
-import { Building, Destination, Gate } from '../buildings';
+import { Building, Gate } from '../buildings';
 import { Toolbar } from '../control/toolbar';
 import { BasicDrawer } from '../drawing';
 import { GameEventHandler, GameEventType } from '../game-events';
@@ -42,11 +42,7 @@ export class Tile {
          car.color = this.color;
       }
 
-      if (this.hasBuilding() && this.building instanceof Destination && this.building.color === car.color) {
-         car.destroy(); //TODO: object pool
-         this.building.onCarArrive();
-         GameEventHandler.getInstance().emitEvent(GameEventType.GAIN_SCORE, null);
-      }
+      this.building?.onCarMove(car);
    }
 
    public openContextMenu(): void {
