@@ -14,6 +14,7 @@ export abstract class Road {
 
    constructor(
       protected readonly tile: Tile,
+      public readonly speedMultiplier: number,
       public readonly protectsFromRain: boolean
    ) {}
 

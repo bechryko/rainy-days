@@ -5,8 +5,10 @@ import { ConstantUtils } from '../utils';
 import { Road } from './road';
 
 export class BasicRoad extends Road {
+   private static readonly SPEED_MULTIPLIER = 1;
+
    constructor(tile: Tile) {
-      super(tile, false);
+      super(tile, BasicRoad.SPEED_MULTIPLIER, false);
    }
 
    public override matchTypeWith(other: Road): boolean {
