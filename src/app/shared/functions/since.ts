@@ -36,7 +36,7 @@ function getSinceString(minutesPassed: number): string {
       return `${hoursPassed} hour${plural(hoursPassed)} ago`;
    }
 
-   const daysPassed = Math.floor(hoursPassed / 60);
+   const daysPassed = Math.floor(hoursPassed / 24);
    return `${daysPassed} day${plural(daysPassed)} ago`;
 }
 
