@@ -2,7 +2,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { BasicDrawer } from '../drawing';
 import { transparent } from '../functions';
 import { GameEventHandler, GameEventType } from '../game-events';
-import { Tile } from '../map';
+import { Car, Tile } from '../map';
 import { ColorUtils, SystemColorToken } from '../map/utils';
 import { ConstantUtils } from '../utils';
 import { Building } from './building';
@@ -41,6 +41,18 @@ export class Destination extends Building {
       return true;
    }
 
+   public override onCarMove(car: Car): void {
+      if (this.color === car.color) {
+         this.health += Destination.HEALING_PER_CAR;
+
+         this.carsReached++;
+         this._displayCarsReached$.next(this.carsReached);
+
+         car.destroy(); //TODO: object pool
+         GameEventHandler.getInstance().emitEvent(GameEventType.GAIN_SCORE, null);
+      }
+   }
+
    public tick(deltaTime: number): void {
       const oldHealth = this.health;
       this.health -= deltaTime;
@@ -51,13 +63,6 @@ export class Destination extends Building {
             Destination.CRITICAL_HEALTH
          );
       }
-   }
-
-   public onCarArrive(): void {
-      this.health += Destination.HEALING_PER_CAR;
-
-      this.carsReached++;
-      this._displayCarsReached$.next(this.carsReached);
    }
 
    public override draw(drawer: BasicDrawer): void {

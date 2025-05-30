@@ -1,9 +1,14 @@
 import { BasicDrawer } from '../drawing';
+import { Tile } from '../map';
 import { ColorUtils, ComponentColorToken } from '../map/utils';
 import { ConstantUtils } from '../utils';
 import { Road } from './road';
 
 export class Tube extends Road {
+   constructor(tile: Tile) {
+      super(tile, true);
+   }
+
    public override matchTypeWith(other: Road): boolean {
       return other instanceof Tube;
    }

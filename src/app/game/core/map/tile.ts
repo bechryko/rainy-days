@@ -1,8 +1,8 @@
-import { Building, Destination, Gate } from '../buildings';
+import { Building } from '../buildings';
 import { Toolbar } from '../control/toolbar';
 import { BasicDrawer } from '../drawing';
 import { GameEventHandler, GameEventType } from '../game-events';
-import { Road, Tube } from '../roads';
+import { Road } from '../roads';
 import { ConstantUtils } from '../utils';
 import { Car } from './car';
 import { Direction } from './models/direction';
@@ -38,15 +38,11 @@ export class Tile {
    }
 
    public tileAction(car: Car): void {
-      if (!(this.road instanceof Tube) && this.color !== ColorUtils.getBaseTileColor()) {
+      if (this.color !== ColorUtils.getBaseTileColor() && !this.road?.protectsFromRain) {
          car.color = this.color;
       }
 
-      if (this.hasBuilding() && this.building instanceof Destination && this.building.color === car.color) {
-         car.destroy(); //TODO: object pool
-         this.building.onCarArrive();
-         GameEventHandler.getInstance().emitEvent(GameEventType.GAIN_SCORE, null);
-      }
+      this.building?.onCarMove(car);
    }
 
    public openContextMenu(): void {
@@ -67,13 +63,7 @@ export class Tile {
       if (!connectedRoadDirections.some(direction => carTile.getTileInDirection(direction) === this)) {
          return false;
       }
-      if (!this.hasBuilding()) {
-         return true;
-      }
-      if (this.building instanceof Gate) {
-         return this.building.doesLetPass(car);
-      }
-      return true;
+      return !this.building?.isOccupyingFor(car);
    }
 
    public connectRoadTo(other: Tile): void {

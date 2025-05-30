@@ -13,8 +13,8 @@ export class ColoredGate extends Gate {
       super(tile);
    }
 
-   public doesLetPass(car: Car): boolean {
-      return car.color != this.color;
+   public override isOccupyingFor(car: Car): boolean {
+      return car.color === this.color;
    }
 
    public override draw(drawer: BasicDrawer): void {
