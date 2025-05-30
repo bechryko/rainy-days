@@ -1,4 +1,4 @@
-import { Building, Gate } from '../buildings';
+import { Building } from '../buildings';
 import { Toolbar } from '../control/toolbar';
 import { BasicDrawer } from '../drawing';
 import { GameEventHandler, GameEventType } from '../game-events';
@@ -63,13 +63,7 @@ export class Tile {
       if (!connectedRoadDirections.some(direction => carTile.getTileInDirection(direction) === this)) {
          return false;
       }
-      if (!this.hasBuilding()) {
-         return true;
-      }
-      if (this.building instanceof Gate) {
-         return this.building.doesLetPass(car);
-      }
-      return true;
+      return !this.building?.isOccupyingFor(car);
    }
 
    public connectRoadTo(other: Tile): void {

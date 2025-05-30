@@ -6,6 +6,10 @@ export abstract class Building {
 
    public abstract isSpawned(): boolean;
 
+   public isOccupyingFor(car: Car): boolean {
+      return false;
+   }
+
    public onCarMove(car: Car): void {}
 
    public abstract draw(drawer: BasicDrawer): void;

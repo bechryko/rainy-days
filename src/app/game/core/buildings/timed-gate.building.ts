@@ -32,8 +32,8 @@ export class TimedGate extends Gate implements TimedPauseBuilding {
       }
    }
 
-   public doesLetPass(): boolean {
-      return !this.closed();
+   public override isOccupyingFor(): boolean {
+      return this.closed();
    }
 
    public tick(deltaTime: number): void {
