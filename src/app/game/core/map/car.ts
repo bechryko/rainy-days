@@ -7,9 +7,9 @@ import { ColorUtils, DirectionUtils, SystemColorToken } from './utils';
 export class Car {
    private static readonly pool: Car[] = [];
 
-   private static readonly SPEED = 1;
    private static readonly SIZE_TILE_RATIO = 0.25;
    private static readonly COLLISION_DISTANCE = 0.2;
+   private static readonly OFFROAD_SPEED_MULTIPLIER = 0.25;
 
    private static get SIZE(): number {
       return ConstantUtils.unit(this.SIZE_TILE_RATIO);
@@ -104,7 +104,7 @@ export class Car {
       };
       const oldDistanceFromDestination =
          Math.abs(this.x - destinationCoords.x) + Math.abs(this.y - destinationCoords.y);
-      const distanceMoved = Car.SPEED * deltaTime;
+      const distanceMoved = this.getTileSpeedMultiplier(tiles) * deltaTime;
       this.x += DirectionUtils.getDx(this.currentDirection) * distanceMoved;
       this.y += DirectionUtils.getDy(this.currentDirection) * distanceMoved;
 
@@ -153,5 +153,9 @@ export class Car {
          }
       });
       return canEscape;
+   }
+
+   private getTileSpeedMultiplier(tiles: Tile[][]): number {
+      return this.getTile(tiles).road?.speedMultiplier ?? Car.OFFROAD_SPEED_MULTIPLIER;
    }
 }
