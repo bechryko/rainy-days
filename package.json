@@ -1,6 +1,6 @@
 {
   "name": "rainy-days",
-  "version": "Beta 1",
+  "version": "1.0.0",
   "scripts": {
     "start": "ng serve --open",
     "prestart-pwa": "npm run build",
