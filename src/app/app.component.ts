@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { appVersion } from './app-version';
+import { StorageID, StorageService } from './shared/services';
 
 @Component({
    selector: 'rd-root',
@@ -8,8 +10,8 @@ import { RouterOutlet } from '@angular/router';
    imports: [RouterOutlet],
    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {
-   title = 'RainyDays';
+export class AppComponent implements AfterViewInit {
+   public readonly storageService = inject(StorageService);
 
    constructor() {
       document.addEventListener(
@@ -19,5 +21,9 @@ export class AppComponent {
          },
          false
       );
+   }
+
+   public ngAfterViewInit(): void {
+      this.storageService.save(StorageID.LAST_USED_GAME_VERSION, appVersion);
    }
 }
