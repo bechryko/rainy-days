@@ -99,3 +99,11 @@ rd-update-info-tile {
 rd-news {
    grid-area: news;
 }
+
+.version {
+   position: absolute;
+   color: var(--rd-primary-darker);
+   bottom: 0.5rem;
+   left: 0.5rem;
+   user-select: none;
+}
