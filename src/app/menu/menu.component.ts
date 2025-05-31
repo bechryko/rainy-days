@@ -10,12 +10,12 @@ import { Router } from '@angular/router';
 import { Route } from '@rainy-days/routes';
 import { SwUpdateState } from '@rainy-days/shared/enums';
 import { since } from '@rainy-days/shared/functions';
-import { StorageID, StorageService, UpdateService } from '@rainy-days/shared/services';
+import { MusicService, StorageID, StorageService, UpdateService } from '@rainy-days/shared/services';
 import { GameStartService } from 'src/app/game-start.service';
 import { appVersion } from '../app-version';
 import { UpdateInfoTileComponent } from './components';
 import { VersionUpdateDialogComponent } from './dialogs';
-import { ControlPanelGroup } from './models';
+import { ControlPanelGroup, MenuMusicHandler } from './models';
 import { NewsComponent } from './news/news.component';
 
 @Component({
@@ -40,16 +40,18 @@ export class MenuComponent {
    private readonly storageService = inject(StorageService);
    private readonly updateService = inject(UpdateService);
    private readonly dialog = inject(MatDialog);
+   private readonly musicService = inject(MusicService);
 
    public readonly updateState = this.updateService.updateState;
    public readonly ControlPanelGroup = ControlPanelGroup;
 
    public buttonGroup: ControlPanelGroup = ControlPanelGroup.MAIN_MENU;
-   public personalBest = this.storageService.read(StorageID.PERSONAL_BEST);
+   public readonly personalBest = this.storageService.read(StorageID.PERSONAL_BEST);
    public readonly personalBestSince = since(this.storageService.read(StorageID.PERSONAL_BEST_TIME));
    public readonly serviceWorkersEnabled = this.updateService.areServiceWorkersEnabled();
    public readonly currentAppVersion = appVersion;
    public readonly currentYear = new Date().getFullYear();
+   private readonly musicHandler = new MenuMusicHandler();
 
    public readonly setupGameForm = new FormGroup({
       seed: new FormControl('', [Validators.pattern('^[0-9a-zA-Z]*$')])
@@ -61,6 +63,11 @@ export class MenuComponent {
             this.openVersionUpdateDialog();
          }
       });
+
+      this.musicService.songEnded$.subscribe(song => {
+         this.musicService.playSong(this.musicHandler.chooseNextSong(song));
+      });
+      this.musicService.playSong(this.musicHandler.chooseNextSong());
    }
 
    public openVersionUpdateDialog(): void {
