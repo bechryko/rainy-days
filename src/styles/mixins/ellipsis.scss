@@ -1,10 +1,17 @@
-@mixin ellipsis($width: none) {
+@mixin ellipsis($width: none, $lines: 1) {
    @if $width == none {
       @error "A width has to be specified for the ellipsis to work!";
    }
 
-   text-overflow: ellipsis;
-   white-space: nowrap;
+   @if $lines == 1 {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+   } @else {
+      display: -webkit-box;
+      -webkit-line-clamp: $lines;
+      line-clamp: $lines;
+      -webkit-box-orient: vertical;
+   }
    overflow: hidden;
    width: $width;
 }
