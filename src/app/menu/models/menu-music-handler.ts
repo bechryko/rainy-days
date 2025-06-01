@@ -9,7 +9,7 @@ export class MenuMusicHandler extends MusicHandler {
       super(SongPlayContext.MENU);
    }
 
-   public override chooseNextSong(previousSong?: Song): Song {
+   public override chooseNextSong(previousSong: Song | null): Song {
       return this.isDay() ? this.daySong : this.nightSong;
    }
 
