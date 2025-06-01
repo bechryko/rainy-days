@@ -31,39 +31,41 @@
       </div>
    }
    @if (buttonGroup === ControlPanelGroup.SETUP_GAME) {
-      <h2 class="title">Setup game</h2>
-      <form
-         class="game-setup-panel control-panel-inputs-container"
-         autocomplete="off"
-         [formGroup]="setupGameForm"
-         (ngSubmit)="startCustomGame()">
-         <mat-form-field color="accent">
-            <mat-label>Game seed</mat-label>
-            <input
-               matInput
-               placeholder="Enter your favorite seed!"
-               type="text"
-               formControlName="seed" />
-            <mat-icon
-               matSuffix
-               color="accent">
-               terminal
-            </mat-icon>
-         </mat-form-field>
-         <button
-            mat-flat-button
-            color="accent"
-            type="submit">
-            Start
-         </button>
-         <button
-            mat-flat-button
-            color="accent"
-            type="reset"
-            (click)="switchButtonGroup(ControlPanelGroup.MAIN_MENU)">
-            Back
-         </button>
-      </form>
+      <div>
+         <h2 class="title">Setup game</h2>
+         <form
+            class="game-setup-panel control-panel-inputs-container"
+            autocomplete="off"
+            [formGroup]="setupGameForm"
+            (ngSubmit)="startCustomGame()">
+            <mat-form-field color="accent">
+               <mat-label>Game seed</mat-label>
+               <input
+                  matInput
+                  placeholder="Enter your favorite seed!"
+                  type="text"
+                  formControlName="seed" />
+               <mat-icon
+                  matSuffix
+                  color="accent">
+                  terminal
+               </mat-icon>
+            </mat-form-field>
+            <button
+               mat-flat-button
+               color="accent"
+               type="submit">
+               Start
+            </button>
+            <button
+               mat-flat-button
+               color="accent"
+               type="reset"
+               (click)="switchButtonGroup(ControlPanelGroup.MAIN_MENU)">
+               Back
+            </button>
+         </form>
+      </div>
    }
 </div>
 <rd-news></rd-news>
