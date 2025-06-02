@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { appVersion } from 'src/app/app-version';
-import { MusicState } from '../models';
+import { MusicState } from '../state';
 
 export enum StorageID {
    PERSONAL_BEST = 'personal-best',

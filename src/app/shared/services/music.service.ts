@@ -1,6 +1,7 @@
 import { effect, inject, Injectable, Signal, signal } from '@angular/core';
 import { fromEvent, Observable, Subject } from 'rxjs';
-import { MusicState, Song } from '../models';
+import { Song } from '../models';
+import { MusicState } from '../state';
 import { StorageID, StorageService } from './storage.service';
 
 @Injectable({
