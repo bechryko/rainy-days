@@ -1,6 +1,7 @@
-import { effect, Injectable, Signal, signal } from '@angular/core';
+import { effect, inject, Injectable, Signal, signal } from '@angular/core';
 import { fromEvent, Observable, Subject } from 'rxjs';
-import { Song } from '../models';
+import { MusicState, Song } from '../models';
+import { StorageID, StorageService } from './storage.service';
 
 @Injectable({
    providedIn: 'root'
@@ -10,9 +11,12 @@ export class MusicService {
    private static readonly SONG_PLAY_RETRY_TIME_MS = 500;
    private static readonly SONG_STOP_TIME_S = 5;
 
+   private readonly storageService = inject(StorageService);
+
+   private readonly initialMusicState = this.storageService.read(StorageID.MUSIC);
    private readonly audioPlayer = this.initAudioPlayer();
    private readonly _currentSong = signal<Song | null>(null);
-   private readonly _muted = signal(false);
+   private readonly _muted = signal(this.initialMusicState.isMuted);
    private readonly _hasError = signal(false);
 
    private readonly _playNextSong$ = new Subject<Song | null>();
@@ -50,10 +54,12 @@ export class MusicService {
 
    public setVolume(volume: number): void {
       this.audioPlayer.volume = volume;
+      this.updateMusicState({ volume });
    }
 
    public toggleMute(): void {
       this._muted.update(muted => !muted);
+      this.updateMusicState({ isMuted: this.muted() });
 
       if (this._muted()) {
          this.songStopTimeout = setTimeout(() => this.stopPlaying(), MusicService.SONG_STOP_TIME_S * 1000);
@@ -93,8 +99,7 @@ export class MusicService {
       player.autoplay = false;
       player.controls = false;
       player.loop = false;
-      player.muted = false;
-      player.volume = MusicService.DEFAULT_VOLUME;
+      player.volume = this.initialMusicState.volume ?? MusicService.DEFAULT_VOLUME;
 
       this.initAudioPlayerEvents(player);
 
@@ -105,6 +110,13 @@ export class MusicService {
       fromEvent(player, 'ended').subscribe(() => {
          this._currentSong.set(null);
          this._playNextSong$.next(this._currentSong()!);
+      });
+   }
+
+   private updateMusicState(updateObject: Partial<MusicState>): void {
+      this.storageService.save(StorageID.MUSIC, {
+         ...this.storageService.read(StorageID.MUSIC),
+         ...updateObject
       });
    }
 }
