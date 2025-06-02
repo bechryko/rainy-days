@@ -22,6 +22,10 @@ interface StorageIDDataMap {
 export class StorageService {
    private static readonly LOCAL_STORAGE_PREFIX = 'rainy-days';
 
+   constructor() {
+      this.removeUnusedKeys();
+   }
+
    public save<T extends StorageID>(id: T, data: StorageIDDataMap[T]): void {
       const dataToSave = typeof data === 'object' ? JSON.stringify(data) : String(data);
       localStorage.setItem(this.getKey(id), dataToSave);
@@ -58,7 +62,7 @@ export class StorageService {
       return parsedValue;
    }
 
-   private getKey(id: string): string {
+   private getKey(id: StorageID): string {
       return `${StorageService.LOCAL_STORAGE_PREFIX}-${id}`;
    }
 
@@ -78,5 +82,16 @@ export class StorageService {
    private parseToNumber<DT extends number | undefined>(item: unknown, defaultValue: DT): number | DT {
       const numberItem = Number(item);
       return isNaN(numberItem) ? defaultValue : numberItem;
+   }
+
+   private removeUnusedKeys(): void {
+      const usedKeys = Object.values(StorageID).map(id => this.getKey(id));
+
+      for (let i = 0; i < localStorage.length; i++) {
+         const key = localStorage.key(i)!;
+         if (key.startsWith(StorageService.LOCAL_STORAGE_PREFIX) && !usedKeys.includes(key)) {
+            localStorage.removeItem(key);
+         }
+      }
    }
 }
