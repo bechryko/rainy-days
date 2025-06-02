@@ -14,8 +14,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MusicHandler } from '@rainy-days/shared/models';
-import { MusicService } from '@rainy-days/shared/services';
-import { BehaviorSubject, combineLatest, map, startWith, Subject, throttleTime } from 'rxjs';
+import { MusicService, StorageID, StorageService } from '@rainy-days/shared/services';
+import { BehaviorSubject, combineLatest, map, Subject, throttleTime } from 'rxjs';
 
 @Component({
    selector: 'rd-music-controller',
@@ -29,6 +29,7 @@ export class MusicControllerComponent implements OnInit, OnDestroy {
 
    private readonly musicService = inject(MusicService);
    private readonly destroyRef = inject(DestroyRef);
+   private readonly storageService = inject(StorageService);
 
    public readonly handler = input.required<MusicHandler>();
    public readonly currentSongTitle = computed(() => {
@@ -47,9 +48,12 @@ export class MusicControllerComponent implements OnInit, OnDestroy {
    private overlayCloseTimeout?: any;
 
    public ngOnInit(): void {
-      this.musicService.playNextSong$.pipe(startWith(null), takeUntilDestroyed(this.destroyRef)).subscribe(song => {
+      this.musicService.playNextSong$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(song => {
          this.musicService.playSong(this.handler().chooseNextSong(song));
       });
+      if (!this.storageService.read(StorageID.MUSIC).isMuted) {
+         this.musicService.playSong(this.handler().chooseNextSong(null));
+      }
 
       this.volumeChange$.pipe(throttleTime(100)).subscribe(value => this.musicService.setVolume(value));
 
