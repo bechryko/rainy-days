@@ -48,7 +48,7 @@ export class MenuComponent {
 
    public buttonGroup: ControlPanelGroup = ControlPanelGroup.MAIN_MENU;
    public readonly personalBest = this.storageService.read(StorageID.PERSONAL_BEST);
-   public readonly personalBestSince = since(this.storageService.read(StorageID.PERSONAL_BEST_TIME));
+   public readonly personalBestSince = since(this.personalBest.timestamp);
    public readonly serviceWorkersEnabled = this.updateService.areServiceWorkersEnabled();
    public readonly currentAppVersion = appVersion;
    public readonly currentYear = new Date().getFullYear();

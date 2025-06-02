@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
 import { appVersion } from 'src/app/app-version';
-import { MusicState } from '../state';
+import { MusicState, PersonalBestState } from '../state';
 
 export enum StorageID {
    PERSONAL_BEST = 'personal-best',
-   PERSONAL_BEST_TIME = 'personal-best-time',
    GAME_SPEED = 'game-speed',
    LAST_USED_GAME_VERSION = 'last-used-game-version',
    MUSIC = 'music'
 }
 
 interface StorageIDDataMap {
-   [StorageID.PERSONAL_BEST]: number;
-   [StorageID.PERSONAL_BEST_TIME]: number | null;
+   [StorageID.PERSONAL_BEST]: PersonalBestState;
    [StorageID.GAME_SPEED]: number;
    [StorageID.LAST_USED_GAME_VERSION]: string;
    [StorageID.MUSIC]: MusicState;
@@ -37,10 +35,11 @@ export class StorageService {
       let parsedValue: any;
       switch (id) {
          case StorageID.PERSONAL_BEST:
-            parsedValue = item === null ? 0 : Number(item);
-            break;
-         case StorageID.PERSONAL_BEST_TIME:
-            parsedValue = item === null ? null : Number(item);
+            const obj = this.parseToObject(item);
+            parsedValue = {
+               score: this.parseToNumber(obj['score'], 0),
+               timestamp: this.parseToNumber(obj['timestamp'], 0)
+            };
             break;
          case StorageID.GAME_SPEED:
             parsedValue = item === null ? 1 : Number(item);
@@ -49,11 +48,10 @@ export class StorageService {
             parsedValue = item === null ? appVersion : item;
             break;
          case StorageID.MUSIC:
-            const obj = this.parseToObject(item);
-            const volume = Number(obj['volume']);
+            const obj2 = this.parseToObject(item);
             parsedValue = {
-               volume: isNaN(volume) ? undefined : volume,
-               isMuted: Boolean(obj['isMuted'])
+               volume: this.parseToNumber(obj2['volume'], undefined),
+               isMuted: Boolean(obj2['isMuted'])
             };
             break;
       }
@@ -75,5 +73,10 @@ export class StorageService {
          obj = {};
       }
       return obj;
+   }
+
+   private parseToNumber<DT extends number | undefined>(item: unknown, defaultValue: DT): number | DT {
+      const numberItem = Number(item);
+      return isNaN(numberItem) ? defaultValue : numberItem;
    }
 }

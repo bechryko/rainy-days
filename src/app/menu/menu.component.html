@@ -7,13 +7,13 @@
 <div class="control-panel">
    @if (buttonGroup === ControlPanelGroup.MAIN_MENU) {
       <div class="menu-buttons control-panel-inputs-container">
-         @if (personalBest !== 0) {
+         @if (personalBest.score !== 0) {
             <p
                class="personal-best"
                [matTooltip]="personalBestSince()"
                [matTooltipDisabled]="!personalBestSince()"
                matTooltipPosition="right">
-               Personal best: {{ personalBest }}
+               Personal best: {{ personalBest.score }}
             </p>
          }
          <button
