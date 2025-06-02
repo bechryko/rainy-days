@@ -43,6 +43,11 @@ export class MusicService {
          });
    }
 
+   public stopPlaying(): void {
+      this.audioPlayer.src = '';
+      this._currentSong.set(null);
+   }
+
    public setVolume(volume: number): void {
       this.audioPlayer.volume = volume;
    }
@@ -80,11 +85,6 @@ export class MusicService {
 
    public get volume(): number {
       return this.audioPlayer.volume;
-   }
-
-   private stopPlaying(): void {
-      this.audioPlayer.src = '';
-      this._currentSong.set(null);
    }
 
    private initAudioPlayer(): HTMLAudioElement {

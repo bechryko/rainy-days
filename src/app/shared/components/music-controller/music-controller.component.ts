@@ -1,5 +1,15 @@
 import { ConnectedPosition, OverlayModule } from '@angular/cdk/overlay';
-import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, input, OnInit, signal } from '@angular/core';
+import {
+   ChangeDetectionStrategy,
+   Component,
+   computed,
+   DestroyRef,
+   inject,
+   input,
+   OnDestroy,
+   OnInit,
+   signal
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,7 +24,7 @@ import { BehaviorSubject, combineLatest, map, startWith, Subject, throttleTime }
    styleUrl: './music-controller.component.scss',
    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MusicControllerComponent implements OnInit {
+export class MusicControllerComponent implements OnInit, OnDestroy {
    private static readonly OVERLAY_CLOSE_DELAY_MS = 100;
 
    private readonly musicService = inject(MusicService);
@@ -58,6 +68,10 @@ export class MusicControllerComponent implements OnInit {
                );
             }
          });
+   }
+
+   public ngOnDestroy(): void {
+      this.musicService.stopPlaying();
    }
 
    public onMute(): void {
