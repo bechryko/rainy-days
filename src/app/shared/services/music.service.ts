@@ -1,40 +1,103 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable, Signal, signal } from '@angular/core';
 import { fromEvent, Observable, Subject } from 'rxjs';
 import { Song } from '../models';
+import { MusicState } from '../state';
+import { StorageID, StorageService } from './storage.service';
 
 @Injectable({
    providedIn: 'root'
 })
 export class MusicService {
    private static readonly DEFAULT_VOLUME = 0.1;
+   private static readonly SONG_PLAY_RETRY_TIME_MS = 500;
+   private static readonly SONG_STOP_TIME_S = 5;
+
+   private readonly storageService = inject(StorageService);
 
    private readonly audioPlayer = this.initAudioPlayer();
-   private _currentSong?: Song;
+   private readonly _currentSong = signal<Song | null>(null);
+   private readonly _hasError = signal(false);
 
-   private readonly _songEnded$ = new Subject<Song>();
+   private readonly _playNextSong$ = new Subject<Song | null>();
+   private songPlayRetryTimeout?: any;
+   private songStopTimeout?: any;
 
    public playSong(song: Song): void {
+      if (this.songPlayRetryTimeout) {
+         clearTimeout(this.songPlayRetryTimeout);
+      }
+
       this.audioPlayer.src = `assets/music/${song.context}/${song.filename}.mp3`;
-      this.audioPlayer.play();
-      this._currentSong = song;
+      this.audioPlayer
+         .play()
+         .then(() => {
+            this._hasError.set(false);
+            this._currentSong.set(song);
+         })
+         .catch(() => {
+            this._hasError.set(true);
+            this.songPlayRetryTimeout = setTimeout(() => this.playSong(song), MusicService.SONG_PLAY_RETRY_TIME_MS);
+         });
+   }
+
+   public stopPlaying(): void {
+      this.audioPlayer.src = '';
+      this._currentSong.set(null);
    }
 
    public setVolume(volume: number): void {
       this.audioPlayer.volume = volume;
+      this.updateMusicState({ volume });
    }
 
-   public get songEnded$(): Observable<Song> {
-      return this._songEnded$.asObservable();
+   public toggleMute(): boolean {
+      const muted = !this.audioPlayer.muted;
+      this.audioPlayer.muted = muted;
+      this.updateMusicState({ isMuted: muted });
+
+      if (muted) {
+         this.songStopTimeout = setTimeout(() => this.stopPlaying(), MusicService.SONG_STOP_TIME_S * 1000);
+      } else {
+         if (this.songStopTimeout) {
+            clearTimeout(this.songStopTimeout);
+         }
+         if (!this._currentSong()) {
+            this._playNextSong$.next(null);
+         }
+      }
+
+      return muted;
+   }
+
+   public get playNextSong$(): Observable<Song | null> {
+      return this._playNextSong$.asObservable();
+   }
+
+   public get currentSong(): Signal<Song | null> {
+      return this._currentSong.asReadonly();
+   }
+
+   public get hasError(): Signal<boolean> {
+      return this._hasError.asReadonly();
+   }
+
+   public get volume(): number {
+      return this.audioPlayer.volume;
+   }
+
+   public get muted(): boolean {
+      return this.audioPlayer.muted;
    }
 
    private initAudioPlayer(): HTMLAudioElement {
       const player = new Audio();
+      const initialMusicState = this.storageService.read(StorageID.MUSIC);
 
       player.autoplay = false;
       player.controls = false;
       player.loop = false;
-      player.muted = false;
-      player.volume = MusicService.DEFAULT_VOLUME;
+      player.volume = initialMusicState.volume ?? MusicService.DEFAULT_VOLUME;
+      player.muted = initialMusicState.isMuted;
 
       this.initAudioPlayerEvents(player);
 
@@ -43,8 +106,15 @@ export class MusicService {
 
    private initAudioPlayerEvents(player: HTMLAudioElement): void {
       fromEvent(player, 'ended').subscribe(() => {
-         this._songEnded$.next(this._currentSong!);
-         delete this._currentSong;
+         this._currentSong.set(null);
+         this._playNextSong$.next(this._currentSong()!);
+      });
+   }
+
+   private updateMusicState(updateObject: Partial<MusicState>): void {
+      this.storageService.save(StorageID.MUSIC, {
+         ...this.storageService.read(StorageID.MUSIC),
+         ...updateObject
       });
    }
 }

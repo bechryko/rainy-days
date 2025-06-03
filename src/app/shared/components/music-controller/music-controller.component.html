@@ -1,0 +1,39 @@
+<mat-icon>music_note</mat-icon>
+<p class="song-title">{{ currentSongTitle() }}</p>
+<button
+   mat-icon-button
+   cdkOverlayOrigin
+   #volumeChanger="cdkOverlayOrigin"
+   class="volume-button"
+   (mouseenter)="volumeButtonHover$.next(true)"
+   (mouseleave)="volumeButtonHover$.next(false)"
+   (click)="onMute()">
+   <mat-icon>
+      @if (muted) {
+         volume_off
+      } @else {
+         volume_up
+      }
+   </mat-icon>
+</button>
+
+<ng-template
+   cdkConnectedOverlay
+   [cdkConnectedOverlayOrigin]="volumeChanger"
+   [cdkConnectedOverlayPositions]="overlayPositions"
+   [cdkConnectedOverlayOpen]="isOverlayOpen()">
+   <div
+      class="volume-changer-overlay-container"
+      (mouseenter)="volumeChangerOverlayHover$.next(true)"
+      (mouseleave)="volumeChangerOverlayHover$.next(false)">
+      <input
+         class="volume-changer"
+         type="range"
+         orient="vertical"
+         min="0"
+         max="100"
+         step="1"
+         [value]="getVolume()"
+         (input)="onVolumeChange($event)" />
+   </div>
+</ng-template>

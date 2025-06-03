@@ -9,7 +9,7 @@ export abstract class MusicHandler {
       this.contextSongs = gameSongs.filter(song => song.context === context);
    }
 
-   public abstract chooseNextSong(previousSong?: Song): Song;
+   public abstract chooseNextSong(previousSong: Song | null): Song;
 
    protected findSongByTitle(title: string): Song {
       const song = this.contextSongs.find(song => song.title === title);

@@ -1,0 +1,38 @@
+@use 'mixins';
+
+:host {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 1rem;
+   min-height: 4rem;
+   color: var(--rd-primary-darker);
+   background-color: var(--rd-primary-lighter);
+   border: 2px solid var(--rd-primary);
+   border-radius: 1rem;
+}
+
+.song-title {
+   margin: 0;
+
+   @include mixins.ellipsis($width: 50%, $lines: 2);
+}
+
+.volume-changer-overlay-container {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   width: 1rem;
+   height: 9rem;
+   background-color: var(--rd-primary-lighter);
+   border: 2px solid var(--rd-primary);
+   border-radius: 1rem;
+   padding: 0.5rem;
+
+   .volume-changer {
+      writing-mode: vertical-lr;
+      direction: rtl;
+      flex-basis: 100%;
+      accent-color: var(--rd-accent);
+   }
+}

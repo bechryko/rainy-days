@@ -122,9 +122,11 @@ export class GameComponent {
 
    public onEndOfGame(): void {
       const score = this.gameStatus().score;
-      if (score > this.storageService.read(StorageID.PERSONAL_BEST)) {
-         this.storageService.save(StorageID.PERSONAL_BEST, score);
-         this.storageService.save(StorageID.PERSONAL_BEST_TIME, Date.now());
+      if (score > this.storageService.read(StorageID.PERSONAL_BEST).score) {
+         this.storageService.save(StorageID.PERSONAL_BEST, {
+            score,
+            timestamp: Date.now()
+         });
          this.isNewBest = true;
       }
 
@@ -134,7 +136,7 @@ export class GameComponent {
    public openEndOfGameDialog(): void {
       const data: EndOfGameDialogData = {
          score: this.gameStatus().score,
-         best: this.storageService.read(StorageID.PERSONAL_BEST),
+         best: this.storageService.read(StorageID.PERSONAL_BEST).score,
          isNewBest: this.isNewBest,
          isVictory: this.gameStatus().isVictory,
          seed: this.seed
