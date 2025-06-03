@@ -2,8 +2,8 @@ import { SongPlayContext, SongTag } from '@rainy-days/shared/enums';
 import { MusicHandler, Song } from '@rainy-days/shared/models';
 
 export class MenuMusicHandler extends MusicHandler {
-   private readonly daySongs = this.findSongsByTag(SongTag.DAY);
-   private readonly nightSongs = this.findSongsByTag(SongTag.NIGHT);
+   private readonly daySongs = this.findSongsByTag(SongTag.DAY_THEME);
+   private readonly nightSongs = this.findSongsByTag(SongTag.NIGHT_THEME);
 
    constructor() {
       super(SongPlayContext.MENU);

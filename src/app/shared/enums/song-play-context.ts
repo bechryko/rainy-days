@@ -1,3 +1,4 @@
 export enum SongPlayContext {
-   MENU = 'menu'
+   MENU = 'menu',
+   GAME = 'game'
 }

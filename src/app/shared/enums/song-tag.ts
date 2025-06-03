@@ -1,4 +1,5 @@
 export enum SongTag {
-   DAY,
-   NIGHT
+   DAY_THEME,
+   NIGHT_THEME,
+   EARLY_GAME
 }
