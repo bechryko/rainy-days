@@ -55,7 +55,12 @@ export class MusicControllerComponent implements OnInit, OnDestroy {
          this.musicService.playSong(this.handler().chooseNextSong(null));
       }
 
-      this.volumeChange$.pipe(throttleTime(100)).subscribe(value => this.musicService.setVolume(value));
+      this.volumeChange$.pipe(throttleTime(100)).subscribe(value => {
+         this.musicService.setVolume(value);
+         if (this.muted) {
+            this.onMute();
+         }
+      });
 
       combineLatest([this.volumeButtonHover$, this.volumeChangerOverlayHover$])
          .pipe(map(([volumeButtonHover, volumeChangerOverlayHover]) => volumeButtonHover || volumeChangerOverlayHover))
