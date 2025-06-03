@@ -1,4 +1,4 @@
-import { effect, inject, Injectable, Signal, signal } from '@angular/core';
+import { inject, Injectable, Signal, signal } from '@angular/core';
 import { fromEvent, Observable, Subject } from 'rxjs';
 import { Song } from '../models';
 import { MusicState } from '../state';
@@ -14,21 +14,13 @@ export class MusicService {
 
    private readonly storageService = inject(StorageService);
 
-   private readonly initialMusicState = this.storageService.read(StorageID.MUSIC);
    private readonly audioPlayer = this.initAudioPlayer();
    private readonly _currentSong = signal<Song | null>(null);
-   private readonly _muted = signal(this.initialMusicState.isMuted);
    private readonly _hasError = signal(false);
 
    private readonly _playNextSong$ = new Subject<Song | null>();
    private songPlayRetryTimeout?: any;
    private songStopTimeout?: any;
-
-   constructor() {
-      effect(() => {
-         this.audioPlayer.muted = this._muted();
-      });
-   }
 
    public playSong(song: Song): void {
       if (this.songPlayRetryTimeout) {
@@ -58,11 +50,12 @@ export class MusicService {
       this.updateMusicState({ volume });
    }
 
-   public toggleMute(): void {
-      this._muted.update(muted => !muted);
-      this.updateMusicState({ isMuted: this.muted() });
+   public toggleMute(): boolean {
+      const muted = !this.audioPlayer.muted;
+      this.audioPlayer.muted = muted;
+      this.updateMusicState({ isMuted: muted });
 
-      if (this._muted()) {
+      if (muted) {
          this.songStopTimeout = setTimeout(() => this.stopPlaying(), MusicService.SONG_STOP_TIME_S * 1000);
       } else {
          if (this.songStopTimeout) {
@@ -72,6 +65,8 @@ export class MusicService {
             this._playNextSong$.next(null);
          }
       }
+
+      return muted;
    }
 
    public get playNextSong$(): Observable<Song | null> {
@@ -82,10 +77,6 @@ export class MusicService {
       return this._currentSong.asReadonly();
    }
 
-   public get muted(): Signal<boolean> {
-      return this._muted.asReadonly();
-   }
-
    public get hasError(): Signal<boolean> {
       return this._hasError.asReadonly();
    }
@@ -94,13 +85,19 @@ export class MusicService {
       return this.audioPlayer.volume;
    }
 
+   public get muted(): boolean {
+      return this.audioPlayer.muted;
+   }
+
    private initAudioPlayer(): HTMLAudioElement {
       const player = new Audio();
+      const initialMusicState = this.storageService.read(StorageID.MUSIC);
 
       player.autoplay = false;
       player.controls = false;
       player.loop = false;
-      player.volume = this.initialMusicState.volume ?? MusicService.DEFAULT_VOLUME;
+      player.volume = initialMusicState.volume ?? MusicService.DEFAULT_VOLUME;
+      player.muted = initialMusicState.isMuted;
 
       this.initAudioPlayerEvents(player);
 

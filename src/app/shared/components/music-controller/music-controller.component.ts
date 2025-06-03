@@ -38,7 +38,7 @@ export class MusicControllerComponent implements OnInit, OnDestroy {
       }
       return this.musicService.currentSong()?.title ?? 'Unmute to start playing!';
    });
-   public readonly muted = this.musicService.muted;
+   public muted = this.musicService.muted;
    private readonly volumeChange$ = new Subject<number>();
 
    public readonly overlayPositions = this.getOverlayPositions();
@@ -79,7 +79,7 @@ export class MusicControllerComponent implements OnInit, OnDestroy {
    }
 
    public onMute(): void {
-      this.musicService.toggleMute();
+      this.muted = this.musicService.toggleMute();
    }
 
    public onVolumeChange(event: any): void {

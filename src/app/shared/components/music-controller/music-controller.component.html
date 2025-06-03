@@ -9,7 +9,7 @@
    (mouseleave)="volumeButtonHover$.next(false)"
    (click)="onMute()">
    <mat-icon>
-      @if (muted()) {
+      @if (muted) {
          volume_off
       } @else {
          volume_up
