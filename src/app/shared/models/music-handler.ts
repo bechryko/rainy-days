@@ -3,6 +3,8 @@ import { SongPlayContext, SongTag } from '../enums';
 import { Song } from './song';
 
 export abstract class MusicHandler {
+   private static readonly RARE_SONG_WEIGHT = 0.25;
+
    protected readonly contextSongs: Song[];
 
    constructor(protected readonly context: SongPlayContext) {
@@ -20,10 +22,17 @@ export abstract class MusicHandler {
       }
 
       const songs = songList.filter(song => song !== previousSong);
-      return songs[Math.floor(Math.random() * songs.length)];
+      const normalSongs = songs.filter(song => !song.tags.includes(SongTag.RARE));
+      const normalSongWeight = normalSongs.length;
+      const rareSongs = this.findSongsByTag(SongTag.RARE, songs);
+      const rareSongWeight = rareSongs.length * MusicHandler.RARE_SONG_WEIGHT;
+
+      const list = Math.random() * (normalSongWeight + rareSongWeight) < normalSongWeight ? normalSongs : rareSongs;
+
+      return list[Math.floor(Math.random() * list.length)];
    }
 
-   protected findSongsByTag(tag: SongTag): Song[] {
-      return this.contextSongs.filter(song => song.tags.includes(tag));
+   protected findSongsByTag(tag: SongTag, songList = this.contextSongs): Song[] {
+      return songList.filter(song => song.tags.includes(tag));
    }
 }

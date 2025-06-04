@@ -48,7 +48,7 @@ export const gameSongs: Song[] = [
       context: SongPlayContext.GAME,
       filename: 'what-could-one-more-step-mean-rainy-days-version',
       title: 'What Could One More Step Mean (Rainy Days Version)',
-      tags: [SongTag.LATE_GAME]
+      tags: [SongTag.LATE_GAME, SongTag.RARE]
    },
    {
       context: SongPlayContext.GAME,
