@@ -1,10 +1,13 @@
+@use 'sass:math';
+
 :host {
    position: relative;
-   display: flex;
+   display: grid;
+   grid-template-columns: 1fr auto 1fr;
    gap: 1rem;
    align-items: center;
    background-color: var(--rd-primary);
-   padding-inline: 3rem;
+   padding-inline: 1rem;
    user-select: none;
 
    &.game-over {
@@ -20,31 +23,57 @@ p {
 .score {
    display: block;
    font-size: 2.5rem;
-   margin-right: 2rem;
-   min-width: 14rem;
+   min-width: max-content;
    user-select: none;
 }
 
-.toolbar-item-container {
+.toolbar-items-container {
    display: flex;
-   align-items: center;
-   padding: 0.75rem;
-   border: 0.25rem solid var(--rd-primary);
-   border-radius: 0.5rem;
-   transition: border-color 150ms ease-in-out;
+   gap: 0.25rem;
 
-   &.selected {
-      border-color: var(--rd-primary-darker);
-   }
-
-   .toolbar-item-key {
-      font-size: 2rem;
-      margin-right: 1rem;
-   }
-
-   button {
+   .toolbar-item {
+      position: relative;
       font-size: 1.25rem;
+      margin: 0.75rem;
+      box-shadow: none;
+
+      &.selected {
+         &::after {
+            $height: 0.5rem;
+
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -0.75rem;
+            width: 100%;
+            height: $height;
+            background-color: var(--rd-accent-darker);
+            border-radius: math.div($height, 2);
+         }
+
+         .toolbar-item-key {
+            color: var(--rd-accent-darker);
+            font-weight: bold;
+         }
+      }
+
+      .toolbar-item-key {
+         $translate-percent: 80%;
+
+         position: absolute;
+         top: 0;
+         left: 0;
+         translate: -#{$translate-percent} -#{$translate-percent};
+         font-size: 2rem;
+         color: var(--rd-accent-disabled);
+         margin-right: 1rem;
+      }
    }
+}
+
+rd-music-controller {
+   width: clamp(15rem, 100%, 22rem);
+   justify-self: center;
 }
 
 .game-speed-panel {

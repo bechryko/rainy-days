@@ -106,8 +106,8 @@ export class MusicService {
 
    private initAudioPlayerEvents(player: HTMLAudioElement): void {
       fromEvent(player, 'ended').subscribe(() => {
+         this._playNextSong$.next(this._currentSong());
          this._currentSong.set(null);
-         this._playNextSong$.next(this._currentSong()!);
       });
    }
 

@@ -5,21 +5,22 @@
       Score: {{ gameStatus().score }}
    </p>
    @if (gameToolbar()) {
-      @for (toolbarItem of gameToolbar()!.items; track $index) {
-         <div
-            class="toolbar-item-container"
-            [class.selected]="gameStatus().selectedToolbarItem === $index">
-            <span class="toolbar-item-key">{{ $index }}</span>
+      <div class="toolbar-items-container">
+         @for (toolbarItem of gameToolbar()!.items; track $index) {
             <button
                mat-fab
+               class="toolbar-item"
+               [class.selected]="gameStatus().selectedToolbarItem === $index"
                (click)="selectTool($index)">
+               <span class="toolbar-item-key">{{ $index }}</span>
                <rd-toolbar-icon
                   [item]="toolbarItem"
                   [matTooltip]="toolbarItem.displayName"></rd-toolbar-icon>
             </button>
-         </div>
-      }
+         }
+      </div>
    }
+   <rd-music-controller [handler]="musicHandler"></rd-music-controller>
    <div class="game-speed-panel">
       @for (speed of possibleGameSpeeds; track speed) {
          <div

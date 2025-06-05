@@ -32,7 +32,7 @@ function getSinceString(minutesPassed: number): string {
    }
 
    const hoursPassed = Math.floor(minutesPassed / 60);
-   if (hoursPassed < 60) {
+   if (hoursPassed < 48) {
       return `${hoursPassed} hour${plural(hoursPassed)} ago`;
    }
 
