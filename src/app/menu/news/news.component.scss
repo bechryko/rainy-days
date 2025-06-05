@@ -7,7 +7,7 @@
       'guide guide tips'
       'guide guide controls'
       'versions versions versions'
-      'roadmap roadmap roadmap';
+      'feedback roadmap roadmap';
    gap: 0.5rem;
 }
 
@@ -26,6 +26,10 @@ rd-news-tile {
 
    &.versions {
       grid-area: versions;
+   }
+
+   &.feedback {
+      grid-area: feedback;
    }
 
    &.roadmap {

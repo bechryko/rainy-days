@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
    ControlsDialogComponent,
+   FeedbackDialogComponent,
    GuideDialogComponent,
    RoadmapDialogComponent,
    TipsDialogComponent,
@@ -20,5 +21,6 @@ export class NewsComponent {
    public readonly ControlsDialogComponent = ControlsDialogComponent;
    public readonly TipsDialogComponent = TipsDialogComponent;
    public readonly VersionHistoryDialogComponent = VersionHistoryDialogComponent;
+   public readonly FeedbackDialogComponent = FeedbackDialogComponent;
    public readonly RoadmapDialogComponent = RoadmapDialogComponent;
 }

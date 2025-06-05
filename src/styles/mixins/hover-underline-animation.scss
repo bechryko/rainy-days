@@ -1,0 +1,21 @@
+@mixin hover-underline-animation($color: var(--rd-primary), $thickness: 1px) {
+   position: relative;
+
+   &::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      transform: scaleX(0);
+      height: $thickness;
+      bottom: 0;
+      left: 0;
+      background-color: $color;
+      transition: transform 0.25s ease-out;
+      transform-origin: bottom center;
+   }
+
+   &:hover::after {
+      transform: scaleX(1);
+      transform-origin: inherit;
+   }
+}
