@@ -84,6 +84,7 @@ h3 {
 }
 
 .icon-wrapper {
+   display: grid;
    grid-area: icon;
    align-self: stretch;
    container-type: size;
