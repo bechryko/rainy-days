@@ -5,6 +5,7 @@ import { ConstantUtils } from '../utils';
 import { Road } from './road';
 
 export class Tube extends Road {
+   private static readonly INNER_THICKNESS_UNIT = 0.4;
    private static readonly SPEED_MULTIPLIER = 1;
 
    constructor(tile: Tile) {
@@ -16,8 +17,8 @@ export class Tube extends Road {
    }
 
    public override draw(drawer: BasicDrawer): void {
-      this.drawRoadBase(drawer, ColorUtils.getTokenValue(ComponentColorToken.TUBE_OUTLINE), ConstantUtils.unit(0.5));
-      this.drawRoadBase(drawer, ColorUtils.getTokenValue(ComponentColorToken.TUBE), ConstantUtils.unit(0.4));
+      this.drawRoadBase(drawer, ColorUtils.getTokenValue(ComponentColorToken.TUBE_OUTLINE));
+      this.drawRoadBase(drawer, ColorUtils.getTokenValue(ComponentColorToken.TUBE), Tube.INNER_THICKNESS_UNIT);
    }
 
    public override drawRoadSegment(drawer: BasicDrawer, x1: number, y1: number, x2: number, y2: number): void {
