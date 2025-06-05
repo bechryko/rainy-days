@@ -1,0 +1,54 @@
+@use 'mixins';
+
+@include mixins.menu-dialog;
+
+:host {
+   min-height: revert;
+   min-width: revert;
+   height: fit-content;
+}
+
+rd-icon {
+   display: block;
+   margin-inline: auto;
+   width: 98px;
+   height: 96px;
+
+   a:has(> &) {
+      display: block;
+      width: fit-content;
+   }
+}
+
+p,
+a {
+   display: block;
+   font-size: 1.25rem;
+   text-align: center;
+   max-width: 35rem;
+   margin: 2.5rem auto;
+
+   &:focus-visible {
+      outline: none;
+   }
+}
+
+.feedback-link {
+   @include mixins.hover-underline-animation($color: currentcolor, $thickness: 2px);
+
+   color: var(--rd-primary-darker);
+   text-decoration: none;
+   width: fit-content;
+   line-height: 1.5;
+
+   &:focus-visible {
+      color: var(--rd-primary);
+   }
+}
+
+.mdc-button {
+   padding: 1rem;
+   width: fit-content;
+   height: fit-content;
+   margin-inline: auto;
+}

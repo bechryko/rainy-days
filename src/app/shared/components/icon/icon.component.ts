@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
-export type IconName = 'info' | 'controller' | 'history' | 'road' | 'guide' | 'forum';
+export type IconName = 'info' | 'controller' | 'history' | 'road' | 'guide' | 'forum' | 'github';
 
 @Component({
    selector: 'rd-icon',
