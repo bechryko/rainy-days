@@ -16,7 +16,7 @@ export class BasicRoad extends Road {
    }
 
    public override draw(drawer: BasicDrawer): void {
-      this.drawRoadBase(drawer, ColorUtils.getTokenValue(ComponentColorToken.BASIC_ROAD), ConstantUtils.unit(0.5));
+      this.drawRoadBase(drawer, ColorUtils.getTokenValue(ComponentColorToken.BASIC_ROAD));
    }
 
    public override drawRoadSegment(drawer: BasicDrawer, x1: number, y1: number, x2: number, y2: number): void {

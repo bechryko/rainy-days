@@ -5,6 +5,9 @@ import { DirectionUtils } from '../map/utils';
 import { ConstantUtils } from '../utils';
 
 export abstract class Road {
+   private static readonly THICKNESS_UNIT = 0.5;
+   private static readonly SEGMENT_CONNECTION_OFFSET_UNIT = 0.16;
+
    protected readonly connections: Record<Direction, boolean> = {
       [Direction.UP]: false,
       [Direction.RIGHT]: false,
@@ -48,9 +51,9 @@ export abstract class Road {
 
    public abstract getName(): string;
 
-   protected drawRoadBase(drawer: BasicDrawer, color: string, size: number): void {
+   protected drawRoadBase(drawer: BasicDrawer, color: string, thicknessInUnit = Road.THICKNESS_UNIT): void {
       drawer.strokeStyle = color;
-      drawer.lineWidth = size;
+      drawer.lineWidth = ConstantUtils.unit(thicknessInUnit);
       drawer.lineCap = 'round';
 
       drawer.ctx.beginPath();
@@ -61,9 +64,16 @@ export abstract class Road {
             return;
          }
 
+         const segmentConnectionOffsetDirectionMultiplier =
+            direction === Direction.UP || direction === Direction.LEFT ? 1 : -1;
+         const segmentConnectionOffsetX =
+            Math.sign(dx) * Road.SEGMENT_CONNECTION_OFFSET_UNIT * segmentConnectionOffsetDirectionMultiplier;
+         const segmentConnectionOffsetY =
+            Math.sign(dy) * Road.SEGMENT_CONNECTION_OFFSET_UNIT * segmentConnectionOffsetDirectionMultiplier;
+
          drawer.ctx.lineTo(
-            ConstantUtils.unit(this.tile.x + 0.5 + dx / 2),
-            ConstantUtils.unit(this.tile.y + 0.5 + dy / 2)
+            ConstantUtils.unit(this.tile.x + 0.5 + dx / 2 - segmentConnectionOffsetX),
+            ConstantUtils.unit(this.tile.y + 0.5 + dy / 2 - segmentConnectionOffsetY)
          );
          drawer.ctx.moveTo(ConstantUtils.unit(this.tile.x + 0.5), ConstantUtils.unit(this.tile.y + 0.5));
       });
