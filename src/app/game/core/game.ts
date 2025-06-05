@@ -35,6 +35,10 @@ export class Game {
 
    public onResize(): void {
       this.drawer.onResize();
+
+      if (!this.status().isGameGoing) {
+         this.draw();
+      }
    }
 
    public stop(): void {
@@ -68,10 +72,14 @@ export class Game {
       this.controller.handleMouseActions();
 
       // Draw
-      this.map.draw(this.drawer);
-      this.controller.draw(this.drawer);
+      this.draw();
 
       return this.status().isPaused || !this.isEndOfGame();
+   }
+
+   private draw(): void {
+      this.map.draw(this.drawer);
+      this.controller.draw(this.drawer);
    }
 
    private isEndOfGame(): boolean {
