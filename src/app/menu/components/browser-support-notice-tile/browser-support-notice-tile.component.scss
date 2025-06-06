@@ -1,0 +1,25 @@
+:host {
+   display: flex;
+   align-items: center;
+   gap: 1rem;
+   border: 2px solid var(--rd-warn);
+   border-radius: 1rem;
+   padding: 1rem;
+   background-color: var(--rd-warn-lighter);
+   width: max(40%, 15rem);
+   opacity: 0.75;
+   transition-property: opacity;
+   transition-duration: 1s;
+   user-select: none;
+
+   @starting-style {
+      opacity: 0;
+   }
+}
+
+p {
+   color: var(--rd-black);
+   font-size: 0.875rem;
+   text-align: center;
+   margin: 0;
+}

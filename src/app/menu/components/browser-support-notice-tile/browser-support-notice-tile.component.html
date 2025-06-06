@@ -1,0 +1,14 @@
+<p
+   matTooltip="Only supported browser versions are guaranteed to run the game as it was intended. Update your browser or switch browsers, otherwise the game may have issues and bugs that will not be fixed in the future."
+   matTooltipPosition="left"
+   matTooltipClass="no-select">
+   @if (isUnsupported()) {
+      Your current browser ({{ browser().type }}) is not supported by Rainy Days at the moment. Use one of the following
+      browsers for guaranteed full game experience:
+      <strong>{{ supportedBrowserList }}</strong>
+   } @else {
+      Your current browser ({{ browser().type }}) is supported by Rainy Days, but only starting from version
+      <strong>{{ supportedVersionForBrowser() }}</strong>
+      (your version: {{ browser().version }})
+   }
+</p>
