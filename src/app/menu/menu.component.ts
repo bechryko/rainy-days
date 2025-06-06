@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
@@ -17,7 +17,7 @@ import { filter } from 'rxjs';
 import { GameStartService } from 'src/app/game-start.service';
 import { appVersion } from '../app-version';
 import { BrowserSupportNoticeTileComponent, UpdateInfoTileComponent } from './components';
-import { VersionUpdateDialogComponent } from './dialogs';
+import { MobileNoticeDialogComponent, VersionUpdateDialogComponent } from './dialogs';
 import { Browser, ControlPanelGroup, MenuMusicHandler } from './models';
 import { NewsComponent } from './news/news.component';
 
@@ -39,7 +39,7 @@ import { NewsComponent } from './news/news.component';
    ],
    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit {
    private readonly router = inject(Router);
    private readonly gameStartService = inject(GameStartService);
    private readonly storageService = inject(StorageService);
@@ -85,6 +85,12 @@ export class MenuComponent {
             this.openVersionUpdateDialog();
          }
       });
+   }
+
+   public ngOnInit(): void {
+      if (this.platformService.isMobile()) {
+         this.dialog.open(MobileNoticeDialogComponent, { disableClose: true });
+      }
    }
 
    public openVersionUpdateDialog(): void {

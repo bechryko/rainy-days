@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Platform } from '@angular/cdk/platform';
+import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { supportedBrowsers } from '../constants';
 import { BrowserType } from '../enums';
@@ -23,6 +24,8 @@ export class PlatformService {
       [BrowserType.FIREFOX]: PlatformService.FIREFOX_REGEX
    };
 
+   private readonly platform = inject(Platform);
+
    private readonly _isLoaded$ = new BehaviorSubject(false);
 
    private isBrave = false;
@@ -36,6 +39,8 @@ export class PlatformService {
    }
 
    public getBrowserType(): BrowserType {
+      this.checkLoadedState();
+
       const { userAgent } = navigator;
 
       if (this.isBrave) {
@@ -78,6 +83,10 @@ export class PlatformService {
       return null;
    }
 
+   public isMobile(): boolean {
+      return this.platform.ANDROID || this.platform.IOS;
+   }
+
    public get isLoaded$(): Observable<boolean> {
       return this._isLoaded$.asObservable();
    }
@@ -85,5 +94,11 @@ export class PlatformService {
    private async checkIfBrave(): Promise<void> {
       const isBrave = await (navigator as any).brave.isBrave();
       this.isBrave = isBrave;
+   }
+
+   private checkLoadedState(): void {
+      if (!this._isLoaded$.value) {
+         throw new Error('Platform information is not yet loaded!');
+      }
    }
 }
