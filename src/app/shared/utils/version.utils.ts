@@ -1,4 +1,16 @@
+import { supportedBrowsers } from '../constants';
+import { BrowserType } from '../enums';
+
 export class VersionUtils {
+   public static isSupported(browser: BrowserType, version: string | null): boolean {
+      if (!version || !(browser in supportedBrowsers)) {
+         return false;
+      }
+
+      const supportedVersion = supportedBrowsers[browser as keyof typeof supportedBrowsers];
+      return this.compare(supportedVersion, version) !== 1;
+   }
+
    public static compare(v1: string, v2: string): number {
       const v1Min = this.minimalize(v1);
       const v2Min = this.minimalize(v2);

@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { supportedBrowsers } from '../constants';
 import { BrowserType } from '../enums';
 import { VersionUtils } from '../utils';
+
+type SupportedBrowserName = keyof typeof supportedBrowsers;
 
 @Injectable({
    providedIn: 'root'
@@ -14,7 +17,7 @@ export class PlatformService {
    private static readonly SEAMONKEY_REGEX = /Seamonkey\//;
    private static readonly SAFARI_REGEX = /Safari\//;
 
-   private static readonly SUPPORTED_BROWSER_REGEX_MAP: Partial<Record<BrowserType, RegExp>> = {
+   private static readonly SUPPORTED_BROWSER_REGEX_MAP: Record<SupportedBrowserName, RegExp> = {
       [BrowserType.EDGE]: PlatformService.EDGE_REGEX,
       [BrowserType.CHROME]: PlatformService.CHROME_REGEX,
       [BrowserType.FIREFOX]: PlatformService.FIREFOX_REGEX
@@ -26,6 +29,10 @@ export class PlatformService {
 
    constructor() {
       this.checkIfBrave().finally(() => this._isLoaded$.next(true));
+   }
+
+   public isBrowserVersionSupported(): boolean {
+      return VersionUtils.isSupported(this.getBrowserType(), this.getBrowserVersion());
    }
 
    public getBrowserType(): BrowserType {
@@ -60,7 +67,8 @@ export class PlatformService {
 
    public getBrowserVersion(): string | null {
       const splitVersions = navigator.userAgent.split('/');
-      const regex = PlatformService.SUPPORTED_BROWSER_REGEX_MAP[this.getBrowserType()];
+      const regex: RegExp | undefined =
+         PlatformService.SUPPORTED_BROWSER_REGEX_MAP[this.getBrowserType() as SupportedBrowserName];
 
       if (regex) {
          const versionSegmentIndex = splitVersions.findIndex(v => regex.test(v + '/')) + 1;
