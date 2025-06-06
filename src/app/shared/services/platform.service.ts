@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { BrowserType } from '../enums';
+import { VersionUtils } from '../utils';
 
 @Injectable({
    providedIn: 'root'
@@ -12,6 +13,12 @@ export class PlatformService {
    private static readonly FIREFOX_REGEX = /Firefox\//;
    private static readonly SEAMONKEY_REGEX = /Seamonkey\//;
    private static readonly SAFARI_REGEX = /Safari\//;
+
+   private static readonly SUPPORTED_BROWSER_REGEX_MAP: Partial<Record<BrowserType, RegExp>> = {
+      [BrowserType.EDGE]: PlatformService.EDGE_REGEX,
+      [BrowserType.CHROME]: PlatformService.CHROME_REGEX,
+      [BrowserType.FIREFOX]: PlatformService.FIREFOX_REGEX
+   };
 
    private readonly _isLoaded$ = new BehaviorSubject(false);
 
@@ -49,6 +56,18 @@ export class PlatformService {
       }
 
       return BrowserType.UNKNOWN;
+   }
+
+   public getBrowserVersion(): string | null {
+      const splitVersions = navigator.userAgent.split('/');
+      const regex = PlatformService.SUPPORTED_BROWSER_REGEX_MAP[this.getBrowserType()];
+
+      if (regex) {
+         const versionSegmentIndex = splitVersions.findIndex(v => regex.test(v + '/')) + 1;
+         return VersionUtils.readFromString(splitVersions[versionSegmentIndex]);
+      }
+
+      return null;
    }
 
    public get isLoaded$(): Observable<boolean> {
