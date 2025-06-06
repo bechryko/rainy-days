@@ -1,7 +1,7 @@
 import { BrowserType } from '../enums';
 
 export const supportedBrowsers = {
-   [BrowserType.EDGE]: '117',
-   [BrowserType.CHROME]: '117',
-   [BrowserType.FIREFOX]: '129'
+   [BrowserType.EDGE]: '108',
+   [BrowserType.CHROME]: '108',
+   [BrowserType.FIREFOX]: '121'
 } as const;
