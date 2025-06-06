@@ -72,14 +72,26 @@ h3 {
    align-self: start;
    display: block;
    font-size: 1.25rem;
-   height: 0;
    margin: 0;
-   overflow: hidden;
-   transition: height 500ms ease;
-   interpolate-size: allow-keywords;
 
-   :host:hover & {
-      height: auto;
+   @supports (interpolate-size: allow-keywords) {
+      height: 0;
+      overflow: hidden;
+      transition: height 500ms ease;
+      interpolate-size: allow-keywords;
+
+      :host:hover & {
+         height: auto;
+      }
+   }
+
+   @supports not (interpolate-size: allow-keywords) {
+      opacity: 0;
+      transition: opacity 350ms ease;
+
+      :host:hover & {
+         opacity: 1;
+      }
    }
 }
 
