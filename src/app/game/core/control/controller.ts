@@ -144,6 +144,7 @@ export class Controller {
       this.cursor.y = event.offsetY;
 
       if (!(event.target instanceof HTMLCanvasElement)) {
+         this.selectedTile = undefined;
          return;
       }
 
