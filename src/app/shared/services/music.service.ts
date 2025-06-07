@@ -9,7 +9,7 @@ import { StorageID, StorageService } from './storage.service';
 })
 export class MusicService {
    private static readonly DEFAULT_VOLUME = 0.1;
-   private static readonly SONG_PLAY_RETRY_TIME_MS = 500;
+   private static readonly MAX_SONG_RETRY_TIME_MS = 10_000;
    private static readonly SONG_STOP_TIME_S = 5;
    private static readonly NO_INTERACTION_ERROR_MESSAGE =
       "play() failed because the user didn't interact with the document first.";
@@ -23,6 +23,7 @@ export class MusicService {
    private readonly _playNextSong$ = new Subject<Song | null>();
    private songPlayRetryTimeout?: any;
    private songStopTimeout?: any;
+   private songRetryTimeMs = 500;
 
    public playSong(song: Song): void {
       if (this.songPlayRetryTimeout) {
@@ -38,7 +39,8 @@ export class MusicService {
          })
          .catch((error: Error) => {
             this._errorMessage.set(this.getErrorMessage(error));
-            this.songPlayRetryTimeout = setTimeout(() => this.playSong(song), MusicService.SONG_PLAY_RETRY_TIME_MS);
+            this.songPlayRetryTimeout = setTimeout(() => this.playSong(song), this.songRetryTimeMs);
+            this.songRetryTimeMs = Math.min(this.songRetryTimeMs * 2, MusicService.MAX_SONG_RETRY_TIME_MS);
          });
    }
 
