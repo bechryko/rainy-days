@@ -6,7 +6,7 @@
    grid-template-areas:
       'guide guide tips'
       'guide guide controls'
-      'versions versions versions'
+      'versions versions installation'
       'feedback roadmap roadmap';
    gap: 0.5rem;
 }
@@ -26,6 +26,10 @@ rd-news-tile {
 
    &.versions {
       grid-area: versions;
+   }
+
+   &.installation {
+      grid-area: installation;
    }
 
    &.feedback {

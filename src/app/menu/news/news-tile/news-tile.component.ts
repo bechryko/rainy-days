@@ -11,7 +11,7 @@ import { filter, fromEvent, Subscription } from 'rxjs';
    styleUrl: './news-tile.component.scss',
    changeDetection: ChangeDetectionStrategy.OnPush,
    host: {
-      '[class.openable]': 'dialog()',
+      '[class.openable]': 'dialog() || href()',
       '[class.no-description]': '!description()'
    }
 })
@@ -22,6 +22,7 @@ export class NewsTileComponent implements OnDestroy {
    public readonly description = input<string>();
    public readonly icon = input<IconName>();
    public readonly dialog = input<ComponentType<unknown>>();
+   public readonly href = input<string>();
    public readonly quickKey = input<string>();
    private subscription?: Subscription;
    private dialogRef?: MatDialogRef<any, any>;
@@ -38,28 +39,39 @@ export class NewsTileComponent implements OnDestroy {
          }
          this.subscription = fromEvent<KeyboardEvent>(document, 'keydown')
             .pipe(filter(event => event.key === quickKey && !event.ctrlKey && !event.altKey && !event.shiftKey))
-            .subscribe(() => this.openDialog());
+            .subscribe(() => this.onClick());
       });
    }
 
    @HostListener('click')
-   public openDialog(): void {
+   public onClick(): void {
+      const dialog = this.dialog();
+      if (dialog) {
+         this.openDialog(dialog);
+      }
+
+      const href = this.href();
+      if (href) {
+         this.navigate(href);
+      }
+   }
+
+   private navigate(href: string): void {
+      globalThis.open(href, '_blank')?.focus();
+   }
+
+   public ngOnDestroy(): void {
+      this.subscription?.unsubscribe();
+      this.dialogRef?.close();
+   }
+
+   private openDialog(dialog: ComponentType<unknown>): void {
       if (this.dialogRef && this.dialogRef.getState() === MatDialogState.OPEN) {
          this.dialogRef.close();
          this.dialogRef = undefined;
          return;
       }
 
-      const dialog = this.dialog();
-      if (!dialog) {
-         return;
-      }
-
       this.dialogRef = this.dialogService.open(dialog);
-   }
-
-   public ngOnDestroy(): void {
-      this.subscription?.unsubscribe();
-      this.dialogRef?.close();
    }
 }
