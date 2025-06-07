@@ -33,8 +33,9 @@ export class MusicControllerComponent implements OnInit, OnDestroy {
 
    public readonly handler = input.required<MusicHandler>();
    public readonly currentSongTitle = computed(() => {
-      if (this.musicService.hasError()) {
-         return 'Interact with the app to start playing music!';
+      const errorMessage = this.musicService.errorMessage();
+      if (errorMessage) {
+         return errorMessage;
       }
       return this.musicService.currentSong()?.title ?? 'Unmute to start playing!';
    });
