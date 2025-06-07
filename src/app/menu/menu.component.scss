@@ -1,5 +1,6 @@
 :host {
    display: grid;
+   position: relative;
    grid-template-columns: 1fr 1fr;
    grid-template-rows: 1fr 2fr;
    grid-template-areas:
@@ -10,6 +11,8 @@
 
 h1 {
    grid-area: title;
+   position: relative;
+   z-index: 1000;
    font-size: 7rem;
    text-align: center;
    color: var(--rd-primary);
@@ -20,9 +23,17 @@ h1 {
 }
 
 rd-update-info-tile {
+   grid-area: title;
    position: absolute;
    top: 0.5rem;
    left: 0.5rem;
+}
+
+rd-browser-support-notice-tile {
+   grid-area: title;
+   position: absolute;
+   top: 0.5rem;
+   right: 0.5rem;
 }
 
 .control-panel {

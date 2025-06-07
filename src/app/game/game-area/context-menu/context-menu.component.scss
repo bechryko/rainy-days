@@ -3,17 +3,33 @@
    --translate-y: -100%;
 
    position: absolute;
-   translate: var(--translate-x) var(--translate-y);
    display: block;
    visibility: hidden;
-   height: 0;
+   translate: var(--translate-x) var(--translate-y);
    background-color: var(--rd-primary-lighter);
    border: 2px solid var(--rd-primary-darker);
    border-radius: 1rem;
    padding: 1rem;
-   overflow-y: hidden;
-   interpolate-size: allow-keywords;
-   transition: height 250ms ease;
+
+   @supports (interpolate-size: allow-keywords) {
+      height: 0;
+      interpolate-size: allow-keywords;
+      overflow-y: hidden;
+      transition: height 250ms ease;
+
+      &.visible {
+         height: auto;
+      }
+   }
+
+   @supports not (interpolate-size: allow-keywords) {
+      opacity: 0;
+      transition: opacity 350ms ease;
+
+      &.visible {
+         opacity: 1;
+      }
+   }
 
    &.is-on-bottom {
       --translate-y: 0;
@@ -21,6 +37,5 @@
 
    &.visible {
       visibility: visible;
-      height: auto;
    }
 }

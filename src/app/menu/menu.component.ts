@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -11,12 +12,13 @@ import { Route } from '@rainy-days/routes';
 import { MusicControllerComponent } from '@rainy-days/shared/components';
 import { SwUpdateState } from '@rainy-days/shared/enums';
 import { since } from '@rainy-days/shared/functions';
-import { StorageID, StorageService, UpdateService } from '@rainy-days/shared/services';
+import { PlatformService, StorageID, StorageService, UpdateService } from '@rainy-days/shared/services';
+import { filter } from 'rxjs';
 import { GameStartService } from 'src/app/game-start.service';
 import { appVersion } from '../app-version';
-import { UpdateInfoTileComponent } from './components';
-import { VersionUpdateDialogComponent } from './dialogs';
-import { ControlPanelGroup, MenuMusicHandler } from './models';
+import { BrowserSupportNoticeTileComponent, UpdateInfoTileComponent } from './components';
+import { MobileNoticeDialogComponent, VersionUpdateDialogComponent } from './dialogs';
+import { Browser, ControlPanelGroup, MenuMusicHandler } from './models';
 import { NewsComponent } from './news/news.component';
 
 @Component({
@@ -32,16 +34,18 @@ import { NewsComponent } from './news/news.component';
       MatIcon,
       MatTooltipModule,
       UpdateInfoTileComponent,
-      MusicControllerComponent
+      MusicControllerComponent,
+      BrowserSupportNoticeTileComponent
    ],
    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MenuComponent {
+export class MenuComponent implements OnInit {
    private readonly router = inject(Router);
    private readonly gameStartService = inject(GameStartService);
    private readonly storageService = inject(StorageService);
    private readonly updateService = inject(UpdateService);
    private readonly dialog = inject(MatDialog);
+   private readonly platformService = inject(PlatformService);
 
    public readonly updateState = this.updateService.updateState;
    public readonly ControlPanelGroup = ControlPanelGroup;
@@ -53,17 +57,40 @@ export class MenuComponent {
    public readonly currentAppVersion = appVersion;
    public readonly currentYear = new Date().getFullYear();
    public readonly musicHandler = new MenuMusicHandler();
+   public readonly browser = signal<Browser | null>(null);
 
    public readonly setupGameForm = new FormGroup({
       seed: new FormControl('', [Validators.pattern('^[0-9a-zA-Z]*$')])
    });
 
    constructor() {
+      this.platformService.isLoaded$
+         .pipe(
+            filter(isLoaded => isLoaded),
+            takeUntilDestroyed()
+         )
+         .subscribe(() => {
+            if (this.platformService.isBrowserVersionSupported()) {
+               return;
+            }
+
+            this.browser.set({
+               type: this.platformService.getBrowserType(),
+               version: this.platformService.getBrowserVersion()
+            });
+         });
+
       effect(() => {
          if (this.updateState() === SwUpdateState.UPDATE_DOWNLOAD_SUCCESSFUL) {
             this.openVersionUpdateDialog();
          }
       });
+   }
+
+   public ngOnInit(): void {
+      if (this.platformService.isMobile()) {
+         this.dialog.open(MobileNoticeDialogComponent, { disableClose: true });
+      }
    }
 
    public openVersionUpdateDialog(): void {

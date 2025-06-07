@@ -4,6 +4,9 @@
       [state]="updateState()"
       (openDialog)="openVersionUpdateDialog()"></rd-update-info-tile>
 }
+@if (browser()) {
+   <rd-browser-support-notice-tile [browser]="browser()!"></rd-browser-support-notice-tile>
+}
 <div class="control-panel">
    @if (buttonGroup === ControlPanelGroup.MAIN_MENU) {
       <div class="menu-buttons control-panel-inputs-container">

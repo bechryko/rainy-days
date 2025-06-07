@@ -1,0 +1,39 @@
+:host {
+   $animation-time: 1s;
+
+   display: flex;
+   align-items: center;
+   gap: 1rem;
+   border: 2px solid var(--rd-warn);
+   border-radius: 1rem;
+   padding: 1rem;
+   background-color: var(--rd-warn-lighter);
+   width: max(40%, 15rem);
+   opacity: 0.75;
+   transition-property: opacity;
+   transition-duration: $animation-time;
+   user-select: none;
+   animation: appear $animation-time;
+
+   @starting-style {
+      opacity: 0;
+      animation: none;
+   }
+}
+
+p {
+   color: var(--rd-black);
+   font-size: 0.875rem;
+   text-align: center;
+   margin: 0;
+}
+
+@keyframes appear {
+   from {
+      opacity: 0;
+   }
+
+   to {
+      opacity: 0.75;
+   }
+}

@@ -23,4 +23,7 @@ export class NewsComponent {
    public readonly VersionHistoryDialogComponent = VersionHistoryDialogComponent;
    public readonly FeedbackDialogComponent = FeedbackDialogComponent;
    public readonly RoadmapDialogComponent = RoadmapDialogComponent;
+
+   public readonly installationTileHref =
+      'https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Installing#installing_and_uninstalling_pwas';
 }

@@ -33,6 +33,7 @@
       writing-mode: vertical-lr;
       direction: rtl;
       flex-basis: 100%;
+      min-height: 0;
       accent-color: var(--rd-accent);
    }
 }
