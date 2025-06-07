@@ -9,18 +9,21 @@ import { StorageID, StorageService } from './storage.service';
 })
 export class MusicService {
    private static readonly DEFAULT_VOLUME = 0.1;
-   private static readonly SONG_PLAY_RETRY_TIME_MS = 500;
+   private static readonly MAX_SONG_RETRY_TIME_MS = 10_000;
    private static readonly SONG_STOP_TIME_S = 5;
+   private static readonly NO_INTERACTION_ERROR_MESSAGE =
+      "play() failed because the user didn't interact with the document first.";
 
    private readonly storageService = inject(StorageService);
 
    private readonly audioPlayer = this.initAudioPlayer();
    private readonly _currentSong = signal<Song | null>(null);
-   private readonly _hasError = signal(false);
+   private readonly _errorMessage = signal<string | null>(null);
 
    private readonly _playNextSong$ = new Subject<Song | null>();
    private songPlayRetryTimeout?: any;
    private songStopTimeout?: any;
+   private songRetryTimeMs = 500;
 
    public playSong(song: Song): void {
       if (this.songPlayRetryTimeout) {
@@ -31,12 +34,13 @@ export class MusicService {
       this.audioPlayer
          .play()
          .then(() => {
-            this._hasError.set(false);
+            this._errorMessage.set(null);
             this._currentSong.set(song);
          })
-         .catch(() => {
-            this._hasError.set(true);
-            this.songPlayRetryTimeout = setTimeout(() => this.playSong(song), MusicService.SONG_PLAY_RETRY_TIME_MS);
+         .catch((error: Error) => {
+            this._errorMessage.set(this.getErrorMessage(error));
+            this.songPlayRetryTimeout = setTimeout(() => this.playSong(song), this.songRetryTimeMs);
+            this.songRetryTimeMs = Math.min(this.songRetryTimeMs * 2, MusicService.MAX_SONG_RETRY_TIME_MS);
          });
    }
 
@@ -77,8 +81,8 @@ export class MusicService {
       return this._currentSong.asReadonly();
    }
 
-   public get hasError(): Signal<boolean> {
-      return this._hasError.asReadonly();
+   public get errorMessage(): Signal<string | null> {
+      return this._errorMessage.asReadonly();
    }
 
    public get volume(): number {
@@ -116,5 +120,11 @@ export class MusicService {
          ...this.storageService.read(StorageID.MUSIC),
          ...updateObject
       });
+   }
+
+   private getErrorMessage(error: Error): string {
+      return error.message === MusicService.NO_INTERACTION_ERROR_MESSAGE
+         ? 'Interact with the app to start playing music!'
+         : "Can't load music";
    }
 }
