@@ -37,6 +37,7 @@ export class UpdateService {
          }
       });
 
+      this.checkingSubscriptions.push(fromEvent(globalThis, 'online').subscribe(() => this.checkForUpdate()));
       this.checkingSubscriptions.push(
          fromEvent(globalThis, 'offline').subscribe(() => this.state.set(SwUpdateState.OFFLINE))
       );
@@ -52,6 +53,11 @@ export class UpdateService {
 
    public get updateState(): Signal<SwUpdateState> {
       return this.state.asReadonly();
+   }
+
+   private checkForUpdate(): void {
+      this.state.set(SwUpdateState.CHECKING);
+      this.swUpdate.checkForUpdate();
    }
 
    private onCheckSucceeded(): void {
