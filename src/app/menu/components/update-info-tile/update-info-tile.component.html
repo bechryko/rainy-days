@@ -7,5 +7,7 @@
    <mat-icon>check</mat-icon>
 } @else if (flags().isError) {
    <mat-icon>close</mat-icon>
+} @else if (flags().isOffline) {
+   <mat-icon>wifi_off</mat-icon>
 }
 <p>{{ message() }}</p>
