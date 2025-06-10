@@ -9,6 +9,7 @@ interface UpdateStateFlags {
    isSuccessful: boolean;
    isError: boolean;
    isClickable: boolean;
+   isOffline: boolean;
 }
 
 @Component({
@@ -38,6 +39,8 @@ export class UpdateInfoTileComponent {
             return 'Updates downloaded!';
          case SwUpdateState.LATEST_VERSION:
             return 'No updates found.';
+         case SwUpdateState.OFFLINE:
+            return 'The game is offline!';
       }
    });
 
@@ -54,7 +57,8 @@ export class UpdateInfoTileComponent {
          isLoading: state === SwUpdateState.CHECKING || state === SwUpdateState.DOWNLOADING,
          isSuccessful: state === SwUpdateState.LATEST_VERSION || state === SwUpdateState.UPDATE_DOWNLOAD_SUCCESSFUL,
          isError: state === SwUpdateState.UPDATE_DOWNLOAD_FAILED,
-         isClickable: state === SwUpdateState.UPDATE_DOWNLOAD_SUCCESSFUL
+         isClickable: state === SwUpdateState.UPDATE_DOWNLOAD_SUCCESSFUL,
+         isOffline: state === SwUpdateState.OFFLINE
       };
    }
 }
