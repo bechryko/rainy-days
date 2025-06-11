@@ -13,13 +13,14 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { CustomTooltipDirective } from '@rainy-days/shared/directives';
 import { MusicHandler } from '@rainy-days/shared/models';
 import { MusicService, StorageID, StorageService } from '@rainy-days/shared/services';
 import { BehaviorSubject, combineLatest, map, Subject, throttleTime } from 'rxjs';
 
 @Component({
    selector: 'rd-music-controller',
-   imports: [MatIconModule, MatButtonModule, OverlayModule],
+   imports: [MatIconModule, MatButtonModule, OverlayModule, CustomTooltipDirective],
    templateUrl: './music-controller.component.html',
    styleUrl: './music-controller.component.scss',
    changeDetection: ChangeDetectionStrategy.OnPush
@@ -39,6 +40,7 @@ export class MusicControllerComponent implements OnInit, OnDestroy {
       }
       return this.musicService.currentSong()?.title ?? 'Unmute to start playing!';
    });
+   public readonly showInfo = input(false);
    public muted = this.musicService.muted;
    private readonly volumeChange$ = new Subject<number>();
 

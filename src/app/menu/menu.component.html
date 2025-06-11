@@ -70,7 +70,9 @@
          </form>
       </div>
    }
-   <rd-music-controller [handler]="musicHandler"></rd-music-controller>
+   <rd-music-controller
+      [handler]="musicHandler"
+      [showInfo]="true"></rd-music-controller>
 </div>
 <rd-news></rd-news>
 <span class="version">Rainy Days &copy; 2021-{{ currentYear }} bechryko - Version {{ currentAppVersion }}</span>
