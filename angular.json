@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "RainyDays": {
+    "rainy-days": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -109,6 +109,14 @@
               "src/styles.scss"
             ],
             "scripts": []
+          }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "buildTarget": "rainy-days:build:production",
+            "dir": "dist/rainy-days/browser",
+            "baseHref": "/rainy-days/"
           }
         }
       }

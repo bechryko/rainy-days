@@ -16,6 +16,23 @@
       }
    </mat-icon>
 </button>
+@if (showInfo()) {
+   <mat-icon
+      rdCustomTooltip
+      tooltipPosition="above"
+      class="info-icon">
+      info
+      <span #rdTooltip>
+         The game songs were created by
+         <a
+            class="tooltip-link"
+            href="https://suno.com/"
+            target="_blank">
+            Suno AI
+         </a>
+      </span>
+   </mat-icon>
+}
 
 <ng-template
    cdkConnectedOverlay

@@ -28,7 +28,6 @@ export class VersionHistoryDialogComponent {
    public readonly versions: VersionData[] = [
       {
          version: '1.0',
-         isSnapshot: true,
          changes: [
             {
                description: 'Added spawnable buildings',
@@ -43,6 +42,12 @@ export class VersionHistoryDialogComponent {
             },
             {
                description: 'Added 5 game speeds'
+            },
+            {
+               description: 'Added menu and game music'
+            },
+            {
+               description: 'Created menu'
             }
          ]
       }
