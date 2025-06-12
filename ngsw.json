@@ -1,0 +1,107 @@
+{
+  "configVersion": 1,
+  "timestamp": 1749732641573,
+  "index": "/rainy-days/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/rainy-days/assets/favicon.ico",
+        "/rainy-days/chunk-DXRQAALT.js",
+        "/rainy-days/chunk-EMHYHDEK.js",
+        "/rainy-days/chunk-MXH2ASGT.js",
+        "/rainy-days/chunk-PCKVWH2M.js",
+        "/rainy-days/index.html",
+        "/rainy-days/main-2KWCLG7P.js",
+        "/rainy-days/manifest.webmanifest",
+        "/rainy-days/polyfills-FFHMD2TL.js",
+        "/rainy-days/styles-I5ZSVJYQ.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/rainy-days/assets/icons/icon-128x128.png",
+        "/rainy-days/assets/icons/icon-144x144.png",
+        "/rainy-days/assets/icons/icon-192x192.png",
+        "/rainy-days/assets/icons/icon-384x384.png",
+        "/rainy-days/assets/icons/icon-512x512.png",
+        "/rainy-days/assets/icons/icon-72x72.png",
+        "/rainy-days/assets/icons/icon-96x96.png",
+        "/rainy-days/assets/images/menu/rain-your-paint-background.png",
+        "/rainy-days/assets/images/menu/trophy.webp",
+        "/rainy-days/assets/music/game/droplets-embrace.mp3",
+        "/rainy-days/assets/music/game/meandering-tunnels.mp3",
+        "/rainy-days/assets/music/game/summer-shower.mp3",
+        "/rainy-days/assets/music/game/the-eye-of-the-storm.mp3",
+        "/rainy-days/assets/music/game/the-yield-of-a-warm-breeze.mp3",
+        "/rainy-days/assets/music/game/through-the-orange-rain.mp3",
+        "/rainy-days/assets/music/game/what-could-one-more-step-mean-rainy-days-version.mp3",
+        "/rainy-days/assets/music/menu/cloudy-nights.mp3",
+        "/rainy-days/assets/music/menu/rainy-days.mp3"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/rainy-days/assets/favicon.ico": "dd0d14e0a137c79b788fcc0991c5fc8823e35bf8",
+    "/rainy-days/assets/icons/icon-128x128.png": "b22c313634fd64f2c2faffa60b42f9daafc30e55",
+    "/rainy-days/assets/icons/icon-144x144.png": "e3f15cc756bbfd5bdca85827287332427b54724d",
+    "/rainy-days/assets/icons/icon-192x192.png": "9f098ef81f32bda128b7d5408a3d68d39e45c5db",
+    "/rainy-days/assets/icons/icon-384x384.png": "da2d6124d2779ac815e86091e10228e20dc27b6c",
+    "/rainy-days/assets/icons/icon-512x512.png": "f42c29106b63a8127d9065ec9b1ccdf6596f2476",
+    "/rainy-days/assets/icons/icon-72x72.png": "cac9613cfa3313b78aa547bc932a823af9fba067",
+    "/rainy-days/assets/icons/icon-96x96.png": "bf9cb2af0c196eb5702acedcbc386f68476b7600",
+    "/rainy-days/assets/images/menu/rain-your-paint-background.png": "4463a42961d359b9b84a2f0624a7cc188eb60c25",
+    "/rainy-days/assets/images/menu/trophy.webp": "37392cf87d5ec7e12087d5d3fd3a38ad6ba569e6",
+    "/rainy-days/assets/music/game/droplets-embrace.mp3": "56e5b34530bcf5939a6d2fd82f7baccfdca7f2ba",
+    "/rainy-days/assets/music/game/meandering-tunnels.mp3": "cefd6ea1fd885258607869527fefd33e9db90c4c",
+    "/rainy-days/assets/music/game/summer-shower.mp3": "7f42274c9fb1e76bfe9cf8c72f09dd18872ed079",
+    "/rainy-days/assets/music/game/the-eye-of-the-storm.mp3": "e0f33b22b72a03df57899b9d6d624a6774fd82fc",
+    "/rainy-days/assets/music/game/the-yield-of-a-warm-breeze.mp3": "962b81b72dd09c647aff932b9c09a0dc412dfb87",
+    "/rainy-days/assets/music/game/through-the-orange-rain.mp3": "44b8f3ceee3fb2e6d83f614a0db533a3139091df",
+    "/rainy-days/assets/music/game/what-could-one-more-step-mean-rainy-days-version.mp3": "7deab1835f93a9d5b8393e5b154d36983f9e3a61",
+    "/rainy-days/assets/music/menu/cloudy-nights.mp3": "06346ef23c90c7ed980165cc49d703ebe880d7cc",
+    "/rainy-days/assets/music/menu/rainy-days.mp3": "3be89bf2eea10b7e49b2ec9b843e7647883b5420",
+    "/rainy-days/chunk-DXRQAALT.js": "b77dd0546b837d772fe54e6badf0a538e7c00920",
+    "/rainy-days/chunk-EMHYHDEK.js": "5daefbfd3e84964c1621174875f37028f388cd55",
+    "/rainy-days/chunk-MXH2ASGT.js": "180d8ca595fd6e06a8488f40a31e35dcef12d7d9",
+    "/rainy-days/chunk-PCKVWH2M.js": "40d9606f410a249e7d4fb9ea2bf84333e3e59d05",
+    "/rainy-days/index.html": "26fd29472bcf24fff210db2121d30472ebbdfad3",
+    "/rainy-days/main-2KWCLG7P.js": "8dadb499429536df441cba0f1ed6473208da351e",
+    "/rainy-days/manifest.webmanifest": "2127eb9e1e17baa1a6773088b10ba3f1195c7c2a",
+    "/rainy-days/polyfills-FFHMD2TL.js": "f49b49a155bc7d192db62a4c15d0a612b460a667",
+    "/rainy-days/styles-I5ZSVJYQ.css": "28228e20ddc8ac1074e2602c8e5d77e40ebaab47"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
