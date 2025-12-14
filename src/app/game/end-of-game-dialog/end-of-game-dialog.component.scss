@@ -20,7 +20,7 @@
       align-items: center;
       padding: 1rem;
       background-color: var(--rd-dialog-background-color);
-      border-radius: var(--mdc-dialog-container-shape);
+      border-radius: var(--mat-dialog-container-shape);
    }
 }
 
@@ -99,7 +99,7 @@ hgroup {
       height: 3rem;
       background-color: var(--rd-accent);
       border: none;
-      border-radius: var(--mdc-filled-button-container-shape);
+      border-radius: var(--mat-button-filled-container-shape);
 
       @include mixins.ellipsis($width: 100%);
    }
