@@ -1,6 +1,5 @@
 import { ApplicationConfig, importProvidersFrom, isDevMode, provideZoneChangeDetection } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { routes } from './app.routes';
@@ -17,7 +16,6 @@ export const appConfig: ApplicationConfig = {
          })
       ),
       provideRouter(routes),
-      provideAnimations(),
       provideZoneChangeDetection()
    ]
 };

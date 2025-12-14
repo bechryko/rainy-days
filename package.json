@@ -3,13 +3,12 @@
   "version": "1.0.0",
   "scripts": {
     "start": "ng serve --open",
-    "prestart-pwa": "npm run build",
     "start-pwa": "npx http-server -p 8080 -c-1 dist/rainy-days/browser",
+    "prestart-pwa": "npm run build",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "format": "prettier \"src/**/*.ts\" --write",
-    "clean": "rm -rf node_modules .angular",
+    "clean": "rm -rf node_modules .angular dist",
     "deploy": "ng deploy"
   },
   "private": true,
