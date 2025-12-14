@@ -19,7 +19,6 @@
       "target": "ES2022",
       "module": "ES2022",
       "useDefineForClassFields": false,
-      "lib": ["ES2022", "dom"],
       "paths": {
          "@rainy-days/shared/*": ["./src/app/shared/*"],
          "@rainy-days/core/*": ["./src/app/game/core/*"],
