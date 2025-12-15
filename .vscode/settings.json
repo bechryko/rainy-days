@@ -26,5 +26,17 @@
       "editor.suggest.insertMode": "replace",
       "editor.defaultFormatter": "vscode.json-language-features"
    },
-   "cSpell.words": ["bechryko", "endindex", "cooldown", "cqmin", "offroad", "Seamonkey", "minimalize", "Suno"]
+   "cSpell.words": [
+      "bechryko",
+      "endindex",
+      "cooldown",
+      "cqmin",
+      "offroad",
+      "Seamonkey",
+      "minimalize",
+      "Suno",
+      "ghpages",
+      "Trag",
+      "ngsw"
+   ]
 }

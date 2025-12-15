@@ -1,8 +1,8 @@
 :root {
    --mat-checkbox-label-text-color: var(--rd-black);
-   --mdc-checkbox-unselected-icon-color: var(--rd-black);
-   --mdc-checkbox-unselected-hover-icon-color: var(--mdc-checkbox-unselected-icon-color);
-   --mdc-checkbox-unselected-hover-state-layer-opacity: 0.09;
+   --mat-checkbox-unselected-icon-color: var(--rd-black);
+   --mat-checkbox-unselected-hover-icon-color: var(--mat-checkbox-unselected-icon-color);
+   --mat-checkbox-unselected-hover-state-layer-opacity: 0.09;
 }
 
 mat-checkbox .mdc-checkbox__ripple {
@@ -10,6 +10,6 @@ mat-checkbox .mdc-checkbox__ripple {
 }
 
 mat-checkbox:has(label.mdc-label:hover) .mdc-checkbox__ripple {
-   opacity: var(--mdc-checkbox-unselected-hover-state-layer-opacity);
-   background-color: var(--mdc-checkbox-unselected-hover-state-layer-color);
+   opacity: var(--mat-checkbox-unselected-hover-state-layer-opacity);
+   background-color: var(--mat-checkbox-unselected-hover-state-layer-color);
 }
