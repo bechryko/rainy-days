@@ -6,6 +6,7 @@
    display: grid;
    grid-template-rows: auto 1fr;
    gap: 1rem;
+   max-height: 75dvh;
 
    h4 {
       margin-bottom: 1rem;
@@ -16,6 +17,7 @@ main {
    display: grid;
    grid-template-columns: 2fr 3fr;
    gap: 1rem;
+   height: calc(75dvh - 4rem - 2.1rem - 1rem - 1rem);
 }
 
 .version-chooser,
@@ -62,6 +64,8 @@ main {
 }
 
 .version-data {
+   overflow-y: auto;
+
    h5 {
       color: var(--rd-primary-darker);
       font-size: 2rem;
@@ -69,10 +73,16 @@ main {
    }
 
    .version-name {
-      color: var(--rd-primary);
+      color: var(--rd-primary-darker);
       font-size: 1.75rem;
       font-weight: bold;
-      margin: 0;
+      margin-block: 0;
+   }
+
+   .release-date {
+      color: var(--rd-primary);
+      font-size: 1.25rem;
+      margin-block: 0.5rem;
    }
 
    .snapshot-warning {
@@ -84,7 +94,7 @@ main {
       padding-inline-start: 1.5rem;
 
       &.changes-list {
-         margin-top: 1.5rem;
+         margin-block: 1rem 0;
 
          @include mixins.scrollbar;
       }

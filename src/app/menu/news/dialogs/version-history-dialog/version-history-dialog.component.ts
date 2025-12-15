@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,6 +9,7 @@ interface VersionData {
    version: string;
    name?: string;
    isSnapshot?: boolean;
+   releaseDate: Date;
    changes: ChangeItem[];
    childVersions?: VersionData[];
 }
@@ -19,15 +21,16 @@ interface ChangeItem {
 
 @Component({
    selector: 'rd-version-history-dialog',
-   imports: [DialogCloseButtonComponent, MatTreeModule, MatButtonModule, MatIconModule],
    templateUrl: './version-history-dialog.component.html',
    styleUrl: './version-history-dialog.component.scss',
-   changeDetection: ChangeDetectionStrategy.OnPush
+   changeDetection: ChangeDetectionStrategy.OnPush,
+   imports: [DialogCloseButtonComponent, MatTreeModule, MatButtonModule, MatIconModule, DatePipe]
 })
 export class VersionHistoryDialogComponent {
    public readonly versions: VersionData[] = [
       {
          version: '1.0',
+         releaseDate: new Date(2025, 5, 12),
          changes: [
             {
                description: 'Added spawnable buildings',
