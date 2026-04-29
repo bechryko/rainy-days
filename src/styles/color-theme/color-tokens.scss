@@ -7,6 +7,7 @@
    --rd-primary: #{material-theme.primary(600)};
    --rd-primary-darker: #{material-theme.primary-darker(600)};
 
+   --rd-accent-lighter-alternative: #{material-theme.accent(100)};
    --rd-accent-lighter: #{color.mix(material-theme.accent(200), material-theme.accent(300))};
    --rd-accent: #{material-theme.accent(500)};
    --rd-accent-darker: #{material-theme.accent-darker(700)};

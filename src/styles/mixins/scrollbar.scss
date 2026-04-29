@@ -7,11 +7,11 @@
    @include utils.check-arg-value($always-visible, (true, false), always-visible);
 
    @if $color == primary {
-      --scrollbar-track-color: var(--rd-primary-lighter-alternative);
+      --scrollbar-track-color: var(--rd-primary-lighter);
       --scrollbar-thumb-color: var(--rd-primary);
    } @else {
-      --scrollbar-track-color: var(--rd-accent-lighter);
-      --scrollbar-thumb-color: var(--rd-accent);
+      --scrollbar-track-color: var(--rd-accent-lighter-alternative);
+      --scrollbar-thumb-color: var(--rd-accent-lighter);
    }
 
    #{get-overflow-property-name($orientation)}: get-overflow-property-value($always-visible);

@@ -1,9 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTreeModule } from '@angular/material/tree';
 import { DialogCloseButtonComponent } from '@rainy-days/shared/components';
+import { ReversePipe } from '@rainy-days/shared/pipes';
 
 interface VersionData {
    version: string;
@@ -24,7 +22,7 @@ interface ChangeItem {
    templateUrl: './version-history-dialog.component.html',
    styleUrl: './version-history-dialog.component.scss',
    changeDetection: ChangeDetectionStrategy.OnPush,
-   imports: [DialogCloseButtonComponent, MatTreeModule, MatButtonModule, MatIconModule, DatePipe]
+   imports: [DialogCloseButtonComponent, DatePipe, ReversePipe]
 })
 export class VersionHistoryDialogComponent {
    public readonly versions: VersionData[] = [
@@ -56,19 +54,5 @@ export class VersionHistoryDialogComponent {
       }
    ];
 
-   public readonly childrenAccessor = (node: VersionData) => node.childVersions ?? [];
-   public readonly hasChild = (_: number, node: VersionData) =>
-      Boolean(node.childVersions) && node.childVersions!.length > 0;
-
-   public displayedVersion?: VersionData;
-
-   public selectVersionToDisplay(version: string, root = this.versions): void {
-      this.versions.forEach(v => {
-         if (v.version === version) {
-            this.displayedVersion = v;
-         } else if (v.childVersions) {
-            this.selectVersionToDisplay(version, v.childVersions);
-         }
-      });
-   }
+   public selectedVersion = this.versions[this.versions.length - 1];
 }
