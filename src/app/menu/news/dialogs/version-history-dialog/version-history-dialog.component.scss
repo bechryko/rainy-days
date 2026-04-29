@@ -22,7 +22,7 @@ main {
 
 .version-chooser {
    font-size: 1.125rem;
-   background-color: var(--rd-accent-lighter-alternative);
+   background-color: var(--rd-accent-lightest);
    border-radius: 0.5rem;
    user-select: none;
    overflow: hidden;
@@ -51,7 +51,7 @@ main {
 }
 
 .version-data {
-   background-color: var(--rd-primary-lighter);
+   background-color: var(--rd-primary-lightest);
    padding: 1rem;
    border-radius: 0.5rem;
    overflow-y: auto;
