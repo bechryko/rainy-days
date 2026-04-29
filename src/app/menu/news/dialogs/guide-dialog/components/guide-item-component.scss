@@ -3,11 +3,11 @@
 $text-indent: 1rem;
 
 :host {
-   background-color: var(--rd-primary-lightest);
    max-width: 35rem;
-   align-self: stretch;
-   justify-self: center;
-   padding: 1.5rem;
+   background-color: var(--rd-primary-lightest);
+   padding: 1rem;
+   border-radius: 0.5rem;
+   overflow-y: auto;
 
    @include mixins.scrollbar($always-visible: true);
 }

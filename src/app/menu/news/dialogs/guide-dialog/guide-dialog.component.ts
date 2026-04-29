@@ -1,7 +1,6 @@
 import { ComponentType } from '@angular/cdk/portal';
 import { NgComponentOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, HostListener } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
 import { DialogCloseButtonComponent } from '@rainy-days/shared/components';
 import {
    GuideCarsComponent,
@@ -18,7 +17,7 @@ interface GuideItem {
 
 @Component({
    selector: 'rd-guide-dialog',
-   imports: [DialogCloseButtonComponent, MatButtonModule, NgComponentOutlet],
+   imports: [DialogCloseButtonComponent, NgComponentOutlet],
    templateUrl: './guide-dialog.component.html',
    styleUrl: './guide-dialog.component.scss',
    changeDetection: ChangeDetectionStrategy.OnPush

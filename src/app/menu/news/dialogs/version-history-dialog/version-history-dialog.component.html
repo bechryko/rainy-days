@@ -1,10 +1,10 @@
 <rd-dialog-close-button></rd-dialog-close-button>
 <h4>Version history</h4>
 <main>
-   <div class="version-chooser">
+   <div class="split-content-chooser">
       @for (mainVersion of versions | reverse; track $index) {
          <div
-            class="version-node"
+            class="split-content-chooser-node"
             [class.selected]="mainVersion === selectedVersion"
             (click)="selectedVersion = mainVersion">
             {{ mainVersion.version }}
@@ -14,7 +14,7 @@
          </div>
          @for (childVersion of mainVersion.childVersions ?? []; track $index) {
             <div
-               class="version-node child-version"
+               class="split-content-chooser-node split-content-chooser-child-node"
                [class.selected]="childVersion === selectedVersion"
                (click)="selectedVersion = childVersion">
                {{ childVersion.version }}
@@ -25,7 +25,7 @@
          }
       }
    </div>
-   <div class="version-data">
+   <div class="split-content-data version-data">
       <h5>{{ selectedVersion.version }}</h5>
       @if (selectedVersion.name) {
          <p class="version-name">{{ selectedVersion.name }}</p>

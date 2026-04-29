@@ -1,15 +1,14 @@
 <rd-dialog-close-button></rd-dialog-close-button>
 <h4>Guide</h4>
 <main>
-   <div class="guide-item-selector">
+   <div class="split-content-chooser">
       @for (item of items; track $index) {
-         <button
-            mat-flat-button
-            color="accent"
+         <div
+            class="split-content-chooser-node"
             [class.selected]="selectedItem === item"
             (click)="selectItem(item)">
             {{ item.title }}
-         </button>
+         </div>
       }
    </div>
    <ng-container [ngComponentOutlet]="selectedItem.component"></ng-container>

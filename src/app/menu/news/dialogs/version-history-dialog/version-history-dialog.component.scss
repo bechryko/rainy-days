@@ -14,50 +14,12 @@
 }
 
 main {
-   display: grid;
-   grid-template-columns: 1fr 2fr;
-   gap: 1rem;
    height: calc(75dvh - 4rem - 2.1rem - 1rem - 1rem);
-}
 
-.version-chooser {
-   font-size: 1.125rem;
-   background-color: var(--rd-accent-lightest);
-   border-radius: 0.5rem;
-   user-select: none;
-   overflow: hidden;
-
-   @include mixins.scrollbar($color: accent);
-
-   .version-node {
-      position: relative;
-      color: var(--rd-accent-darker);
-      font-weight: 550;
-      padding: 0.75em;
-      transition: background-color 300ms ease;
-
-      &.selected {
-         background-color: var(--rd-accent-lighter);
-      }
-
-      &:not(.selected) {
-         cursor: pointer;
-      }
-
-      &.child-version {
-         padding-left: 2em;
-      }
-   }
+   @include mixins.split-content-dialog;
 }
 
 .version-data {
-   background-color: var(--rd-primary-lightest);
-   padding: 1rem;
-   border-radius: 0.5rem;
-   overflow-y: auto;
-
-   @include mixins.scrollbar;
-
    h5 {
       color: var(--rd-primary-darker);
       font-size: 2rem;
