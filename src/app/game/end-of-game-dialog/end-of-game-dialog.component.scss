@@ -97,7 +97,6 @@ hgroup {
       color: var(--rd-white);
       font-size: 1.25rem;
       height: 3rem;
-      background-color: var(--rd-accent);
       border: none;
       border-radius: var(--mat-button-filled-container-shape);
 
@@ -105,12 +104,14 @@ hgroup {
    }
 
    button {
+      background-color: var(--rd-accent);
       cursor: pointer;
    }
 
    div {
       text-align: center;
       line-height: 2rem;
+      background-color: var(--rd-primary);
       padding: 0.5rem;
       box-sizing: border-box;
    }
