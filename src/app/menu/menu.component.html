@@ -74,5 +74,5 @@
       [handler]="musicHandler"
       [showInfo]="true"></rd-music-controller>
 </div>
-<rd-news></rd-news>
+<rd-news [isInstalled]="isPWAInstalled()"></rd-news>
 <span class="version">Rainy Days &copy; 2021-{{ currentYear }} bechryko - Version {{ currentAppVersion }}</span>

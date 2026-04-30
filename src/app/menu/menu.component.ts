@@ -54,6 +54,7 @@ export class MenuComponent implements OnInit {
    public readonly personalBest = this.storageService.read(StorageID.PERSONAL_BEST);
    public readonly personalBestSince = since(this.personalBest.timestamp);
    public readonly serviceWorkersEnabled = this.updateService.areServiceWorkersEnabled();
+   public readonly isPWAInstalled = this.platformService.isPWAInstalled;
    public readonly currentAppVersion = VersionUtils.printAppVersion();
    public readonly currentYear = new Date().getFullYear();
    public readonly musicHandler = new MenuMusicHandler();
