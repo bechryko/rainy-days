@@ -1,6 +1,7 @@
 import { Platform } from '@angular/cdk/platform';
-import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { inject, Injectable, Signal } from '@angular/core';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { BehaviorSubject, fromEvent, map, Observable } from 'rxjs';
 import { supportedBrowsers } from '../constants';
 import { BrowserType } from '../enums';
 import { VersionUtils } from '../utils';
@@ -27,11 +28,21 @@ export class PlatformService {
    private readonly platform = inject(Platform);
 
    private readonly _isLoaded$ = new BehaviorSubject(false);
+   public readonly isPWAInstalled: Signal<boolean>;
 
    private isBrave = false;
 
    constructor() {
       this.checkIfBrave().finally(() => this._isLoaded$.next(true));
+
+      const installedMediaQueryFactory = () => window.matchMedia('(display-mode: standalone)');
+      this.isPWAInstalled = toSignal(
+         fromEvent(installedMediaQueryFactory(), 'change').pipe(
+            takeUntilDestroyed(),
+            map(() => installedMediaQueryFactory().matches)
+         ),
+         { initialValue: installedMediaQueryFactory().matches }
+      );
    }
 
    public isBrowserVersionSupported(): boolean {
