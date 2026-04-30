@@ -1,1 +1,10 @@
-export const appVersion = '1.0.0';
+interface RainyDaysAppVersion {
+   versionNumber: string;
+   snapshotNumber?: number;
+   isWorkInProgress?: boolean;
+}
+
+export const appVersion: RainyDaysAppVersion = {
+   versionNumber: '1.0.1',
+   isWorkInProgress: true
+};

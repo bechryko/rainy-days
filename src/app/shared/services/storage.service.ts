@@ -49,7 +49,7 @@ export class StorageService {
             parsedValue = item === null ? 1 : Number(item);
             break;
          case StorageID.LAST_USED_GAME_VERSION:
-            parsedValue = item === null ? appVersion : item;
+            parsedValue = item === null ? appVersion.versionNumber : item;
             break;
          case StorageID.MUSIC:
             const obj2 = this.parseToObject(item);

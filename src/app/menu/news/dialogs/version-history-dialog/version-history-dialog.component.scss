@@ -6,6 +6,7 @@
    display: grid;
    grid-template-rows: auto 1fr;
    gap: 1rem;
+   max-height: 75dvh;
 
    h4 {
       margin-bottom: 1rem;
@@ -13,52 +14,9 @@
 }
 
 main {
-   display: grid;
-   grid-template-columns: 2fr 3fr;
-   gap: 1rem;
-}
+   height: calc(75dvh - 4rem - 2.1rem - 1rem - 1rem);
 
-.version-chooser,
-.version-data {
-   background-color: var(--rd-primary-lighter);
-   border-radius: 0.5rem;
-   padding: 1rem;
-}
-
-.version-chooser {
-   user-select: none;
-
-   .version-node {
-      position: relative;
-      color: var(--rd-primary-darker);
-      font-weight: bold;
-      min-height: 0;
-      height: 2rem;
-      border: 2px solid var(--rd-accent-lighter);
-      border-radius: 0.5rem;
-      outline: none;
-
-      &:not(.selected) {
-         cursor: pointer;
-      }
-
-      &::after {
-         content: '';
-         position: absolute;
-         inset: 0;
-         box-shadow: inset 0 0 0.5rem var(--rd-accent);
-         opacity: 0;
-         transition: opacity 300ms ease;
-      }
-
-      &.selected::after {
-         opacity: 1;
-      }
-
-      &.leaf {
-         padding-left: 3rem !important;
-      }
-   }
+   @include mixins.split-content-dialog;
 }
 
 .version-data {
@@ -69,13 +27,19 @@ main {
    }
 
    .version-name {
-      color: var(--rd-primary);
+      color: var(--rd-primary-darker);
       font-size: 1.75rem;
       font-weight: bold;
-      margin: 0;
+      margin-block: 0;
    }
 
-   .snapshot-warning {
+   .release-date {
+      color: var(--rd-primary);
+      font-size: 1.25rem;
+      margin-block: 0.5rem;
+   }
+
+   .wip-warning {
       color: var(--rd-warn);
       font-style: italic;
    }
@@ -84,9 +48,7 @@ main {
       padding-inline-start: 1.5rem;
 
       &.changes-list {
-         margin-top: 1.5rem;
-
-         @include mixins.scrollbar;
+         margin-block: 1rem 0;
       }
 
       li {
