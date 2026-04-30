@@ -11,6 +11,14 @@
    gap: 0.5rem;
 }
 
+:host(.pwa-installed) {
+   grid-template-areas:
+      'guide guide tips'
+      'guide guide controls'
+      'versions versions versions'
+      'feedback roadmap roadmap';
+}
+
 rd-news-tile {
    &.guide {
       grid-area: guide;
