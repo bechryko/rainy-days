@@ -1,14 +1,17 @@
-import { supportedBrowsers } from '../constants';
-import { BrowserType } from '../enums';
+import { appVersion } from '../../app-version';
 
 export class VersionUtils {
-   public static isSupported(browser: BrowserType, version: string | null): boolean {
-      if (!version || !(browser in supportedBrowsers)) {
-         return false;
+   public static printAppVersion(): string {
+      let version = appVersion.versionNumber;
+
+      if (appVersion.snapshotNumber !== undefined) {
+         version += ` snapshot ${appVersion.snapshotNumber}`;
+      }
+      if (appVersion.isWorkInProgress) {
+         version += ' work-in-progress';
       }
 
-      const supportedVersion = supportedBrowsers[browser as keyof typeof supportedBrowsers];
-      return this.compare(supportedVersion, version) !== 1;
+      return version;
    }
 
    public static compare(v1: string, v2: string): number {
@@ -47,7 +50,7 @@ export class VersionUtils {
       return version;
    }
 
-   public static minimalize(version: string): string {
+   private static minimalize(version: string): string {
       const vs = version.split('.');
 
       for (let i = vs.length - 1; i >= 0; i--) {

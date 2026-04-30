@@ -24,6 +24,6 @@ export class AppComponent implements AfterViewInit {
    }
 
    public ngAfterViewInit(): void {
-      this.storageService.save(StorageID.LAST_USED_GAME_VERSION, appVersion);
+      this.storageService.save(StorageID.LAST_USED_GAME_VERSION, appVersion.versionNumber);
    }
 }

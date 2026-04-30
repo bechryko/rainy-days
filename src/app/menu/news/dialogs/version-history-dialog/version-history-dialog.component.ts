@@ -2,11 +2,12 @@ import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { DialogCloseButtonComponent } from '@rainy-days/shared/components';
 import { ReversePipe } from '@rainy-days/shared/pipes';
+import { appVersion } from '../../../../app-version';
 
 interface VersionData {
    version: string;
    name?: string;
-   isSnapshot?: boolean;
+   isWIP?: boolean;
    releaseDate: Date;
    changes: ChangeItem[];
    childVersions?: VersionData[];
@@ -98,7 +99,7 @@ export class VersionHistoryDialogComponent {
             {
                version: '1.0.1',
                releaseDate: new Date(),
-               isSnapshot: true,
+               isWIP: true,
                changes: [
                   {
                      description: 'Made menu dialog styles more consistent'
@@ -112,5 +113,20 @@ export class VersionHistoryDialogComponent {
       }
    ];
 
-   public selectedVersion = this.versions[this.versions.length - 1];
+   public selectedVersion = this.getInitialSelectedVersion();
+
+   private getInitialSelectedVersion(): VersionData {
+      const currentVersion = this.versions
+         .flatMap(v => [v, ...(v.childVersions ?? [])])
+         .find(v => v.version === appVersion.versionNumber);
+      if (currentVersion) {
+         return currentVersion;
+      }
+
+      const latestMainVersion = this.versions[this.versions.length - 1];
+      if (latestMainVersion.childVersions) {
+         return latestMainVersion.childVersions[latestMainVersion.childVersions.length - 1];
+      }
+      return latestMainVersion;
+   }
 }

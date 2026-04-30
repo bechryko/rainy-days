@@ -35,7 +35,15 @@ export class PlatformService {
    }
 
    public isBrowserVersionSupported(): boolean {
-      return VersionUtils.isSupported(this.getBrowserType(), this.getBrowserVersion());
+      const browser = this.getBrowserType();
+      const version = this.getBrowserVersion();
+
+      if (!version || !(browser in supportedBrowsers)) {
+         return false;
+      }
+
+      const supportedVersion = supportedBrowsers[browser as keyof typeof supportedBrowsers];
+      return VersionUtils.compare(supportedVersion, version) !== 1;
    }
 
    public getBrowserType(): BrowserType {

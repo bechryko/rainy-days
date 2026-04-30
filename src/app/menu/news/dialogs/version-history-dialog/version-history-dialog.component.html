@@ -31,9 +31,10 @@
          <p class="version-name">{{ selectedVersion.name }}</p>
       }
       <p class="release-date">{{ selectedVersion.releaseDate | date }}</p>
-      @if (selectedVersion.isSnapshot) {
-         <p class="snapshot-warning">
-            This is just a snapshot version! The final changes can differ from the ones below!
+      @if (selectedVersion.isWIP) {
+         <p class="wip-warning">
+            <strong>This version is still under development!</strong>
+            The final changes can differ from the ones below!
          </p>
       }
       <ul class="changes-list">
