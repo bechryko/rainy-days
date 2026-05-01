@@ -15,6 +15,9 @@ export class Destination extends Building {
    private static readonly HEALING_PER_CAR = 5;
    private static readonly CRITICAL_HEALTH = 15;
 
+   private static readonly DRAWN_SIZE_UNIT = 0.9;
+   private static readonly DRAWN_CONTENT_SIZE_RATIO = 0.9;
+
    private static CURRENT_HEALTH = Destination.STARTING_HEALTH;
 
    public static anyWithZeroHealth(): boolean {
@@ -73,14 +76,20 @@ export class Destination extends Building {
          drawer.circle(
             drawX,
             drawY,
-            ConstantUtils.unit(),
+            ConstantUtils.unit(Destination.DRAWN_SIZE_UNIT),
             drawer.createRadialGradient(drawX, drawY, ConstantUtils.unit(0.75), [0.5, this.color], [1, transparent()])
          );
       }
 
-      drawer.circle(drawX, drawY, ConstantUtils.unit(0.5), ColorUtils.getTokenValue(SystemColorToken.BUILDING_OUTLINE));
-      drawer.circle(drawX, drawY, ConstantUtils.unit(0.45), this.color);
-      drawer.text(Math.ceil(this.health) + 's', drawX, drawY, ConstantUtils.unit(0.45));
+      drawer.circle(
+         drawX,
+         drawY,
+         ConstantUtils.unit(Destination.DRAWN_SIZE_UNIT / 2),
+         ColorUtils.getTokenValue(SystemColorToken.BUILDING_OUTLINE)
+      );
+      const contentRadiusUnit = (Destination.DRAWN_SIZE_UNIT / 2) * Destination.DRAWN_CONTENT_SIZE_RATIO;
+      drawer.circle(drawX, drawY, ConstantUtils.unit(contentRadiusUnit), this.color);
+      drawer.text(Math.ceil(this.health) + 's', drawX, drawY, ConstantUtils.unit(contentRadiusUnit));
    }
 
    public get displayCarsReached$(): Observable<number> {
