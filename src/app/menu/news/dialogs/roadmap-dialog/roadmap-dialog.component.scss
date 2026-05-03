@@ -75,6 +75,10 @@ main {
    }
 }
 
+.greenhorn-qol {
+   background-color: #078e00;
+}
+
 .rain-your-paint {
    background-image: url('src/assets/images/menu/rain-your-paint-background.png');
    background-position: center;
@@ -82,7 +86,7 @@ main {
    background-size: cover;
 
    .version-container {
-      backdrop-filter: blur(0.75rem);
+      backdrop-filter: blur(1rem);
    }
 }
 
@@ -95,8 +99,4 @@ main {
    .version-container {
       backdrop-filter: blur(1.25rem);
    }
-}
-
-.upgrade-update {
-   background-color: #797979;
 }
