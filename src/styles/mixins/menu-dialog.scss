@@ -1,4 +1,5 @@
 @use 'utils';
+@use './phone-width' as *;
 
 @mixin menu-dialog($fix-width: false, $main-heading-level: 4) {
    @include utils.check-arg-value($fix-width, (true, false), fix-width);
@@ -14,6 +15,11 @@
       }
       box-sizing: border-box;
       background-color: var(--rd-dialog-background-color);
+
+      @include phone-width {
+         padding: 1rem;
+         max-width: 100dvw;
+      }
 
       h#{$main-heading-level} {
          color: var(--rd-primary-darker);

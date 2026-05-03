@@ -6,6 +6,10 @@
    min-width: unset;
    width: 40dvw;
    min-height: unset;
+
+   @include mixins.phone-width {
+      width: unset;
+   }
 }
 
 p {

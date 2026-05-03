@@ -24,6 +24,10 @@
       'music-controller'
       'version';
    width: 100dvw;
+
+   & > rd-news {
+      justify-self: center;
+   }
 }
 
 h1 {
