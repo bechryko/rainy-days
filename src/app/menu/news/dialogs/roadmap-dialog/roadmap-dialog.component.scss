@@ -10,11 +10,9 @@
 
 main {
    $displayed-versions-count: 3;
-   $border: 1px solid var(--rd-primary-darker);
 
    display: grid;
    grid-template-columns: repeat($displayed-versions-count, 1fr);
-   border: $border;
 
    @include mixins.phone-width {
       grid-template-columns: unset;
@@ -37,10 +35,6 @@ main {
          grid-template-rows: unset;
          height: 100%;
          box-sizing: border-box;
-      }
-
-      &:not(:nth-of-type(#{$displayed-versions-count})) {
-         border-right: $border;
       }
 
       * {
@@ -73,6 +67,18 @@ main {
          font-weight: 500;
       }
    }
+
+   .more-planned {
+      font-style: italic;
+      font-weight: bold;
+      color: var(--rd-primary-darker);
+      grid-column: 1 / -1;
+      justify-self: center;
+   }
+}
+
+.greenhorn-qol {
+   background-color: #078e00;
 }
 
 .rain-your-paint {
@@ -82,7 +88,7 @@ main {
    background-size: cover;
 
    .version-container {
-      backdrop-filter: blur(0.75rem);
+      backdrop-filter: blur(1rem);
    }
 }
 
@@ -95,8 +101,4 @@ main {
    .version-container {
       backdrop-filter: blur(1.25rem);
    }
-}
-
-.upgrade-update {
-   background-color: #797979;
 }
