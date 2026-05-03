@@ -1,9 +1,13 @@
+@use 'mixins';
+
 $padding: 1.5rem;
 
 :host {
+   --description-row-height: 3.5rem;
+
    position: relative;
    display: grid;
-   grid-template-rows: auto 3.5rem 1fr;
+   grid-template-rows: auto var(--description-row-height) 1fr;
    grid-template-areas:
       'title'
       'description'
@@ -16,6 +20,10 @@ $padding: 1.5rem;
    padding: $padding;
    user-select: none;
    transition: all 500ms ease;
+
+   @include mixins.tablet-height {
+      --description-row-height: 2.375rem;
+   }
 
    &.no-description {
       grid-template-rows: auto 1fr;
@@ -65,6 +73,10 @@ h3 {
    font-size: 1.75rem;
    margin: 0;
    text-wrap: balance;
+
+   @include mixins.tablet-height {
+      font-size: 1.25rem;
+   }
 }
 
 .description {
@@ -73,6 +85,10 @@ h3 {
    display: block;
    font-size: 1.25rem;
    margin: 0;
+
+   @include mixins.tablet-height {
+      font-size: 1rem;
+   }
 
    @supports (interpolate-size: allow-keywords) {
       height: 0;

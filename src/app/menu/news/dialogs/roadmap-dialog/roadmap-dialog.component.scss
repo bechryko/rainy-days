@@ -16,6 +16,11 @@ main {
    grid-template-columns: repeat($displayed-versions-count, 1fr);
    border: $border;
 
+   @include mixins.phone-width {
+      grid-template-columns: unset;
+      grid-template-rows: repeat($displayed-versions-count, 1fr);
+   }
+
    .version-container {
       display: grid;
       grid-template-rows: 3rem 2.5rem 6rem 12rem;
@@ -27,6 +32,12 @@ main {
       align-items: center;
       padding: 1.5rem;
       background-color: transparent;
+
+      @include mixins.phone-width {
+         grid-template-rows: unset;
+         height: 100%;
+         box-sizing: border-box;
+      }
 
       &:not(:nth-of-type(#{$displayed-versions-count})) {
          border-right: $border;

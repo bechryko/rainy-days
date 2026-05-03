@@ -1,0 +1,5 @@
+@mixin phone-width {
+   @media (width <= 500px) {
+      @content;
+   }
+}

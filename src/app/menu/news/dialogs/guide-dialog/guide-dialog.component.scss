@@ -11,6 +11,10 @@
    height: 75dvh;
    max-height: 45rem;
    overflow: hidden;
+
+   @include mixins.phone-width {
+      width: 100dvw;
+   }
 }
 
 main {

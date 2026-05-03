@@ -22,7 +22,8 @@
       "paths": {
          "@rainy-days/shared/*": ["./src/app/shared/*"],
          "@rainy-days/core/*": ["./src/app/game/core/*"],
-         "@rainy-days/routes": ["./src/app/app.routes.ts"]
+         "@rainy-days/routes": ["./src/app/app.routes.ts"],
+         "@rainy-days/guards/*": ["./src/app/*/guards"]
       }
    },
    "angularCompilerOptions": {
