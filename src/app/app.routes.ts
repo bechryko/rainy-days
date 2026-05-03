@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { mobileGuard } from '@rainy-days/guards/game';
 
 export enum Route {
    MENU = 'menu',
@@ -12,7 +13,8 @@ export const routes: Routes = [
    },
    {
       path: Route.GAME,
-      loadComponent: () => import('./game/game.component').then(c => c.GameComponent)
+      loadComponent: () => import('./game/game.component').then(c => c.GameComponent),
+      canActivate: [mobileGuard]
    },
    {
       path: '**',
