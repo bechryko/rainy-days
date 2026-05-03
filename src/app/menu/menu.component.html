@@ -7,72 +7,80 @@
 @if (browser()) {
    <rd-browser-support-notice-tile [browser]="browser()!"></rd-browser-support-notice-tile>
 }
-<div class="control-panel">
-   @if (buttonGroup === ControlPanelGroup.MAIN_MENU) {
-      <div class="menu-buttons control-panel-inputs-container">
-         @if (personalBest.score !== 0) {
-            <p
-               class="personal-best"
-               [matTooltip]="personalBestSince()"
-               [matTooltipDisabled]="!personalBestSince()"
-               matTooltipPosition="right">
-               Personal best: {{ personalBest.score }}
-            </p>
-         }
-         <button
-            mat-flat-button
-            color="accent"
-            (click)="startQuickGame()">
-            Play
-         </button>
-         <button
-            mat-flat-button
-            color="accent"
-            (click)="switchButtonGroup(ControlPanelGroup.SETUP_GAME)">
-            Setup game
-         </button>
-      </div>
-   }
-   @if (buttonGroup === ControlPanelGroup.SETUP_GAME) {
-      <div>
-         <h2 class="title">Setup game</h2>
-         <form
-            class="game-setup-panel control-panel-inputs-container"
-            autocomplete="off"
-            [formGroup]="setupGameForm"
-            (ngSubmit)="startCustomGame()">
-            <mat-form-field color="accent">
-               <mat-label>Game seed</mat-label>
-               <input
-                  matInput
-                  placeholder="Enter your favorite seed!"
-                  type="text"
-                  formControlName="seed" />
-               <mat-icon
-                  matSuffix
-                  color="accent">
-                  terminal
-               </mat-icon>
-            </mat-form-field>
+@if (!isMobile) {
+   <div class="control-panel">
+      @if (buttonGroup === ControlPanelGroup.MAIN_MENU) {
+         <div class="menu-buttons control-panel-inputs-container">
+            @if (personalBest.score !== 0) {
+               <p
+                  class="personal-best"
+                  [matTooltip]="personalBestSince()"
+                  [matTooltipDisabled]="!personalBestSince()"
+                  matTooltipPosition="right">
+                  Personal best: {{ personalBest.score }}
+               </p>
+            }
             <button
                mat-flat-button
                color="accent"
-               type="submit">
-               Start
+               (click)="startQuickGame()">
+               Play
             </button>
             <button
                mat-flat-button
                color="accent"
-               type="reset"
-               (click)="switchButtonGroup(ControlPanelGroup.MAIN_MENU)">
-               Back
+               (click)="switchButtonGroup(ControlPanelGroup.SETUP_GAME)">
+               Setup game
             </button>
-         </form>
-      </div>
-   }
+         </div>
+      }
+      @if (buttonGroup === ControlPanelGroup.SETUP_GAME) {
+         <div>
+            <h2 class="title">Setup game</h2>
+            <form
+               class="game-setup-panel control-panel-inputs-container"
+               autocomplete="off"
+               [formGroup]="setupGameForm"
+               (ngSubmit)="startCustomGame()">
+               <mat-form-field color="accent">
+                  <mat-label>Game seed</mat-label>
+                  <input
+                     matInput
+                     placeholder="Enter your favorite seed!"
+                     type="text"
+                     formControlName="seed" />
+                  <mat-icon
+                     matSuffix
+                     color="accent">
+                     terminal
+                  </mat-icon>
+               </mat-form-field>
+               <button
+                  mat-flat-button
+                  color="accent"
+                  type="submit">
+                  Start
+               </button>
+               <button
+                  mat-flat-button
+                  color="accent"
+                  type="reset"
+                  (click)="switchButtonGroup(ControlPanelGroup.MAIN_MENU)">
+                  Back
+               </button>
+            </form>
+         </div>
+      }
+   </div>
+} @else {
    <rd-music-controller
+      class="mobile"
       [handler]="musicHandler"
       [showInfo]="true"></rd-music-controller>
-</div>
+}
 <rd-news [isInstalled]="isPWAInstalled()"></rd-news>
-<span class="version">Rainy Days &copy; 2021-{{ currentYear }} bechryko - Version {{ currentAppVersion }}</span>
+<span
+   class="version"
+   [class.mobile]="isMobile">
+   Rainy Days &copy; 2021-{{ currentYear }} bechryko - Version {{ currentAppVersion }}
+</span>

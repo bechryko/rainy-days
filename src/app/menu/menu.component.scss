@@ -15,6 +15,17 @@
    }
 }
 
+:host(.mobile-menu) {
+   grid-template-columns: 1fr;
+   grid-template-rows: unset;
+   grid-template-areas:
+      'title'
+      'news'
+      'music-controller'
+      'version';
+   width: 100dvw;
+}
+
 h1 {
    --shadow-offset: 0.5rem;
 
@@ -143,6 +154,13 @@ rd-news {
    justify-self: end;
 }
 
+rd-music-controller.mobile {
+   grid-area: music-controller;
+   height: 3rem;
+   margin-inline: 1.5rem;
+   margin-bottom: 1rem;
+}
+
 .version {
    position: absolute;
    color: var(--rd-primary-darker);
@@ -153,5 +171,11 @@ rd-news {
    @include mixins.tablet-height {
       font-size: 0.875rem;
       bottom: 0.25rem;
+   }
+
+   &.mobile {
+      position: static;
+      grid-area: version;
+      padding-inline: 0.5rem;
    }
 }

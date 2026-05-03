@@ -37,7 +37,10 @@ import { NewsComponent } from './news/news.component';
       MusicControllerComponent,
       BrowserSupportNoticeTileComponent
    ],
-   changeDetection: ChangeDetectionStrategy.OnPush
+   changeDetection: ChangeDetectionStrategy.OnPush,
+   host: {
+      '[class.mobile-menu]': 'isMobile'
+   }
 })
 export class MenuComponent implements OnInit {
    private readonly router = inject(Router);
@@ -54,6 +57,7 @@ export class MenuComponent implements OnInit {
    public readonly personalBest = this.storageService.read(StorageID.PERSONAL_BEST);
    public readonly personalBestSince = since(this.personalBest.timestamp);
    public readonly serviceWorkersEnabled = this.updateService.areServiceWorkersEnabled();
+   public readonly isMobile = this.platformService.isMobile();
    public readonly isPWAInstalled = this.platformService.isPWAInstalled;
    public readonly currentAppVersion = VersionUtils.printAppVersion();
    public readonly currentYear = new Date().getFullYear();
@@ -89,7 +93,7 @@ export class MenuComponent implements OnInit {
    }
 
    public ngOnInit(): void {
-      if (this.platformService.isMobile()) {
+      if (this.isMobile) {
          this.dialog.open(MobileNoticeDialogComponent, { disableClose: true });
       }
    }
