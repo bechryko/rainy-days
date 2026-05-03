@@ -3,7 +3,7 @@ import { GameEventHandler, GameEventType } from '../game-events';
 import { Tile } from '../map';
 import { ColorUtils, SystemColorToken } from '../map/utils';
 import { EventListener } from '../models';
-import { ConstantUtils } from '../utils';
+import { ConstantUtils, GameUtils } from '../utils';
 import { Selection } from './models';
 import { Toolbar } from './toolbar';
 
@@ -143,7 +143,7 @@ export class Controller {
       this.cursor.x = event.offsetX;
       this.cursor.y = event.offsetY;
 
-      if (!(event.target instanceof HTMLCanvasElement)) {
+      if (!GameUtils.isGameCanvasElement(event.target)) {
          this.selectedTile = undefined;
          return;
       }
