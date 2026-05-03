@@ -10,11 +10,9 @@
 
 main {
    $displayed-versions-count: 3;
-   $border: 1px solid var(--rd-primary-darker);
 
    display: grid;
    grid-template-columns: repeat($displayed-versions-count, 1fr);
-   border: $border;
 
    @include mixins.phone-width {
       grid-template-columns: unset;
@@ -37,10 +35,6 @@ main {
          grid-template-rows: unset;
          height: 100%;
          box-sizing: border-box;
-      }
-
-      &:not(:nth-of-type(#{$displayed-versions-count})) {
-         border-right: $border;
       }
 
       * {
@@ -72,6 +66,14 @@ main {
          grid-area: content;
          font-weight: 500;
       }
+   }
+
+   .more-planned {
+      font-style: italic;
+      font-weight: bold;
+      color: var(--rd-primary-darker);
+      grid-column: 1 / -1;
+      justify-self: center;
    }
 }
 
