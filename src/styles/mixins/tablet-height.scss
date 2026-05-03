@@ -1,0 +1,5 @@
+@mixin tablet-height {
+   @media (height <= 800px) {
+      @content;
+   }
+}
