@@ -1,6 +1,6 @@
 {
   "name": "rainy-days",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "start": "ng serve --open",
     "start-pwa": "npx http-server -p 8080 -c-1 dist/rainy-days/browser",

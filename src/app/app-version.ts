@@ -5,6 +5,5 @@ interface RainyDaysAppVersion {
 }
 
 export const appVersion: RainyDaysAppVersion = {
-   versionNumber: '1.0.1',
-   isWorkInProgress: true
+   versionNumber: '1.0.1'
 };
