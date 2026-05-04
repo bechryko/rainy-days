@@ -1,4 +1,5 @@
 import { appVersion } from '../../app-version';
+import { LastPlayedVersionState } from '../enums';
 
 export class VersionUtils {
    public static printAppVersion(): string {
@@ -12,6 +13,22 @@ export class VersionUtils {
       }
 
       return version;
+   }
+
+   public static getLastPlayedVersionState(lastPlayedVersion: string): LastPlayedVersionState {
+      const lastPlayedVersionBase = lastPlayedVersion.split(' ')[0];
+      const isLastPlayedVersionSnapshot = lastPlayedVersion.split(' ').length > 1;
+      const comparedVersions = this.compare(lastPlayedVersionBase, appVersion.versionNumber);
+
+      if (comparedVersions === 0 && isLastPlayedVersionSnapshot && appVersion.snapshotNumber === undefined) {
+         return LastPlayedVersionState.PATCH_UPDATED;
+      }
+
+      if (comparedVersions !== -1) {
+         return LastPlayedVersionState.UP_TO_DATE;
+      }
+
+      return LastPlayedVersionState.PATCH_UPDATED;
    }
 
    public static compare(v1: string, v2: string): number {
@@ -47,6 +64,14 @@ export class VersionUtils {
          }
       }
 
+      return version;
+   }
+
+   public static get storedVersion(): string {
+      let version = appVersion.versionNumber;
+      if (appVersion.snapshotNumber) {
+         version += ` snapshot ${appVersion.snapshotNumber}`;
+      }
       return version;
    }
 
