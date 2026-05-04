@@ -10,14 +10,16 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { Route } from '@rainy-days/routes';
 import { MusicControllerComponent } from '@rainy-days/shared/components';
-import { SwUpdateState } from '@rainy-days/shared/enums';
+import { LastPlayedVersionState, SwUpdateState } from '@rainy-days/shared/enums';
 import { since } from '@rainy-days/shared/functions';
 import { PlatformService, StorageID, StorageService, UpdateService } from '@rainy-days/shared/services';
 import { VersionUtils } from '@rainy-days/shared/utils';
 import { filter } from 'rxjs';
 import { GameStartService } from 'src/app/game-start.service';
+import { appVersion } from '../app-version';
 import { BrowserSupportNoticeTileComponent, UpdateInfoTileComponent } from './components';
 import { MobileNoticeDialogComponent, VersionUpdateDialogComponent } from './dialogs';
+import { NewPatchVersionDialogComponent } from './dialogs/new-patch-version-dialog/new-patch-version-dialog.component';
 import { Browser, ControlPanelGroup, MenuMusicHandler } from './models';
 import { NewsComponent } from './news/news.component';
 
@@ -47,7 +49,7 @@ export class MenuComponent implements OnInit {
    private readonly gameStartService = inject(GameStartService);
    private readonly storageService = inject(StorageService);
    private readonly updateService = inject(UpdateService);
-   private readonly dialog = inject(MatDialog);
+   private readonly dialogService = inject(MatDialog);
    private readonly platformService = inject(PlatformService);
 
    public readonly updateState = this.updateService.updateState;
@@ -94,12 +96,19 @@ export class MenuComponent implements OnInit {
 
    public ngOnInit(): void {
       if (this.isMobile) {
-         this.dialog.open(MobileNoticeDialogComponent, { disableClose: true });
+         this.dialogService.open(MobileNoticeDialogComponent, { disableClose: true });
       }
+
+      const lastPlayedVersion = this.storageService.read(StorageID.LAST_USED_GAME_VERSION);
+      const lastPlayedVersionState = VersionUtils.getLastPlayedVersionState(lastPlayedVersion);
+      if (lastPlayedVersionState === LastPlayedVersionState.PATCH_UPDATED) {
+         this.dialogService.open(NewPatchVersionDialogComponent, { disableClose: true });
+      }
+      this.storageService.save(StorageID.LAST_USED_GAME_VERSION, appVersion.versionNumber);
    }
 
    public openVersionUpdateDialog(): void {
-      this.dialog.open(VersionUpdateDialogComponent);
+      this.dialogService.open(VersionUpdateDialogComponent);
    }
 
    public switchButtonGroup(group: ControlPanelGroup): void {

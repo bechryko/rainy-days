@@ -1,0 +1,19 @@
+<h2>New version of Rainy Days: {{ currentVersion }}!</h2>
+<p>
+   A new patch version is available for the game. You won't notice big changes, but if you want to look at what changed,
+   head to the version history!
+</p>
+<div class="buttons-container">
+   <button
+      mat-flat-button
+      color="accent"
+      (click)="openVersionHistory()">
+      View changes
+   </button>
+   <button
+      mat-flat-button
+      color="accent"
+      (click)="close()">
+      Got it!
+   </button>
+</div>

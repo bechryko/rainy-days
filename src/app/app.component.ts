@@ -1,7 +1,5 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { appVersion } from './app-version';
-import { StorageID, StorageService } from './shared/services';
 
 @Component({
    selector: 'rd-root',
@@ -10,9 +8,7 @@ import { StorageID, StorageService } from './shared/services';
    imports: [RouterOutlet],
    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements AfterViewInit {
-   public readonly storageService = inject(StorageService);
-
+export class AppComponent {
    constructor() {
       document.addEventListener(
          'contextmenu',
@@ -21,9 +17,5 @@ export class AppComponent implements AfterViewInit {
          },
          false
       );
-   }
-
-   public ngAfterViewInit(): void {
-      this.storageService.save(StorageID.LAST_USED_GAME_VERSION, appVersion.versionNumber);
    }
 }

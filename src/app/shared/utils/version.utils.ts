@@ -1,4 +1,5 @@
 import { appVersion } from '../../app-version';
+import { LastPlayedVersionState } from '../enums';
 
 export class VersionUtils {
    public static printAppVersion(): string {
@@ -12,6 +13,14 @@ export class VersionUtils {
       }
 
       return version;
+   }
+
+   public static getLastPlayedVersionState(lastPlayedVersion: string): LastPlayedVersionState {
+      if (this.compare(lastPlayedVersion, appVersion.versionNumber) !== -1) {
+         return LastPlayedVersionState.UP_TO_DATE;
+      }
+
+      return LastPlayedVersionState.PATCH_UPDATED;
    }
 
    public static compare(v1: string, v2: string): number {
