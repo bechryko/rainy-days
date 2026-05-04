@@ -37,6 +37,7 @@
             The final changes can differ from the ones below!
          </p>
       }
+      <h6>Changes</h6>
       <ul class="changes-list">
          @for (change of selectedVersion.changes; track $index) {
             <li>
@@ -53,5 +54,15 @@
             </li>
          }
       </ul>
+      @if (selectedVersion.bugfixes) {
+         <h6>Bugfixes</h6>
+         <ul class="changes-list">
+            @for (bugfix of selectedVersion.bugfixes; track $index) {
+               <li>
+                  <p>{{ bugfix }}</p>
+               </li>
+            }
+         </ul>
+      }
    </div>
 </main>

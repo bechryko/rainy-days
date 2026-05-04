@@ -56,6 +56,16 @@ main {
             margin-block: 0.5rem;
          }
       }
+
+      + h6 {
+         margin-top: 2rem;
+      }
+   }
+
+   h6 {
+      color: var(--rd-primary-darker);
+      font-size: 1.125rem;
+      margin-block: 1rem 0;
    }
 }
 
