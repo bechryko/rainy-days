@@ -10,6 +10,7 @@ interface VersionData {
    isWIP?: boolean;
    releaseDate: Date;
    changes: ChangeItem[];
+   bugfixes?: string[];
    childVersions?: VersionData[];
 }
 
@@ -29,7 +30,7 @@ export class VersionHistoryDialogComponent {
    public readonly versions: VersionData[] = [
       {
          version: '1.0',
-         releaseDate: new Date(2025, 5, 12),
+         releaseDate: this.getReleaseDate(2025, 6, 12),
          changes: [
             {
                description: 'Added menu',
@@ -98,15 +99,35 @@ export class VersionHistoryDialogComponent {
          childVersions: [
             {
                version: '1.0.1',
-               releaseDate: new Date(),
-               isWIP: true,
+               releaseDate: this.getReleaseDate(2026, 5, 4),
                changes: [
                   {
-                     description: 'Made menu dialog styles more consistent'
+                     description: 'Minor UI changes',
+                     children: ['Made menu dialog styles more consistent', 'Tweaked Destination size']
                   },
                   {
                      description: 'Enriched version history with more details'
+                  },
+                  {
+                     description: 'Updated the roadmap'
+                  },
+                  {
+                     description: 'Installation tile in the menu is no longer displayed if the app is installed'
+                  },
+                  {
+                     description: 'Added notification about new version'
+                  },
+                  {
+                     description: 'Minor changes for mobile users',
+                     children: ['Disabled playing from mobile', 'Adjusted the menu in mobile']
+                  },
+                  {
+                     description: 'Minor technical changes'
                   }
+               ],
+               bugfixes: [
+                  'Fixed a bug that caused roads and buildings to be placed when clicking outside the game area',
+                  'Fixed a bug that caused unnecessary scrollbar to appear in the document root'
                ]
             }
          ]
@@ -128,5 +149,9 @@ export class VersionHistoryDialogComponent {
          return latestMainVersion.childVersions[latestMainVersion.childVersions.length - 1];
       }
       return latestMainVersion;
+   }
+
+   private getReleaseDate(year: number, month: number, day: number): Date {
+      return new Date(year, month - 1, day);
    }
 }
