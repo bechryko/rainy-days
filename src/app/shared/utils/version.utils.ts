@@ -16,7 +16,15 @@ export class VersionUtils {
    }
 
    public static getLastPlayedVersionState(lastPlayedVersion: string): LastPlayedVersionState {
-      if (this.compare(lastPlayedVersion, appVersion.versionNumber) !== -1) {
+      const lastPlayedVersionBase = lastPlayedVersion.split(' ')[0];
+      const isLastPlayedVersionSnapshot = lastPlayedVersion.split(' ').length > 1;
+      const comparedVersions = this.compare(lastPlayedVersionBase, appVersion.versionNumber);
+
+      if (comparedVersions === 0 && isLastPlayedVersionSnapshot && appVersion.snapshotNumber === undefined) {
+         return LastPlayedVersionState.PATCH_UPDATED;
+      }
+
+      if (comparedVersions !== -1) {
          return LastPlayedVersionState.UP_TO_DATE;
       }
 
@@ -56,6 +64,14 @@ export class VersionUtils {
          }
       }
 
+      return version;
+   }
+
+   public static get storedVersion(): string {
+      let version = appVersion.versionNumber;
+      if (appVersion.snapshotNumber) {
+         version += ` snapshot ${appVersion.snapshotNumber}`;
+      }
       return version;
    }
 

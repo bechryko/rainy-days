@@ -16,7 +16,6 @@ import { PlatformService, StorageID, StorageService, UpdateService } from '@rain
 import { VersionUtils } from '@rainy-days/shared/utils';
 import { filter } from 'rxjs';
 import { GameStartService } from 'src/app/game-start.service';
-import { appVersion } from '../app-version';
 import { BrowserSupportNoticeTileComponent, UpdateInfoTileComponent } from './components';
 import { MobileNoticeDialogComponent, VersionUpdateDialogComponent } from './dialogs';
 import { NewPatchVersionDialogComponent } from './dialogs/new-patch-version-dialog/new-patch-version-dialog.component';
@@ -104,7 +103,7 @@ export class MenuComponent implements OnInit {
       if (lastPlayedVersionState === LastPlayedVersionState.PATCH_UPDATED) {
          this.dialogService.open(NewPatchVersionDialogComponent, { disableClose: true });
       }
-      this.storageService.save(StorageID.LAST_USED_GAME_VERSION, appVersion.versionNumber);
+      this.storageService.save(StorageID.LAST_USED_GAME_VERSION, VersionUtils.storedVersion);
    }
 
    public openVersionUpdateDialog(): void {
