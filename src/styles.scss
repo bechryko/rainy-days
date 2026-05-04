@@ -6,7 +6,7 @@
 @include material.app-background();
 
 html {
-   overflow: hidden;
+   overflow: auto !important;
 }
 
 body {
