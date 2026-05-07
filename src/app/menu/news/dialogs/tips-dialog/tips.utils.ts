@@ -13,6 +13,9 @@ export class TipsUtils {
       "There are so many roads I can't manage!": [
          'Sometimes you can get rid of roads by connecting different spawners with different destinations.',
          'Sometimes you can merge two roads and separating them again using gates! But be careful, if they become the same color, they can only be separated using a timed gate!'
+      ],
+      'How can I show others how cool map I found?': [
+         'At the end of the game, click the "Reveal seed" button and copy the seed used to create the map! It can be pasted under the "Setup game" submenu to use it. Or if you append a "?seed=<your seed>" to the url, the game automatically opens with the given seed, so you can send this URL as well.'
       ]
    };
 
