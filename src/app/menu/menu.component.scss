@@ -51,6 +51,14 @@ h1 {
    }
 }
 
+.dev-dialog {
+   grid-area: title;
+   position: absolute;
+   bottom: 0;
+   left: 50%;
+   translate: -50% 0;
+}
+
 rd-update-info-tile {
    grid-area: title;
    position: absolute;

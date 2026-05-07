@@ -1,0 +1,13 @@
+mat-tab-group.mat-mdc-tab-group {
+   display: grid;
+   grid-template-rows: auto 1fr;
+   height: 100%;
+
+   mat-tab-header {
+      user-select: none;
+   }
+
+   mat-tab-body {
+      padding: 2rem;
+   }
+}

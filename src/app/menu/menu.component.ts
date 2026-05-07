@@ -21,9 +21,14 @@ import {
 } from '@rainy-days/shared/services';
 import { VersionUtils } from '@rainy-days/shared/utils';
 import { filter } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { BrowserSupportNoticeTileComponent, UpdateInfoTileComponent } from './components';
-import { MobileNoticeDialogComponent, VersionUpdateDialogComponent } from './dialogs';
-import { NewPatchVersionDialogComponent } from './dialogs/new-patch-version-dialog/new-patch-version-dialog.component';
+import {
+   DeveloperDialogComponent,
+   MobileNoticeDialogComponent,
+   NewPatchVersionDialogComponent,
+   VersionUpdateDialogComponent
+} from './dialogs';
 import { Browser, ControlPanelGroup, MenuMusicHandler } from './models';
 import { NewsComponent } from './news/news.component';
 
@@ -57,6 +62,7 @@ export class MenuComponent implements OnInit {
    private readonly platformService = inject(PlatformService);
 
    public readonly updateState = this.updateService.updateState;
+   public readonly isDevMode = environment.isDevMode;
    public readonly ControlPanelGroup = ControlPanelGroup;
 
    public buttonGroup: ControlPanelGroup = ControlPanelGroup.MAIN_MENU;
@@ -109,6 +115,12 @@ export class MenuComponent implements OnInit {
          this.dialogService.open(NewPatchVersionDialogComponent, { disableClose: true });
       }
       this.storageService.save(StorageID.LAST_USED_GAME_VERSION, VersionUtils.storedVersion);
+   }
+
+   public openDevDialog(): void {
+      if (this.isDevMode) {
+         this.dialogService.open(DeveloperDialogComponent);
+      }
    }
 
    public openVersionUpdateDialog(): void {

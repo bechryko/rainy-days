@@ -1,0 +1,9 @@
+@use 'mixins';
+
+@include mixins.menu-dialog($main-heading-level: 2);
+
+:host {
+   height: 100dvh;
+   width: 100dvw;
+   padding: 0;
+}

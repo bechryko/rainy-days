@@ -2,8 +2,6 @@
 
 .cdk-overlay-container {
    .cdk-overlay-pane.mat-mdc-dialog-panel {
-      @include mixins.phone-width {
-         max-width: 100dvw;
-      }
+      --mat-dialog-container-max-width: 100dvw;
    }
 }
