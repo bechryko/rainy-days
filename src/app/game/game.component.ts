@@ -4,9 +4,8 @@ import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GameEventHandler, GameEventType } from '@rainy-days/core/game-events';
-import { StorageID, StorageService } from '@rainy-days/shared/services';
+import { GameConfigurationService, StorageID, StorageService } from '@rainy-days/shared/services';
 import { filter, map, pairwise } from 'rxjs';
-import { GameStartService } from '../game-start.service';
 import { EndOfGameDialogData } from './end-of-game-dialog/end-of-game-dialog-data';
 import { EndOfGameDialogComponent } from './end-of-game-dialog/end-of-game-dialog.component';
 import { GameAreaComponent } from './game-area';
@@ -25,15 +24,17 @@ export class GameComponent {
 
    private readonly snackbar = inject(MatSnackBar);
    private readonly dialog = inject(MatDialog);
-   private readonly gameStartService = inject(GameStartService);
+   private readonly gameConfigurationService = inject(GameConfigurationService);
    private readonly storageService = inject(StorageService);
 
    public readonly gameStatus: WritableSignal<GameStatus>;
+   private readonly configuration = this.gameConfigurationService.useConfiguration();
+
    public seed: string;
    private isNewBest = false;
 
    constructor() {
-      this.seed = this.getSeed();
+      this.seed = this.configuration.seed ?? Math.random().toString();
 
       const gameSpeed = this.storageService.read(StorageID.GAME_SPEED);
       this.gameStatus = signal<GameStatus>({
@@ -46,6 +47,56 @@ export class GameComponent {
          spawnTimer: 0
       });
 
+      this.registerEventHandlers();
+   }
+
+   public onGameSpeedChange(gameSpeed: number): void {
+      if (gameSpeed === 0 && !this.gameStatus().isPaused) {
+         GameEventHandler.getInstance().emitEvent(GameEventType.TOGGLE_PAUSE, null);
+         return;
+      }
+      if (gameSpeed !== 0) {
+         if (this.gameStatus().isPaused) {
+            GameEventHandler.getInstance().emitEvent(GameEventType.TOGGLE_PAUSE, null);
+         }
+         this.gameStatus.update(status => ({
+            ...status,
+            gameSpeed
+         }));
+         this.storageService.save(StorageID.GAME_SPEED, gameSpeed);
+      }
+   }
+
+   public onEndOfGame(): void {
+      const score = this.gameStatus().score;
+      if (score > this.storageService.read(StorageID.PERSONAL_BEST).score) {
+         this.storageService.save(StorageID.PERSONAL_BEST, {
+            score,
+            timestamp: Date.now()
+         });
+         this.isNewBest = true;
+      }
+
+      this.openEndOfGameDialog();
+   }
+
+   public openEndOfGameDialog(): void {
+      const data: EndOfGameDialogData = {
+         score: this.gameStatus().score,
+         best: this.storageService.read(StorageID.PERSONAL_BEST).score,
+         isNewBest: this.isNewBest,
+         isVictory: this.gameStatus().isVictory,
+         seed: this.seed
+      };
+
+      this.dialog.open(EndOfGameDialogComponent, { data });
+   }
+
+   public openSnackbarMessage(message: string, action: string): void {
+      this.snackbar.open(message, action, { duration: 3000 });
+   }
+
+   private registerEventHandlers(): void {
       GameEventHandler.getInstance().watchEvents(GameEventType.START_GAME, () =>
          this.gameStatus.update(status => ({
             ...status,
@@ -101,56 +152,5 @@ export class GameComponent {
             takeUntilDestroyed()
          )
          .subscribe(() => this.onEndOfGame());
-   }
-
-   public onGameSpeedChange(gameSpeed: number): void {
-      if (gameSpeed === 0 && !this.gameStatus().isPaused) {
-         GameEventHandler.getInstance().emitEvent(GameEventType.TOGGLE_PAUSE, null);
-         return;
-      }
-      if (gameSpeed !== 0) {
-         if (this.gameStatus().isPaused) {
-            GameEventHandler.getInstance().emitEvent(GameEventType.TOGGLE_PAUSE, null);
-         }
-         this.gameStatus.update(status => ({
-            ...status,
-            gameSpeed
-         }));
-         this.storageService.save(StorageID.GAME_SPEED, gameSpeed);
-      }
-   }
-
-   public onEndOfGame(): void {
-      const score = this.gameStatus().score;
-      if (score > this.storageService.read(StorageID.PERSONAL_BEST).score) {
-         this.storageService.save(StorageID.PERSONAL_BEST, {
-            score,
-            timestamp: Date.now()
-         });
-         this.isNewBest = true;
-      }
-
-      this.openEndOfGameDialog();
-   }
-
-   public openEndOfGameDialog(): void {
-      const data: EndOfGameDialogData = {
-         score: this.gameStatus().score,
-         best: this.storageService.read(StorageID.PERSONAL_BEST).score,
-         isNewBest: this.isNewBest,
-         isVictory: this.gameStatus().isVictory,
-         seed: this.seed
-      };
-
-      this.dialog.open(EndOfGameDialogComponent, { data });
-   }
-
-   public openSnackbarMessage(message: string, action: string): void {
-      this.snackbar.open(message, action, { duration: 3000 });
-   }
-
-   private getSeed(): string {
-      const seed = this.gameStartService.getStartingParams().seed;
-      return seed ? seed : Math.random().toString();
    }
 }

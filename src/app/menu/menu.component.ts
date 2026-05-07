@@ -10,12 +10,17 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router } from '@angular/router';
 import { Route } from '@rainy-days/routes';
 import { MusicControllerComponent } from '@rainy-days/shared/components';
-import { LastPlayedVersionState, SwUpdateState } from '@rainy-days/shared/enums';
+import { GameConfigurationKey, LastPlayedVersionState, SwUpdateState } from '@rainy-days/shared/enums';
 import { since } from '@rainy-days/shared/functions';
-import { PlatformService, StorageID, StorageService, UpdateService } from '@rainy-days/shared/services';
+import {
+   GameConfigurationService,
+   PlatformService,
+   StorageID,
+   StorageService,
+   UpdateService
+} from '@rainy-days/shared/services';
 import { VersionUtils } from '@rainy-days/shared/utils';
 import { filter } from 'rxjs';
-import { GameStartService } from 'src/app/game-start.service';
 import { BrowserSupportNoticeTileComponent, UpdateInfoTileComponent } from './components';
 import { MobileNoticeDialogComponent, VersionUpdateDialogComponent } from './dialogs';
 import { NewPatchVersionDialogComponent } from './dialogs/new-patch-version-dialog/new-patch-version-dialog.component';
@@ -45,7 +50,7 @@ import { NewsComponent } from './news/news.component';
 })
 export class MenuComponent implements OnInit {
    private readonly router = inject(Router);
-   private readonly gameStartService = inject(GameStartService);
+   private readonly gameConfigurationService = inject(GameConfigurationService);
    private readonly storageService = inject(StorageService);
    private readonly updateService = inject(UpdateService);
    private readonly dialogService = inject(MatDialog);
@@ -116,12 +121,15 @@ export class MenuComponent implements OnInit {
    }
 
    public startQuickGame(): void {
-      this.gameStartService.initStartingParams('');
+      this.gameConfigurationService.setConfiguration(GameConfigurationKey.DEFAULT);
       this.router.navigateByUrl(Route.GAME);
    }
 
    public startCustomGame(): void {
-      this.gameStartService.initStartingParams(this.setupGameForm.value.seed ?? '');
+      this.gameConfigurationService.setConfiguration(
+         GameConfigurationKey.DEFAULT,
+         this.setupGameForm.value.seed ?? undefined
+      );
       this.router.navigateByUrl(Route.GAME);
    }
 }
