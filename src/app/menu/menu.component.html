@@ -1,4 +1,13 @@
 <h1>Rainy Days</h1>
+@if (isDevMode) {
+   <button
+      mat-flat-button
+      color="accent"
+      class="dev-dialog"
+      (click)="openDevDialog()">
+      Open developer dialog
+   </button>
+}
 @if (serviceWorkersEnabled) {
    <rd-update-info-tile
       [state]="updateState()"
